@@ -1,0 +1,632 @@
+[
+  {
+    "id": "INT001",
+    "drugs": ["Aspirin", "Ibuprofen"],
+    "severity": "moderate",
+    "effect": "Ibuprofen blocks the antiplatelet effect of low-dose aspirin, reducing its cardioprotective benefit.",
+    "mechanism": "Ibuprofen competes with aspirin for the COX-1 active site, preventing irreversible platelet inhibition.",
+    "recommendation": "Take aspirin at least 30 minutes before or 8 hours after ibuprofen. Consider paracetamol for pain relief instead.",
+    "clinicalSignificance": "High — can nullify aspirin therapy in cardiac patients."
+  },
+  {
+    "id": "INT002",
+    "drugs": ["Aspirin", "Clopidogrel"],
+    "severity": "moderate",
+    "effect": "Combined use significantly increases the risk of bleeding, especially gastrointestinal bleeding.",
+    "mechanism": "Dual antiplatelet action — aspirin inhibits COX-1 and clopidogrel inhibits ADP-mediated platelet aggregation.",
+    "recommendation": "This combination is intentional post-stent/ACS (Deplatt-A) but requires a PPI co-prescription to protect the stomach.",
+    "clinicalSignificance": "High — standard dual antiplatelet therapy; bleeding risk must be managed."
+  },
+  {
+    "id": "INT003",
+    "drugs": ["Clopidogrel", "Omeprazole"],
+    "severity": "moderate",
+    "effect": "Omeprazole reduces clopidogrel's antiplatelet effect by up to 40%, potentially increasing the risk of cardiovascular events.",
+    "mechanism": "Omeprazole inhibits CYP2C19, the enzyme that converts clopidogrel into its active metabolite.",
+    "recommendation": "Use Pantoprazole or Rabeprazole instead of Omeprazole when a PPI is needed alongside clopidogrel.",
+    "clinicalSignificance": "High — a very common and clinically important interaction in cardiac patients."
+  },
+  {
+    "id": "INT004",
+    "drugs": ["Clopidogrel", "Pantoprazole"],
+    "severity": "mild",
+    "effect": "Mild reduction in clopidogrel antiplatelet activity; less significant than with omeprazole.",
+    "mechanism": "Pantoprazole has weaker CYP2C19 inhibition compared to omeprazole.",
+    "recommendation": "Preferred PPI choice with clopidogrel; monitor clinically.",
+    "clinicalSignificance": "Low to moderate — pantoprazole is the safer PPI option."
+  },
+  {
+    "id": "INT005",
+    "drugs": ["Metronidazole", "Alcohol"],
+    "severity": "severe",
+    "effect": "Causes a disulfiram-like reaction: severe flushing, nausea, vomiting, rapid heartbeat, and low blood pressure.",
+    "mechanism": "Metronidazole inhibits acetaldehyde dehydrogenase, causing accumulation of toxic acetaldehyde after alcohol consumption.",
+    "recommendation": "Strictly avoid all alcohol during metronidazole treatment and for 48 hours after the last dose.",
+    "clinicalSignificance": "High — this reaction can be very distressing and occasionally serious."
+  },
+  {
+    "id": "INT006",
+    "drugs": ["Paracetamol", "Alcohol"],
+    "severity": "severe",
+    "effect": "Chronic alcohol use combined with paracetamol greatly increases the risk of severe liver damage even at normal doses.",
+    "mechanism": "Alcohol induces CYP2E1, which converts more paracetamol into the toxic metabolite NAPQI, overwhelming liver defences.",
+    "recommendation": "Avoid paracetamol in heavy drinkers; if needed, limit to the lowest effective dose.",
+    "clinicalSignificance": "High — a major cause of acute liver failure."
+  },
+  {
+    "id": "INT007",
+    "drugs": ["Ramipril", "Spironolactone"],
+    "severity": "severe",
+    "effect": "Combination can cause dangerously high potassium levels (hyperkalemia), which can cause fatal cardiac arrhythmias.",
+    "mechanism": "Both drugs reduce aldosterone activity: ACE inhibitors reduce its production, spironolactone blocks its receptor.",
+    "recommendation": "Monitor serum potassium and renal function closely when used together; avoid potassium supplements.",
+    "clinicalSignificance": "High — this combination is used intentionally in heart failure but requires careful monitoring."
+  },
+  {
+    "id": "INT008",
+    "drugs": ["Telmisartan", "Spironolactone"],
+    "severity": "severe",
+    "effect": "Risk of hyperkalemia is significantly elevated; can cause life-threatening cardiac arrhythmias.",
+    "mechanism": "ARBs block aldosterone signaling; spironolactone antagonizes aldosterone receptors — additive potassium retention.",
+    "recommendation": "Monitor potassium and renal function regularly; adjust doses as needed.",
+    "clinicalSignificance": "High — requires regular electrolyte monitoring."
+  },
+  {
+    "id": "INT009",
+    "drugs": ["Ramipril", "Telmisartan"],
+    "severity": "severe",
+    "effect": "Dual RAAS blockade causes excessive hypotension, hyperkalemia, and increased risk of acute kidney injury.",
+    "mechanism": "Combining ACE inhibitor and ARB provides no additional cardiovascular benefit but doubles RAAS suppression side effects.",
+    "recommendation": "Avoid this combination — not recommended per current guidelines.",
+    "clinicalSignificance": "High — combination is contraindicated in most patients."
+  },
+  {
+    "id": "INT010",
+    "drugs": ["Diclofenac", "Ramipril"],
+    "severity": "moderate",
+    "effect": "NSAIDs reduce the blood pressure-lowering effect of ACE inhibitors and can cause acute kidney injury when combined.",
+    "mechanism": "NSAIDs inhibit prostaglandins needed to maintain renal blood flow; ACE inhibitors further reduce renal perfusion pressure.",
+    "recommendation": "Avoid regular NSAID use in patients on ACE inhibitors; use paracetamol for pain if possible.",
+    "clinicalSignificance": "High — triple whammy risk (NSAID + ACE inhibitor + diuretic) is particularly dangerous."
+  },
+  {
+    "id": "INT011",
+    "drugs": ["Ibuprofen", "Ramipril"],
+    "severity": "moderate",
+    "effect": "Ibuprofen blunts the antihypertensive effect of ramipril and raises the risk of kidney damage.",
+    "mechanism": "Prostaglandin inhibition by ibuprofen counteracts ACE inhibitor-induced vasodilation and reduces renal protection.",
+    "recommendation": "Use paracetamol for pain relief; avoid regular ibuprofen use in hypertensive patients on ACE inhibitors.",
+    "clinicalSignificance": "Moderate to high — very common combination in practice."
+  },
+  {
+    "id": "INT012",
+    "drugs": ["Ibuprofen", "Telmisartan"],
+    "severity": "moderate",
+    "effect": "NSAIDs reduce the antihypertensive efficacy of ARBs and can worsen kidney function.",
+    "mechanism": "Prostaglandin inhibition causes sodium retention and vasoconstriction, opposing the ARB's vasodilatory action.",
+    "recommendation": "Monitor blood pressure; prefer paracetamol for analgesia.",
+    "clinicalSignificance": "Moderate — common in elderly patients with hypertension and joint pain."
+  },
+  {
+    "id": "INT013",
+    "drugs": ["Diclofenac", "Prednisolone"],
+    "severity": "severe",
+    "effect": "Combining an NSAID with a corticosteroid greatly increases the risk of gastrointestinal ulceration and bleeding.",
+    "mechanism": "Both drugs independently impair the gastric mucosal barrier — NSAIDs via prostaglandin inhibition, steroids via reduced mucus production.",
+    "recommendation": "Always co-prescribe a PPI (pantoprazole or omeprazole) if this combination is unavoidable.",
+    "clinicalSignificance": "High — a common preventable cause of GI bleeding."
+  },
+  {
+    "id": "INT014",
+    "drugs": ["Aspirin", "Prednisolone"],
+    "severity": "moderate",
+    "effect": "Increased risk of gastrointestinal ulceration and bleeding.",
+    "mechanism": "Prednisolone reduces mucosal protection; aspirin directly damages gastric mucosa and inhibits protective prostaglandins.",
+    "recommendation": "Use PPI cover; monitor for GI symptoms.",
+    "clinicalSignificance": "Moderate — gastroprotection recommended."
+  },
+  {
+    "id": "INT015",
+    "drugs": ["Prednisolone", "Metformin"],
+    "severity": "moderate",
+    "effect": "Corticosteroids raise blood glucose levels, reducing the effectiveness of antidiabetic drugs.",
+    "mechanism": "Prednisolone induces insulin resistance and increases hepatic glucose production.",
+    "recommendation": "Monitor blood glucose closely; dose adjustment of metformin or addition of insulin may be needed.",
+    "clinicalSignificance": "Moderate — steroid-induced hyperglycemia is common in diabetic patients."
+  },
+  {
+    "id": "INT016",
+    "drugs": ["Prednisolone", "Glimepiride"],
+    "severity": "moderate",
+    "effect": "Steroids antagonize the glucose-lowering action of sulfonylureas, causing blood sugar to rise.",
+    "mechanism": "Prednisolone induces insulin resistance and increases gluconeogenesis.",
+    "recommendation": "Increase blood glucose monitoring; dose adjustment of glimepiride may be required.",
+    "clinicalSignificance": "Moderate — requires active monitoring during steroid courses."
+  },
+  {
+    "id": "INT017",
+    "drugs": ["Ciprofloxacin", "Glimepiride"],
+    "severity": "moderate",
+    "effect": "Ciprofloxacin can potentiate the hypoglycemic effect of glimepiride, causing dangerous low blood sugar.",
+    "mechanism": "Fluoroquinolones stimulate insulin secretion from pancreatic beta cells, additive with sulfonylurea-induced secretion.",
+    "recommendation": "Monitor blood glucose closely during antibiotic course; warn patient about hypoglycemia symptoms.",
+    "clinicalSignificance": "Moderate — hypoglycemia cases have been reported."
+  },
+  {
+    "id": "INT018",
+    "drugs": ["Levofloxacin", "Glimepiride"],
+    "severity": "moderate",
+    "effect": "Levofloxacin can cause both hypo- and hyperglycemia when combined with sulfonylureas.",
+    "mechanism": "Fluoroquinolones affect pancreatic beta cell potassium channels, disrupting insulin regulation unpredictably.",
+    "recommendation": "Monitor blood glucose frequently; educate patient on hypoglycemia signs.",
+    "clinicalSignificance": "Moderate — unpredictable glucose fluctuations reported."
+  },
+  {
+    "id": "INT019",
+    "drugs": ["Levothyroxine", "Calcium + Vitamin D3"],
+    "severity": "moderate",
+    "effect": "Calcium significantly reduces the absorption of levothyroxine, lowering its effectiveness.",
+    "mechanism": "Calcium forms an insoluble complex with levothyroxine in the gut, reducing its bioavailability.",
+    "recommendation": "Separate administration by at least 4 hours — take levothyroxine on an empty stomach in the morning.",
+    "clinicalSignificance": "High — very common in practice as both drugs are frequently co-prescribed."
+  },
+  {
+    "id": "INT020",
+    "drugs": ["Levothyroxine", "Iron + Folic Acid"],
+    "severity": "moderate",
+    "effect": "Iron chelates levothyroxine in the gut, substantially reducing its absorption.",
+    "mechanism": "Ferrous ions bind to levothyroxine, forming an insoluble complex that cannot be absorbed.",
+    "recommendation": "Separate by at least 4 hours; take levothyroxine first thing in the morning before any supplements.",
+    "clinicalSignificance": "High — a very common and underrecognized interaction."
+  },
+  {
+    "id": "INT021",
+    "drugs": ["Levothyroxine", "Pantoprazole"],
+    "severity": "mild",
+    "effect": "PPIs can moderately reduce levothyroxine absorption by increasing gastric pH.",
+    "mechanism": "Levothyroxine dissolution depends on an acidic gastric environment; PPIs raise pH and impair this process.",
+    "recommendation": "Monitor TSH levels; may require dose adjustment of levothyroxine.",
+    "clinicalSignificance": "Mild to moderate — monitor thyroid function."
+  },
+  {
+    "id": "INT022",
+    "drugs": ["Ciprofloxacin", "Antacids"],
+    "severity": "moderate",
+    "effect": "Antacids containing aluminium or magnesium drastically reduce ciprofloxacin absorption.",
+    "mechanism": "Divalent and trivalent metal ions chelate ciprofloxacin in the gut, preventing absorption.",
+    "recommendation": "Take ciprofloxacin 2 hours before or 6 hours after antacids.",
+    "clinicalSignificance": "Moderate — can lead to antibiotic treatment failure."
+  },
+  {
+    "id": "INT023",
+    "drugs": ["Levofloxacin", "Antacids"],
+    "severity": "moderate",
+    "effect": "Metal ion-containing antacids reduce levofloxacin bioavailability by up to 80%.",
+    "mechanism": "Chelation of levofloxacin by magnesium, aluminium, or calcium ions prevents intestinal absorption.",
+    "recommendation": "Do not take antacids, iron, or calcium within 2 hours before or 2 hours after levofloxacin.",
+    "clinicalSignificance": "Moderate — therapeutic failure risk."
+  },
+  {
+    "id": "INT024",
+    "drugs": ["Doxycycline", "Calcium + Vitamin D3"],
+    "severity": "moderate",
+    "effect": "Calcium and dairy products significantly reduce doxycycline absorption.",
+    "mechanism": "Calcium chelates tetracyclines in the GI tract, forming insoluble complexes.",
+    "recommendation": "Take doxycycline with water 1–2 hours before or after calcium supplements or dairy products.",
+    "clinicalSignificance": "Moderate — antibiotic efficacy can be substantially reduced."
+  },
+  {
+    "id": "INT025",
+    "drugs": ["Doxycycline", "Iron + Folic Acid"],
+    "severity": "moderate",
+    "effect": "Iron significantly reduces doxycycline absorption, potentially causing treatment failure.",
+    "mechanism": "Iron chelates doxycycline in the gut; the complex is poorly absorbed.",
+    "recommendation": "Separate by at least 2–3 hours; take doxycycline first.",
+    "clinicalSignificance": "Moderate — common in patients on iron supplementation."
+  },
+  {
+    "id": "INT026",
+    "drugs": ["Atorvastatin", "Amlodipine"],
+    "severity": "mild",
+    "effect": "Amlodipine increases atorvastatin blood levels by about 18%, slightly raising the risk of muscle side effects.",
+    "mechanism": "Amlodipine weakly inhibits CYP3A4, the enzyme responsible for atorvastatin metabolism.",
+    "recommendation": "Generally safe; monitor for muscle pain or weakness, especially at high statin doses.",
+    "clinicalSignificance": "Low — clinically significant only at high atorvastatin doses (40–80mg)."
+  },
+  {
+    "id": "INT027",
+    "drugs": ["Rosuvastatin", "Antacids"],
+    "severity": "mild",
+    "effect": "Antacids containing aluminium and magnesium reduce rosuvastatin plasma levels by about 50%.",
+    "mechanism": "Adsorption of rosuvastatin to antacid particles in the gut reduces absorption.",
+    "recommendation": "Take rosuvastatin at least 2 hours before antacid administration.",
+    "clinicalSignificance": "Mild — cholesterol control may be suboptimal."
+  },
+  {
+    "id": "INT028",
+    "drugs": ["Alprazolam", "Alcohol"],
+    "severity": "severe",
+    "effect": "Causes profound central nervous system depression — extreme drowsiness, respiratory depression, and risk of coma or death.",
+    "mechanism": "Both alcohol and benzodiazepines enhance GABA-mediated CNS inhibition in an additive/synergistic manner.",
+    "recommendation": "Strictly avoid alcohol with any benzodiazepine; combination can be fatal.",
+    "clinicalSignificance": "High — one of the most dangerous drug-alcohol combinations."
+  },
+  {
+    "id": "INT029",
+    "drugs": ["Alprazolam", "Levofloxacin"],
+    "severity": "mild",
+    "effect": "Levofloxacin may slightly increase alprazolam levels and enhance CNS sedation.",
+    "mechanism": "Minor inhibition of CYP3A4 by fluoroquinolones may reduce alprazolam clearance.",
+    "recommendation": "Monitor for excessive sedation; advise patient not to drive.",
+    "clinicalSignificance": "Mild — generally manageable."
+  },
+  {
+    "id": "INT030",
+    "drugs": ["Sertraline", "Tramadol"],
+    "severity": "severe",
+    "effect": "Risk of serotonin syndrome — agitation, confusion, rapid heart rate, high temperature, and muscle rigidity.",
+    "mechanism": "Sertraline inhibits serotonin reuptake; tramadol also increases serotonin release, causing dangerous serotonin excess.",
+    "recommendation": "Avoid this combination if possible; if necessary, use the lowest effective doses and monitor closely.",
+    "clinicalSignificance": "High — serotonin syndrome can be life-threatening."
+  },
+  {
+    "id": "INT031",
+    "drugs": ["Azithromycin", "Domperidone"],
+    "severity": "severe",
+    "effect": "Both drugs prolong the QT interval on ECG, increasing the risk of a dangerous arrhythmia called Torsades de Pointes.",
+    "mechanism": "Both drugs block cardiac hERG potassium channels, additively prolonging cardiac repolarization.",
+    "recommendation": "Avoid this combination; use alternative antibiotic. If unavoidable, do an ECG before starting.",
+    "clinicalSignificance": "High — this combination is contraindicated in patients with cardiac risk factors."
+  },
+  {
+    "id": "INT032",
+    "drugs": ["Levofloxacin", "Domperidone"],
+    "severity": "severe",
+    "effect": "Additive QT prolongation risk leading to potentially fatal ventricular arrhythmias.",
+    "mechanism": "Both drugs independently prolong QT interval via hERG channel blockade.",
+    "recommendation": "Avoid combination; if necessary, obtain baseline ECG and monitor electrolytes.",
+    "clinicalSignificance": "High — QT prolongation is a significant concern with both agents."
+  },
+  {
+    "id": "INT033",
+    "drugs": ["Ciprofloxacin", "Domperidone"],
+    "severity": "moderate",
+    "effect": "Increased risk of QT prolongation and cardiac arrhythmias.",
+    "mechanism": "Additive hERG potassium channel inhibition between the two drugs.",
+    "recommendation": "Use with caution, especially in patients with pre-existing cardiac conditions or electrolyte imbalances.",
+    "clinicalSignificance": "Moderate — monitoring recommended."
+  },
+  {
+    "id": "INT034",
+    "drugs": ["Atenolol", "Amlodipine"],
+    "severity": "mild",
+    "effect": "Additive blood pressure and heart rate lowering — risk of excessive bradycardia or hypotension.",
+    "mechanism": "Beta-blocker slows heart rate and reduces cardiac output; calcium channel blocker causes vasodilation — both lower BP.",
+    "recommendation": "Intentional combination in hypertension; monitor heart rate and BP, especially at initiation.",
+    "clinicalSignificance": "Low to moderate — generally safe and commonly co-prescribed."
+  },
+  {
+    "id": "INT035",
+    "drugs": ["Bisoprolol", "Amlodipine"],
+    "severity": "mild",
+    "effect": "Additive hypotensive and bradycardic effect; generally well tolerated but requires monitoring.",
+    "mechanism": "Synergistic BP lowering through different mechanisms.",
+    "recommendation": "Monitor heart rate and BP; common and effective combination for hypertension/angina.",
+    "clinicalSignificance": "Low — standard combination in guidelines."
+  },
+  {
+    "id": "INT036",
+    "drugs": ["Metformin", "Furosemide"],
+    "severity": "mild",
+    "effect": "Furosemide can increase metformin plasma levels; risk of lactic acidosis increases if dehydration occurs.",
+    "mechanism": "Furosemide competes with metformin for renal tubular secretion, increasing metformin levels.",
+    "recommendation": "Monitor renal function; ensure adequate hydration. Hold metformin if patient becomes dehydrated.",
+    "clinicalSignificance": "Mild — important in frail or elderly patients."
+  },
+  {
+    "id": "INT037",
+    "drugs": ["Ramipril", "Furosemide"],
+    "severity": "moderate",
+    "effect": "First-dose hypotension can be severe, especially in volume-depleted patients.",
+    "mechanism": "ACE inhibitor abolishes the compensatory renin-angiotensin response to diuretic-induced volume depletion.",
+    "recommendation": "Start ACE inhibitor at a low dose; ensure patient is not volume-depleted before combining.",
+    "clinicalSignificance": "Moderate — commonly co-prescribed in heart failure but requires careful initiation."
+  },
+  {
+    "id": "INT038",
+    "drugs": ["Furosemide", "Atenolol"],
+    "severity": "mild",
+    "effect": "Additive blood pressure lowering; furosemide-induced low potassium can increase risk of arrhythmias.",
+    "mechanism": "Diuretic depletes potassium; beta-blocker may mask signs of electrolyte imbalance.",
+    "recommendation": "Monitor potassium levels; supplement if needed.",
+    "clinicalSignificance": "Mild — electrolyte monitoring is the key safety measure."
+  },
+  {
+    "id": "INT039",
+    "drugs": ["Atorvastatin", "Azithromycin"],
+    "severity": "mild",
+    "effect": "Short-term azithromycin use can modestly raise atorvastatin levels, increasing the risk of muscle side effects.",
+    "mechanism": "Azithromycin weakly inhibits CYP3A4, which metabolizes atorvastatin.",
+    "recommendation": "Short antibiotic courses are generally safe; monitor for unexplained muscle pain.",
+    "clinicalSignificance": "Low — clinically relevant mainly with prolonged azithromycin use."
+  },
+  {
+    "id": "INT040",
+    "drugs": ["Pregabalin", "Alprazolam"],
+    "severity": "moderate",
+    "effect": "Additive CNS and respiratory depression — excessive sedation, dizziness, and impaired coordination.",
+    "mechanism": "Both drugs have CNS depressant properties through different mechanisms (GABA analogue + benzodiazepine).",
+    "recommendation": "Use the lowest effective doses if combination is necessary; avoid in elderly patients.",
+    "clinicalSignificance": "Moderate — risk of falls and respiratory depression."
+  },
+  {
+    "id": "INT041",
+    "drugs": ["Pregabalin", "Alcohol"],
+    "severity": "severe",
+    "effect": "Significant CNS depression, respiratory suppression, and impaired motor function.",
+    "mechanism": "Additive CNS depression between pregabalin (calcium channel modulator) and alcohol (GABA enhancer).",
+    "recommendation": "Strictly avoid alcohol during pregabalin treatment.",
+    "clinicalSignificance": "High — clearly stated in the prescribing information."
+  },
+  {
+    "id": "INT042",
+    "drugs": ["Phenytoin", "Metronidazole"],
+    "severity": "moderate",
+    "effect": "Metronidazole significantly increases phenytoin blood levels, risking toxicity (nystagmus, ataxia, confusion).",
+    "mechanism": "Metronidazole inhibits CYP2C9, which is the main enzyme metabolizing phenytoin.",
+    "recommendation": "Monitor phenytoin levels closely; reduce phenytoin dose if toxicity signs appear.",
+    "clinicalSignificance": "High — phenytoin has a narrow therapeutic index."
+  },
+  {
+    "id": "INT043",
+    "drugs": ["Phenytoin", "Ciprofloxacin"],
+    "severity": "moderate",
+    "effect": "Ciprofloxacin can raise or lower phenytoin levels unpredictably, risking either toxicity or seizures.",
+    "mechanism": "Fluoroquinolones have variable effects on CYP2C9 activity, making phenytoin level changes unpredictable.",
+    "recommendation": "Monitor phenytoin serum levels during and after antibiotic course.",
+    "clinicalSignificance": "Moderate — unpredictability makes this interaction particularly dangerous."
+  },
+  {
+    "id": "INT044",
+    "drugs": ["Phenytoin", "Omeprazole"],
+    "severity": "mild",
+    "effect": "Omeprazole may increase phenytoin levels, leading to toxicity at normal doses.",
+    "mechanism": "Omeprazole inhibits CYP2C19 and CYP2C9 activity, reducing phenytoin metabolism.",
+    "recommendation": "Monitor for phenytoin toxicity signs; consider switching to pantoprazole.",
+    "clinicalSignificance": "Mild to moderate — pantoprazole is the safer PPI alternative."
+  },
+  {
+    "id": "INT045",
+    "drugs": ["Metformin", "Alcohol"],
+    "severity": "severe",
+    "effect": "Alcohol potentiates metformin's inhibition of hepatic lactate metabolism, significantly increasing lactic acidosis risk.",
+    "mechanism": "Alcohol inhibits lactate clearance in the liver; combined with metformin's inhibition of gluconeogenesis from lactate, lactic acid accumulates.",
+    "recommendation": "Avoid regular or heavy alcohol use with metformin; binge drinking is particularly dangerous.",
+    "clinicalSignificance": "High — lactic acidosis is rare but can be fatal."
+  },
+  {
+    "id": "INT046",
+    "drugs": ["Hydroxychloroquine", "Azithromycin"],
+    "severity": "severe",
+    "effect": "Additive QT interval prolongation, significantly increasing risk of fatal ventricular arrhythmias.",
+    "mechanism": "Both drugs block cardiac hERG potassium channels independently, with additive or synergistic effects.",
+    "recommendation": "Avoid this combination; obtain ECG before use if combination is unavoidable.",
+    "clinicalSignificance": "High — combination is generally contraindicated."
+  },
+  {
+    "id": "INT047",
+    "drugs": ["Hydroxychloroquine", "Levofloxacin"],
+    "severity": "severe",
+    "effect": "Significant QT prolongation risk; potential for Torsades de Pointes.",
+    "mechanism": "Additive hERG channel blockade from both agents.",
+    "recommendation": "Avoid; if necessary, do an ECG and correct any electrolyte imbalances first.",
+    "clinicalSignificance": "High — contraindicated in patients with cardiac risk factors."
+  },
+  {
+    "id": "INT048",
+    "drugs": ["Hydroxychloroquine", "Metformin"],
+    "severity": "mild",
+    "effect": "Hydroxychloroquine has mild glucose-lowering properties that can additively enhance metformin's effect.",
+    "mechanism": "HCQ improves insulin sensitivity independently, adding to metformin's antidiabetic action.",
+    "recommendation": "Monitor blood glucose; hypoglycemia is uncommon but possible.",
+    "clinicalSignificance": "Low — generally beneficial in RA patients with diabetes."
+  },
+  {
+    "id": "INT049",
+    "drugs": ["Sitagliptin", "Furosemide"],
+    "severity": "mild",
+    "effect": "Furosemide may slightly increase sitagliptin plasma levels by reducing renal drug clearance.",
+    "mechanism": "Volume depletion from furosemide reduces GFR, decreasing sitagliptin excretion.",
+    "recommendation": "Monitor renal function; sitagliptin dose may need reduction in impaired renal function.",
+    "clinicalSignificance": "Mild — mainly relevant in elderly or volume-depleted patients."
+  },
+  {
+    "id": "INT050",
+    "drugs": ["Atenolol", "Metformin"],
+    "severity": "mild",
+    "effect": "Beta-blockers can mask hypoglycemia warning signs (palpitations, tremor) in diabetic patients; may also prolong recovery from hypoglycemia.",
+    "mechanism": "Atenolol blocks adrenergic symptoms of hypoglycemia and inhibits glycogenolysis needed for glucose recovery.",
+    "recommendation": "Educate patients to monitor blood glucose regularly; sweating is an unmasked hypoglycemia warning sign.",
+    "clinicalSignificance": "Low to moderate — important patient education point."
+  },
+  {
+    "id": "INT051",
+    "drugs": ["Bisoprolol", "Glimepiride"],
+    "severity": "mild",
+    "effect": "Beta-blockers mask the adrenergic symptoms of hypoglycemia and may impair recovery from low blood sugar.",
+    "mechanism": "Blockade of beta-2 receptors inhibits glucagon-stimulated glycogenolysis and masks tachycardia/tremor.",
+    "recommendation": "Counsel patient to monitor for sweating (unmasked hypoglycemia sign) and check glucose regularly.",
+    "clinicalSignificance": "Low to moderate — patient education is the primary intervention."
+  },
+  {
+    "id": "INT052",
+    "drugs": ["Losartan", "Spironolactone"],
+    "severity": "severe",
+    "effect": "Dual aldosterone pathway blockade causes significant hyperkalemia and risk of renal impairment.",
+    "mechanism": "ARB reduces aldosterone secretion; spironolactone blocks aldosterone receptors — potassium retention is additive.",
+    "recommendation": "Monitor potassium and serum creatinine closely if combination is necessary.",
+    "clinicalSignificance": "High — potentially life-threatening electrolyte imbalance."
+  },
+  {
+    "id": "INT053",
+    "drugs": ["Furosemide", "Ciprofloxacin"],
+    "severity": "moderate",
+    "effect": "Both drugs can be independently nephrotoxic and ototoxic; combined use amplifies these risks.",
+    "mechanism": "Furosemide causes ototoxicity at high doses; fluoroquinolones can be nephrotoxic — combined renal stress is cumulative.",
+    "recommendation": "Monitor renal function and hearing; use minimum effective doses.",
+    "clinicalSignificance": "Moderate — relevant in elderly patients or those with pre-existing kidney disease."
+  },
+  {
+    "id": "INT054",
+    "drugs": ["Sertraline", "Aspirin"],
+    "severity": "moderate",
+    "effect": "SSRIs combined with aspirin significantly increase the risk of gastrointestinal bleeding.",
+    "mechanism": "Serotonin is required for platelet aggregation; SSRIs deplete platelet serotonin stores, impairing clot formation — additive with aspirin's antiplatelet effect.",
+    "recommendation": "Consider PPI co-prescription; monitor for signs of GI bleeding.",
+    "clinicalSignificance": "Moderate to high — clinically important combination in elderly patients."
+  },
+  {
+    "id": "INT055",
+    "drugs": ["Sertraline", "Clopidogrel"],
+    "severity": "moderate",
+    "effect": "Combined antiplatelet and anticoagulant effect greatly raises risk of bleeding.",
+    "mechanism": "SSRI-induced platelet serotonin depletion adds to clopidogrel's P2Y12 antiplatelet effect.",
+    "recommendation": "Use with caution; prescribe PPI and monitor for bleeding.",
+    "clinicalSignificance": "Moderate — relevant in post-MI patients on antidepressants."
+  },
+  {
+    "id": "INT056",
+    "drugs": ["Amoxicillin", "Metronidazole"],
+    "severity": "mild",
+    "effect": "Generally safe combination used intentionally for H. pylori eradication and dental infections; may cause additive GI side effects.",
+    "mechanism": "Both antibiotics cause GI upset independently; combined use increases incidence of nausea and diarrhoea.",
+    "recommendation": "Take both with food to minimize GI upset; avoid alcohol.",
+    "clinicalSignificance": "Low — intentional therapeutic combination; mainly a tolerability issue."
+  },
+  {
+    "id": "INT057",
+    "drugs": ["Cetirizine", "Alprazolam"],
+    "severity": "mild",
+    "effect": "Additive CNS depression — increased drowsiness and impaired concentration.",
+    "mechanism": "Both have CNS depressant properties; cetirizine crosses the blood-brain barrier to a mild degree.",
+    "recommendation": "Avoid driving or operating machinery; use with caution in elderly patients.",
+    "clinicalSignificance": "Low to moderate — common combination in clinical practice."
+  },
+  {
+    "id": "INT058",
+    "drugs": ["Fexofenadine", "Antacids"],
+    "severity": "moderate",
+    "effect": "Antacids containing aluminium and magnesium reduce fexofenadine bioavailability by approximately 36%.",
+    "mechanism": "Metal ions chelate fexofenadine and reduce its intestinal absorption.",
+    "recommendation": "Avoid taking antacids within 15 minutes before or after fexofenadine.",
+    "clinicalSignificance": "Moderate — may lead to inadequate allergy control."
+  },
+  {
+    "id": "INT059",
+    "drugs": ["Montelukast", "Phenytoin"],
+    "severity": "mild",
+    "effect": "Phenytoin may reduce montelukast plasma levels, potentially reducing its efficacy.",
+    "mechanism": "Phenytoin induces CYP3A4 and CYP2C8, enzymes that metabolize montelukast.",
+    "recommendation": "Monitor clinical response to montelukast; dose adjustment may be needed.",
+    "clinicalSignificance": "Mild — clinical significance is not well established."
+  },
+  {
+    "id": "INT060",
+    "drugs": ["Amlodipine", "Telmisartan"],
+    "severity": "mild",
+    "effect": "Additive blood pressure lowering is the intended benefit; excessive hypotension may occur at initiation.",
+    "mechanism": "Complementary mechanisms (calcium channel blockade + RAAS inhibition) provide synergistic BP reduction.",
+    "recommendation": "Start with low doses; monitor BP especially after the first dose.",
+    "clinicalSignificance": "Low — this is the intended combination (e.g., Telma AM)."
+  },
+  {
+    "id": "INT061",
+    "drugs": ["Omeprazole", "Methotrexate"],
+    "severity": "moderate",
+    "effect": "PPIs can reduce renal clearance of methotrexate, increasing its toxicity.",
+    "mechanism": "Omeprazole inhibits renal transporters (OAT3) involved in methotrexate elimination.",
+    "recommendation": "Monitor methotrexate levels and renal function; consider holding PPI during high-dose methotrexate therapy.",
+    "clinicalSignificance": "Moderate — relevant in rheumatology and oncology settings."
+  },
+  {
+    "id": "INT062",
+    "drugs": ["Ciprofloxacin", "Phenytoin"],
+    "severity": "moderate",
+    "effect": "Ciprofloxacin may increase or decrease phenytoin blood levels unpredictably.",
+    "mechanism": "Fluoroquinolones have variable inhibitory effects on CYP2C9-mediated phenytoin metabolism.",
+    "recommendation": "Closely monitor phenytoin levels during treatment; watch for signs of toxicity or seizures.",
+    "clinicalSignificance": "Moderate — unpredictable nature makes monitoring essential."
+  },
+  {
+    "id": "INT063",
+    "drugs": ["Ramipril", "Potassium supplements"],
+    "severity": "severe",
+    "effect": "ACE inhibitors significantly reduce potassium excretion; adding supplements can cause life-threatening hyperkalemia.",
+    "mechanism": "ACE inhibitors lower aldosterone levels, reducing potassium excretion by the kidney.",
+    "recommendation": "Avoid potassium supplements unless there is documented deficiency with close monitoring.",
+    "clinicalSignificance": "High — hyperkalemia can cause fatal cardiac arrhythmias."
+  },
+  {
+    "id": "INT064",
+    "drugs": ["Metoprolol", "Amlodipine"],
+    "severity": "mild",
+    "effect": "Additive BP and heart rate reduction; risk of excessive bradycardia in susceptible patients.",
+    "mechanism": "Complementary mechanisms reduce cardiac output and peripheral vascular resistance.",
+    "recommendation": "Monitor heart rate and BP; common and effective combination.",
+    "clinicalSignificance": "Low — well-tolerated combination in most patients."
+  },
+  {
+    "id": "INT065",
+    "drugs": ["Atorvastatin", "Clopidogrel"],
+    "severity": "mild",
+    "effect": "Both drugs are metabolized by CYP3A4; theoretical competition but clinical significance is low.",
+    "mechanism": "Minor metabolic competition at CYP3A4; does not meaningfully affect plasma levels of either drug.",
+    "recommendation": "No dose adjustment needed; this combination is widely used and safe.",
+    "clinicalSignificance": "Low — not clinically significant in standard doses."
+  },
+  {
+    "id": "INT066",
+    "drugs": ["Levofloxacin", "NSAIDs"],
+    "severity": "moderate",
+    "effect": "Concurrent use of fluoroquinolones and NSAIDs increases the risk of CNS stimulation and seizures.",
+    "mechanism": "NSAIDs inhibit GABA-A receptors, and fluoroquinolones have intrinsic CNS excitatory effects — additive lowering of the seizure threshold.",
+    "recommendation": "Avoid NSAIDs with fluoroquinolones in patients with a seizure history; use paracetamol instead.",
+    "clinicalSignificance": "Moderate — risk is higher in patients predisposed to seizures."
+  },
+  {
+    "id": "INT067",
+    "drugs": ["Pregabalin", "Metformin"],
+    "severity": "mild",
+    "effect": "Pregabalin may cause weight gain, which can worsen insulin resistance and reduce metformin's effectiveness.",
+    "mechanism": "Pregabalin promotes weight gain via increased appetite; excess weight worsens type 2 diabetes control.",
+    "recommendation": "Monitor HbA1c and fasting glucose during pregabalin therapy; dietary counselling recommended.",
+    "clinicalSignificance": "Low — indirect pharmacodynamic effect requiring monitoring."
+  },
+  {
+    "id": "INT068",
+    "drugs": ["Sertraline", "Metoprolol"],
+    "severity": "moderate",
+    "effect": "Sertraline significantly increases metoprolol blood levels, causing excessive heart rate slowing and hypotension.",
+    "mechanism": "Sertraline inhibits CYP2D6, which is the primary enzyme metabolizing metoprolol.",
+    "recommendation": "Reduce metoprolol dose or switch to a non-CYP2D6 beta-blocker (e.g., atenolol, bisoprolol).",
+    "clinicalSignificance": "Moderate to high — bradycardia and AV block reported."
+  },
+  {
+    "id": "INT069",
+    "drugs": ["Azithromycin", "Atorvastatin"],
+    "severity": "mild",
+    "effect": "Short-term azithromycin slightly increases atorvastatin exposure through CYP3A4 inhibition.",
+    "mechanism": "Azithromycin is a weak CYP3A4 inhibitor; short-term use has limited but measurable statin-elevating effect.",
+    "recommendation": "Safe for short antibiotic courses; monitor for muscle pain if repeated courses are needed.",
+    "clinicalSignificance": "Low — standard short antibiotic courses are generally safe."
+  },
+  {
+    "id": "INT070",
+    "drugs": ["Ciprofloxacin", "Metformin"],
+    "severity": "mild",
+    "effect": "Ciprofloxacin can cause both hypoglycemia and hyperglycemia independently; combined effect with metformin is unpredictable.",
+    "mechanism": "Fluoroquinolones stimulate insulin secretion and may inhibit gluconeogenesis through unclear mechanisms.",
+    "recommendation": "Monitor blood glucose more frequently during fluoroquinolone antibiotic courses.",
+    "clinicalSignificance": "Low to moderate — blood glucose monitoring is the key intervention."
+  }
+]

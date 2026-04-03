@@ -1,0 +1,851 @@
+[
+  {
+    "genericName": "Paracetamol",
+    "dosages": ["250mg", "500mg", "650mg", "1000mg"],
+    "formulation": "tablet",
+    "category": "Pain / Fever",
+    "commonBrands": [
+      { "name": "Crocin", "manufacturer": "GSK", "mrp": 30 },
+      { "name": "Dolo 650", "manufacturer": "Micro Labs", "mrp": 30 },
+      { "name": "Calpol", "manufacturer": "GSK", "mrp": 25 },
+      { "name": "Fepanil", "manufacturer": "Cipla", "mrp": 20 }
+    ],
+    "janAushadhiPrice": 3,
+    "description": "Relieves mild to moderate pain and reduces fever by acting on pain and temperature centers in the brain.",
+    "howToTake": "Take with or without food every 4–6 hours as needed; do not exceed 4g per day.",
+    "commonSideEffects": ["Nausea", "Liver damage (overdose)", "Skin rash", "Allergic reaction"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Ibuprofen",
+    "dosages": ["200mg", "400mg", "600mg"],
+    "formulation": "tablet",
+    "category": "Pain / Fever",
+    "commonBrands": [
+      { "name": "Brufen", "manufacturer": "Abbott", "mrp": 35 },
+      { "name": "Combiflam", "manufacturer": "Sanofi", "mrp": 40 },
+      { "name": "Ibugesic", "manufacturer": "Cipla", "mrp": 28 }
+    ],
+    "janAushadhiPrice": 5,
+    "description": "An NSAID that reduces inflammation, pain, and fever by blocking prostaglandin production.",
+    "howToTake": "Take with food or milk every 6–8 hours to minimize stomach upset.",
+    "commonSideEffects": ["Stomach pain", "Nausea", "Heartburn", "Dizziness"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Diclofenac",
+    "dosages": ["50mg", "75mg", "100mg"],
+    "formulation": "tablet",
+    "category": "Pain / Fever",
+    "commonBrands": [
+      { "name": "Voveran", "manufacturer": "Novartis", "mrp": 45 },
+      { "name": "Reactin", "manufacturer": "Cipla", "mrp": 35 },
+      { "name": "Diclomol", "manufacturer": "Win Medicare", "mrp": 30 }
+    ],
+    "janAushadhiPrice": 4,
+    "description": "A powerful NSAID used to relieve pain, swelling, and stiffness in conditions like arthritis and injuries.",
+    "howToTake": "Take after meals with a full glass of water; swallow extended-release tablets whole.",
+    "commonSideEffects": ["Stomach upset", "Headache", "Fluid retention", "Increased BP"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Aceclofenac",
+    "dosages": ["100mg", "200mg"],
+    "formulation": "tablet",
+    "category": "Pain / Fever",
+    "commonBrands": [
+      { "name": "Hifenac", "manufacturer": "Intas", "mrp": 60 },
+      { "name": "Zerodol", "manufacturer": "Ipca", "mrp": 55 },
+      { "name": "Aceclo", "manufacturer": "Cipla", "mrp": 50 }
+    ],
+    "janAushadhiPrice": 6,
+    "description": "An NSAID with analgesic and anti-inflammatory properties, commonly used for musculoskeletal pain and osteoarthritis.",
+    "howToTake": "Take twice daily after meals; do not crush or chew tablets.",
+    "commonSideEffects": ["Nausea", "Dyspepsia", "Abdominal pain", "Diarrhoea"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Amoxicillin",
+    "dosages": ["250mg", "500mg", "875mg"],
+    "formulation": "capsule",
+    "category": "Antibiotics",
+    "commonBrands": [
+      { "name": "Mox", "manufacturer": "Ranbaxy", "mrp": 85 },
+      { "name": "Amoxil", "manufacturer": "GSK", "mrp": 90 },
+      { "name": "Novamox", "manufacturer": "Cipla", "mrp": 80 }
+    ],
+    "janAushadhiPrice": 10,
+    "description": "A broad-spectrum penicillin antibiotic that kills bacteria by interfering with their cell wall formation.",
+    "howToTake": "Take every 8 hours with or without food; complete the full prescribed course.",
+    "commonSideEffects": ["Diarrhoea", "Skin rash", "Nausea", "Vomiting"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Azithromycin",
+    "dosages": ["250mg", "500mg"],
+    "formulation": "tablet",
+    "category": "Antibiotics",
+    "commonBrands": [
+      { "name": "Azithral", "manufacturer": "Alembic", "mrp": 100 },
+      { "name": "Zithromax", "manufacturer": "Pfizer", "mrp": 130 },
+      { "name": "Azifast", "manufacturer": "Cipla", "mrp": 95 }
+    ],
+    "janAushadhiPrice": 12,
+    "description": "A macrolide antibiotic that stops bacterial growth, commonly used for respiratory, ear, and throat infections.",
+    "howToTake": "Take once daily on an empty stomach or 2 hours after a meal for 3–5 days as prescribed.",
+    "commonSideEffects": ["Nausea", "Diarrhoea", "Stomach pain", "Headache"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Cefixime",
+    "dosages": ["100mg", "200mg", "400mg"],
+    "formulation": "tablet",
+    "category": "Antibiotics",
+    "commonBrands": [
+      { "name": "Taxim-O", "manufacturer": "Alkem", "mrp": 120 },
+      { "name": "Zifi", "manufacturer": "FDC", "mrp": 115 },
+      { "name": "Cefspan", "manufacturer": "Glenmark", "mrp": 110 }
+    ],
+    "janAushadhiPrice": 15,
+    "description": "A third-generation cephalosporin antibiotic effective against a wide range of bacterial infections including UTIs and typhoid.",
+    "howToTake": "Take once or twice daily with or without food; complete the full course as directed.",
+    "commonSideEffects": ["Diarrhoea", "Nausea", "Stomach pain", "Flatulence"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Ciprofloxacin",
+    "dosages": ["250mg", "500mg", "750mg"],
+    "formulation": "tablet",
+    "category": "Antibiotics",
+    "commonBrands": [
+      { "name": "Ciplox", "manufacturer": "Cipla", "mrp": 75 },
+      { "name": "Cifran", "manufacturer": "Sun Pharma", "mrp": 70 },
+      { "name": "Ciprolet", "manufacturer": "Dr. Reddy's", "mrp": 65 }
+    ],
+    "janAushadhiPrice": 8,
+    "description": "A fluoroquinolone antibiotic that kills bacteria by inhibiting DNA replication, used for UTIs, GI, and respiratory infections.",
+    "howToTake": "Take twice daily with plenty of water; avoid antacids within 2 hours of the dose.",
+    "commonSideEffects": ["Nausea", "Diarrhoea", "Dizziness", "Tendon pain"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Levofloxacin",
+    "dosages": ["250mg", "500mg", "750mg"],
+    "formulation": "tablet",
+    "category": "Antibiotics",
+    "commonBrands": [
+      { "name": "Levoflox", "manufacturer": "Cipla", "mrp": 100 },
+      { "name": "Levaquin", "manufacturer": "Janssen", "mrp": 140 },
+      { "name": "Glevo", "manufacturer": "Glenmark", "mrp": 95 }
+    ],
+    "janAushadhiPrice": 12,
+    "description": "A broad-spectrum fluoroquinolone antibiotic used for serious respiratory, skin, and urinary tract infections.",
+    "howToTake": "Take once daily at the same time each day with a full glass of water.",
+    "commonSideEffects": ["Nausea", "Headache", "Insomnia", "Tendon rupture (rare)"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Pantoprazole",
+    "dosages": ["20mg", "40mg"],
+    "formulation": "tablet",
+    "category": "Gastric",
+    "commonBrands": [
+      { "name": "Pan", "manufacturer": "Alkem", "mrp": 50 },
+      { "name": "Pantocid", "manufacturer": "Sun Pharma", "mrp": 55 },
+      { "name": "Nexpro", "manufacturer": "Emcure", "mrp": 48 }
+    ],
+    "janAushadhiPrice": 5,
+    "description": "A proton pump inhibitor that reduces stomach acid production, used for acid reflux, ulcers, and gastritis.",
+    "howToTake": "Take 30–60 minutes before meals; swallow whole without crushing or chewing.",
+    "commonSideEffects": ["Headache", "Diarrhoea", "Nausea", "Flatulence"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Omeprazole",
+    "dosages": ["10mg", "20mg", "40mg"],
+    "formulation": "capsule",
+    "category": "Gastric",
+    "commonBrands": [
+      { "name": "Prilosec", "manufacturer": "AstraZeneca", "mrp": 60 },
+      { "name": "Omez", "manufacturer": "Dr. Reddy's", "mrp": 45 },
+      { "name": "Ocid", "manufacturer": "Cipla", "mrp": 42 }
+    ],
+    "janAushadhiPrice": 4,
+    "description": "A proton pump inhibitor that blocks acid production in the stomach, treating GERD, ulcers, and H. pylori infections.",
+    "howToTake": "Take before breakfast on an empty stomach; do not crush or chew capsules.",
+    "commonSideEffects": ["Headache", "Abdominal pain", "Nausea", "Diarrhoea"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Ranitidine",
+    "dosages": ["150mg", "300mg"],
+    "formulation": "tablet",
+    "category": "Gastric",
+    "commonBrands": [
+      { "name": "Zinetac", "manufacturer": "GSK", "mrp": 35 },
+      { "name": "Rantac", "manufacturer": "J.B. Chemicals", "mrp": 30 },
+      { "name": "Aciloc", "manufacturer": "Cadila", "mrp": 28 }
+    ],
+    "janAushadhiPrice": 3,
+    "description": "An H2 blocker that reduces stomach acid by blocking histamine receptors, used for heartburn and peptic ulcers.",
+    "howToTake": "Take twice daily with or without food; can be taken at bedtime for nighttime symptoms.",
+    "commonSideEffects": ["Headache", "Constipation", "Diarrhoea", "Dizziness"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Domperidone",
+    "dosages": ["10mg"],
+    "formulation": "tablet",
+    "category": "Gastric",
+    "commonBrands": [
+      { "name": "Domstal", "manufacturer": "Torrent", "mrp": 40 },
+      { "name": "Motilium", "manufacturer": "Janssen", "mrp": 55 },
+      { "name": "Vomitrol", "manufacturer": "Ipca", "mrp": 35 }
+    ],
+    "janAushadhiPrice": 4,
+    "description": "A dopamine blocker that speeds up stomach emptying, relieving nausea, vomiting, and bloating.",
+    "howToTake": "Take 15–30 minutes before meals and at bedtime if needed.",
+    "commonSideEffects": ["Dry mouth", "Headache", "Diarrhoea", "Rare cardiac effects"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Metformin",
+    "dosages": ["500mg", "850mg", "1000mg"],
+    "formulation": "tablet",
+    "category": "Diabetes",
+    "commonBrands": [
+      { "name": "Glycomet", "manufacturer": "USV", "mrp": 40 },
+      { "name": "Glucophage", "manufacturer": "Merck", "mrp": 60 },
+      { "name": "Obimet", "manufacturer": "Glenmark", "mrp": 35 }
+    ],
+    "janAushadhiPrice": 4,
+    "description": "The first-line diabetes drug that lowers blood sugar by reducing glucose production in the liver and improving insulin sensitivity.",
+    "howToTake": "Take with or just after meals to reduce stomach side effects; swallow extended-release tablets whole.",
+    "commonSideEffects": ["Nausea", "Diarrhoea", "Stomach upset", "Metallic taste"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Glimepiride",
+    "dosages": ["1mg", "2mg", "4mg"],
+    "formulation": "tablet",
+    "category": "Diabetes",
+    "commonBrands": [
+      { "name": "Amaryl", "manufacturer": "Sanofi", "mrp": 80 },
+      { "name": "Glimer", "manufacturer": "Intas", "mrp": 65 },
+      { "name": "Glimpid", "manufacturer": "Cadila", "mrp": 60 }
+    ],
+    "janAushadhiPrice": 6,
+    "description": "A sulfonylurea that stimulates the pancreas to release more insulin, lowering blood sugar in Type 2 diabetes.",
+    "howToTake": "Take once daily with the first meal of the day; never skip meals after taking this medicine.",
+    "commonSideEffects": ["Hypoglycemia", "Weight gain", "Nausea", "Dizziness"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Sitagliptin",
+    "dosages": ["25mg", "50mg", "100mg"],
+    "formulation": "tablet",
+    "category": "Diabetes",
+    "commonBrands": [
+      { "name": "Januvia", "manufacturer": "MSD", "mrp": 350 },
+      { "name": "Zita", "manufacturer": "Sun Pharma", "mrp": 280 },
+      { "name": "Sitagen", "manufacturer": "Glenmark", "mrp": 260 }
+    ],
+    "janAushadhiPrice": 40,
+    "description": "A DPP-4 inhibitor that helps the body release more insulin after meals and reduces glucose production in the liver.",
+    "howToTake": "Take once daily with or without food; dose is typically 100mg unless you have kidney problems.",
+    "commonSideEffects": ["Upper respiratory infection", "Headache", "Nausea", "Joint pain"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Amlodipine",
+    "dosages": ["2.5mg", "5mg", "10mg"],
+    "formulation": "tablet",
+    "category": "Blood Pressure",
+    "commonBrands": [
+      { "name": "Amlogard", "manufacturer": "Pfizer", "mrp": 55 },
+      { "name": "Stamlo", "manufacturer": "Dr. Reddy's", "mrp": 45 },
+      { "name": "Amlip", "manufacturer": "Cipla", "mrp": 40 }
+    ],
+    "janAushadhiPrice": 4,
+    "description": "A calcium channel blocker that relaxes and widens blood vessels, lowering blood pressure and reducing chest pain.",
+    "howToTake": "Take once daily at the same time each day with or without food.",
+    "commonSideEffects": ["Ankle swelling", "Flushing", "Headache", "Palpitations"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Telmisartan",
+    "dosages": ["20mg", "40mg", "80mg"],
+    "formulation": "tablet",
+    "category": "Blood Pressure",
+    "commonBrands": [
+      { "name": "Telma", "manufacturer": "Glenmark", "mrp": 90 },
+      { "name": "Telsartan", "manufacturer": "Dr. Reddy's", "mrp": 80 },
+      { "name": "Micardis", "manufacturer": "Boehringer", "mrp": 150 }
+    ],
+    "janAushadhiPrice": 8,
+    "description": "An ARB that blocks angiotensin II receptors to relax blood vessels, used for hypertension and heart protection.",
+    "howToTake": "Take once daily at the same time each day with or without food.",
+    "commonSideEffects": ["Dizziness", "Back pain", "Diarrhoea", "Upper respiratory infection"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Losartan",
+    "dosages": ["25mg", "50mg", "100mg"],
+    "formulation": "tablet",
+    "category": "Blood Pressure",
+    "commonBrands": [
+      { "name": "Losar", "manufacturer": "Cipla", "mrp": 70 },
+      { "name": "Repace", "manufacturer": "Sun Pharma", "mrp": 65 },
+      { "name": "Cozaar", "manufacturer": "MSD", "mrp": 120 }
+    ],
+    "janAushadhiPrice": 6,
+    "description": "An ARB antihypertensive that also protects kidneys in diabetic patients by reducing pressure in kidney blood vessels.",
+    "howToTake": "Take once or twice daily with or without food; take at the same time each day.",
+    "commonSideEffects": ["Dizziness", "Low blood pressure", "High potassium", "Fatigue"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Ramipril",
+    "dosages": ["1.25mg", "2.5mg", "5mg", "10mg"],
+    "formulation": "capsule",
+    "category": "Blood Pressure",
+    "commonBrands": [
+      { "name": "Cardace", "manufacturer": "Sanofi", "mrp": 85 },
+      { "name": "Hopace", "manufacturer": "Cipla", "mrp": 75 },
+      { "name": "Ramace", "manufacturer": "Dr. Reddy's", "mrp": 70 }
+    ],
+    "janAushadhiPrice": 7,
+    "description": "An ACE inhibitor that widens blood vessels to lower blood pressure and protect the heart and kidneys.",
+    "howToTake": "Take once daily with or without food; avoid potassium supplements unless prescribed.",
+    "commonSideEffects": ["Dry cough", "Dizziness", "High potassium", "Angioedema (rare)"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Atenolol",
+    "dosages": ["25mg", "50mg", "100mg"],
+    "formulation": "tablet",
+    "category": "Blood Pressure",
+    "commonBrands": [
+      { "name": "Aten", "manufacturer": "Zydus", "mrp": 35 },
+      { "name": "Tenormin", "manufacturer": "AstraZeneca", "mrp": 55 },
+      { "name": "Betacard", "manufacturer": "Torrent", "mrp": 30 }
+    ],
+    "janAushadhiPrice": 3,
+    "description": "A beta-blocker that slows the heart rate and reduces the force of heart contractions to lower blood pressure.",
+    "howToTake": "Take once daily with or without food; do not stop abruptly without consulting your doctor.",
+    "commonSideEffects": ["Fatigue", "Cold hands/feet", "Slow heartbeat", "Dizziness"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Atorvastatin",
+    "dosages": ["10mg", "20mg", "40mg", "80mg"],
+    "formulation": "tablet",
+    "category": "Cholesterol",
+    "commonBrands": [
+      { "name": "Lipitor", "manufacturer": "Pfizer", "mrp": 120 },
+      { "name": "Atorva", "manufacturer": "Zydus", "mrp": 85 },
+      { "name": "Aztor", "manufacturer": "Sun Pharma", "mrp": 80 }
+    ],
+    "janAushadhiPrice": 8,
+    "description": "A statin that blocks cholesterol production in the liver, reducing LDL and lowering the risk of heart attack and stroke.",
+    "howToTake": "Take once daily at any time; taking at bedtime may be slightly more effective.",
+    "commonSideEffects": ["Muscle pain", "Liver enzyme elevation", "Headache", "Joint pain"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Rosuvastatin",
+    "dosages": ["5mg", "10mg", "20mg", "40mg"],
+    "formulation": "tablet",
+    "category": "Cholesterol",
+    "commonBrands": [
+      { "name": "Crestor", "manufacturer": "AstraZeneca", "mrp": 150 },
+      { "name": "Rozavel", "manufacturer": "Sun Pharma", "mrp": 110 },
+      { "name": "Rosuvas", "manufacturer": "Cipla", "mrp": 100 }
+    ],
+    "janAushadhiPrice": 10,
+    "description": "A potent statin that significantly lowers LDL cholesterol and triglycerides while raising HDL (good) cholesterol.",
+    "howToTake": "Take once daily with or without food; avoid antacids containing aluminum/magnesium within 2 hours.",
+    "commonSideEffects": ["Muscle pain", "Headache", "Nausea", "Abdominal pain"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Vitamin D3",
+    "dosages": ["1000 IU", "2000 IU", "60000 IU"],
+    "formulation": "tablet",
+    "category": "Vitamins",
+    "commonBrands": [
+      { "name": "Calcirol", "manufacturer": "Cadila", "mrp": 90 },
+      { "name": "Uprise D3", "manufacturer": "Pfizer", "mrp": 120 },
+      { "name": "D-Rise", "manufacturer": "USV", "mrp": 95 }
+    ],
+    "janAushadhiPrice": 15,
+    "description": "Supplements vitamin D3 to support calcium absorption, bone health, immunity, and muscle function.",
+    "howToTake": "Take with a fatty meal for better absorption; weekly 60,000 IU sachets are commonly prescribed.",
+    "commonSideEffects": ["Nausea (high doses)", "Constipation", "Weakness", "Excessive thirst"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Calcium + Vitamin D3",
+    "dosages": ["500mg+250IU", "1000mg+500IU"],
+    "formulation": "tablet",
+    "category": "Vitamins",
+    "commonBrands": [
+      { "name": "Shelcal", "manufacturer": "Torrent", "mrp": 110 },
+      { "name": "Calcimax", "manufacturer": "Meyer Organics", "mrp": 100 },
+      { "name": "Ostocalcium", "manufacturer": "GSK", "mrp": 95 }
+    ],
+    "janAushadhiPrice": 12,
+    "description": "A combination supplement that provides calcium for bone and teeth strength along with vitamin D3 for absorption.",
+    "howToTake": "Take after meals; split doses throughout the day for better calcium absorption.",
+    "commonSideEffects": ["Constipation", "Bloating", "Gas", "Kidney stones (high doses)"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Methylcobalamin (Vitamin B12)",
+    "dosages": ["500mcg", "1000mcg", "1500mcg"],
+    "formulation": "tablet",
+    "category": "Vitamins",
+    "commonBrands": [
+      { "name": "Methylcobal", "manufacturer": "Alkem", "mrp": 85 },
+      { "name": "Cobadex", "manufacturer": "Franco-Indian", "mrp": 90 },
+      { "name": "Nervup", "manufacturer": "Cipla", "mrp": 80 }
+    ],
+    "janAushadhiPrice": 10,
+    "description": "The active form of vitamin B12 that supports nerve health, red blood cell formation, and DNA synthesis.",
+    "howToTake": "Take once daily with or without food; sublingual tablets should be dissolved under the tongue.",
+    "commonSideEffects": ["Nausea", "Headache", "Diarrhoea", "Skin itching"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Iron + Folic Acid",
+    "dosages": ["100mg+1.5mg", "150mg+0.5mg"],
+    "formulation": "tablet",
+    "category": "Vitamins",
+    "commonBrands": [
+      { "name": "Dexorange", "manufacturer": "Franco-Indian", "mrp": 75 },
+      { "name": "Orofer XT", "manufacturer": "Emcure", "mrp": 90 },
+      { "name": "Feronia XT", "manufacturer": "Alkem", "mrp": 80 }
+    ],
+    "janAushadhiPrice": 8,
+    "description": "A combination supplement that treats and prevents iron deficiency anemia and supports fetal development during pregnancy.",
+    "howToTake": "Take on an empty stomach or with vitamin C (juice) for better absorption; avoid tea/coffee around dose time.",
+    "commonSideEffects": ["Black stools", "Constipation", "Nausea", "Stomach cramps"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Cetirizine",
+    "dosages": ["5mg", "10mg"],
+    "formulation": "tablet",
+    "category": "Allergy",
+    "commonBrands": [
+      { "name": "Zyrtec", "manufacturer": "J&J", "mrp": 45 },
+      { "name": "Cetzine", "manufacturer": "Cipla", "mrp": 35 },
+      { "name": "Alerid", "manufacturer": "Cipla", "mrp": 30 }
+    ],
+    "janAushadhiPrice": 3,
+    "description": "A second-generation antihistamine that relieves allergic symptoms like runny nose, sneezing, itching, and hives.",
+    "howToTake": "Take once daily at bedtime; can be taken with or without food.",
+    "commonSideEffects": ["Drowsiness", "Dry mouth", "Headache", "Fatigue"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Levocetirizine",
+    "dosages": ["2.5mg", "5mg"],
+    "formulation": "tablet",
+    "category": "Allergy",
+    "commonBrands": [
+      { "name": "Xyzal", "manufacturer": "UCB", "mrp": 60 },
+      { "name": "Levocet", "manufacturer": "Cipla", "mrp": 45 },
+      { "name": "Lezyncet", "manufacturer": "Sun Pharma", "mrp": 40 }
+    ],
+    "janAushadhiPrice": 4,
+    "description": "A more potent form of cetirizine that provides fast allergy relief with slightly less sedation.",
+    "howToTake": "Take once daily in the evening with or without food.",
+    "commonSideEffects": ["Drowsiness", "Dry mouth", "Fatigue", "Headache"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Montelukast",
+    "dosages": ["4mg", "5mg", "10mg"],
+    "formulation": "tablet",
+    "category": "Allergy",
+    "commonBrands": [
+      { "name": "Singulair", "manufacturer": "MSD", "mrp": 120 },
+      { "name": "Montair", "manufacturer": "Cipla", "mrp": 90 },
+      { "name": "Montemac", "manufacturer": "Macleods", "mrp": 80 }
+    ],
+    "janAushadhiPrice": 10,
+    "description": "A leukotriene receptor antagonist that reduces airway inflammation and allergic reactions in asthma and allergic rhinitis.",
+    "howToTake": "Take once daily in the evening; for asthma, take at least 2 hours before exercise if used for prevention.",
+    "commonSideEffects": ["Headache", "Abdominal pain", "Mood changes", "Sleep disturbance"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Fexofenadine",
+    "dosages": ["60mg", "120mg", "180mg"],
+    "formulation": "tablet",
+    "category": "Allergy",
+    "commonBrands": [
+      { "name": "Allegra", "manufacturer": "Sanofi", "mrp": 90 },
+      { "name": "Fexova", "manufacturer": "Cipla", "mrp": 70 },
+      { "name": "Fexo", "manufacturer": "Intas", "mrp": 65 }
+    ],
+    "janAushadhiPrice": 8,
+    "description": "A non-drowsy antihistamine that relieves allergy symptoms without significantly crossing into the brain.",
+    "howToTake": "Take once or twice daily with water; avoid taking with grapefruit juice as it reduces absorption.",
+    "commonSideEffects": ["Headache", "Nausea", "Dizziness", "Fatigue"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Levothyroxine",
+    "dosages": ["12.5mcg", "25mcg", "50mcg", "75mcg", "100mcg", "150mcg"],
+    "formulation": "tablet",
+    "category": "Thyroid",
+    "commonBrands": [
+      { "name": "Eltroxin", "manufacturer": "GSK", "mrp": 35 },
+      { "name": "Thyronorm", "manufacturer": "Abbott", "mrp": 40 },
+      { "name": "Thyrox", "manufacturer": "Macleods", "mrp": 30 }
+    ],
+    "janAushadhiPrice": 4,
+    "description": "Synthetic thyroid hormone that replaces or supplements natural thyroid hormone in hypothyroidism (underactive thyroid).",
+    "howToTake": "Take on an empty stomach 30–60 minutes before breakfast; maintain consistent timing daily.",
+    "commonSideEffects": ["Palpitations (overdose)", "Insomnia", "Weight loss", "Tremors"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Aspirin",
+    "dosages": ["75mg", "150mg", "325mg"],
+    "formulation": "tablet",
+    "category": "Cardiac",
+    "commonBrands": [
+      { "name": "Ecosprin", "manufacturer": "USV", "mrp": 25 },
+      { "name": "Aspirin Cardio", "manufacturer": "Bayer", "mrp": 35 },
+      { "name": "Disprin", "manufacturer": "Reckitt", "mrp": 20 }
+    ],
+    "janAushadhiPrice": 2,
+    "description": "A low-dose antiplatelet that prevents blood clots, reducing risk of heart attack and stroke in high-risk individuals.",
+    "howToTake": "Take once daily after food; do not crush or chew enteric-coated tablets.",
+    "commonSideEffects": ["Stomach bleeding", "Nausea", "Heartburn", "Easy bruising"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Clopidogrel",
+    "dosages": ["75mg", "150mg"],
+    "formulation": "tablet",
+    "category": "Cardiac",
+    "commonBrands": [
+      { "name": "Plavix", "manufacturer": "Sanofi", "mrp": 130 },
+      { "name": "Deplatt", "manufacturer": "Torrent", "mrp": 100 },
+      { "name": "Clopilet", "manufacturer": "Sun Pharma", "mrp": 95 }
+    ],
+    "janAushadhiPrice": 10,
+    "description": "An antiplatelet drug that prevents platelets from clumping together, used after heart attacks, stents, or strokes.",
+    "howToTake": "Take once daily with or without food at the same time each day; do not stop without doctor advice.",
+    "commonSideEffects": ["Easy bruising", "Bleeding", "Stomach pain", "Diarrhoea"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Doxycycline",
+    "dosages": ["100mg"],
+    "formulation": "capsule",
+    "category": "Antibiotics",
+    "commonBrands": [
+      { "name": "Doxy 1", "manufacturer": "Cipla", "mrp": 70 },
+      { "name": "Doxt", "manufacturer": "Sun Pharma", "mrp": 65 },
+      { "name": "Biodoxi", "manufacturer": "Biochem", "mrp": 60 }
+    ],
+    "janAushadhiPrice": 8,
+    "description": "A tetracycline antibiotic effective against a broad range of bacteria, including those causing acne, malaria prophylaxis, and tick-borne diseases.",
+    "howToTake": "Take with a full glass of water and food; do not lie down for at least 30 minutes after taking.",
+    "commonSideEffects": ["Photosensitivity", "Nausea", "Oesophageal irritation", "Diarrhoea"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Metronidazole",
+    "dosages": ["200mg", "400mg", "500mg"],
+    "formulation": "tablet",
+    "category": "Antibiotics",
+    "commonBrands": [
+      { "name": "Flagyl", "manufacturer": "Sanofi", "mrp": 35 },
+      { "name": "Metrogyl", "manufacturer": "J.B. Chemicals", "mrp": 30 },
+      { "name": "Aristogyl", "manufacturer": "Aristopharma", "mrp": 28 }
+    ],
+    "janAushadhiPrice": 3,
+    "description": "An antibiotic and antiprotozoal that treats bacterial and parasitic infections of the gut, liver, and reproductive system.",
+    "howToTake": "Take with food to reduce nausea; avoid alcohol completely during treatment and 48 hours after.",
+    "commonSideEffects": ["Metallic taste", "Nausea", "Headache", "Vomiting"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Nitrofurantoin",
+    "dosages": ["50mg", "100mg"],
+    "formulation": "capsule",
+    "category": "Antibiotics",
+    "commonBrands": [
+      { "name": "Macrobid", "manufacturer": "Procter & Gamble", "mrp": 90 },
+      { "name": "Furadantin", "manufacturer": "Pfizer", "mrp": 80 },
+      { "name": "Uvamin", "manufacturer": "Cipla", "mrp": 75 }
+    ],
+    "janAushadhiPrice": 10,
+    "description": "An antibiotic specifically used to treat and prevent urinary tract infections (UTIs) caused by susceptible bacteria.",
+    "howToTake": "Take with food or milk to reduce stomach upset; drink plenty of water during treatment.",
+    "commonSideEffects": ["Nausea", "Headache", "Brown urine (harmless)", "Lung reactions (rare)"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Salbutamol",
+    "dosages": ["2mg", "4mg", "100mcg/puff"],
+    "formulation": "tablet",
+    "category": "Respiratory",
+    "commonBrands": [
+      { "name": "Asthalin", "manufacturer": "Cipla", "mrp": 25 },
+      { "name": "Ventolin", "manufacturer": "GSK", "mrp": 35 },
+      { "name": "Salbair", "manufacturer": "Cipla", "mrp": 22 }
+    ],
+    "janAushadhiPrice": 3,
+    "description": "A short-acting bronchodilator (beta-2 agonist) that quickly opens airways during asthma or COPD attacks.",
+    "howToTake": "Take as needed for rescue; inhaler form: 1–2 puffs every 4–6 hours during an attack.",
+    "commonSideEffects": ["Tremors", "Palpitations", "Headache", "Low potassium"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Budesonide",
+    "dosages": ["100mcg", "200mcg", "400mcg"],
+    "formulation": "tablet",
+    "category": "Respiratory",
+    "commonBrands": [
+      { "name": "Budecort", "manufacturer": "Cipla", "mrp": 150 },
+      { "name": "Pulmicort", "manufacturer": "AstraZeneca", "mrp": 180 },
+      { "name": "Rhinocort", "manufacturer": "AstraZeneca", "mrp": 160 }
+    ],
+    "janAushadhiPrice": 20,
+    "description": "An inhaled corticosteroid that reduces airway inflammation and prevents asthma attacks when used regularly.",
+    "howToTake": "Use inhaler twice daily; rinse mouth with water after each use to prevent oral thrush.",
+    "commonSideEffects": ["Oral thrush", "Hoarse voice", "Throat irritation", "Cough"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Alprazolam",
+    "dosages": ["0.25mg", "0.5mg", "1mg"],
+    "formulation": "tablet",
+    "category": "Psychiatry",
+    "commonBrands": [
+      { "name": "Alprax", "manufacturer": "Torrent", "mrp": 45 },
+      { "name": "Restyl", "manufacturer": "Cipla", "mrp": 40 },
+      { "name": "Xanax", "manufacturer": "Pfizer", "mrp": 80 }
+    ],
+    "janAushadhiPrice": 5,
+    "description": "A benzodiazepine that acts on GABA receptors in the brain to reduce anxiety and panic attacks.",
+    "howToTake": "Take exactly as prescribed; do not increase dose or stop abruptly as it can cause withdrawal.",
+    "commonSideEffects": ["Drowsiness", "Dizziness", "Dependence", "Memory impairment"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Sertraline",
+    "dosages": ["25mg", "50mg", "100mg"],
+    "formulation": "tablet",
+    "category": "Psychiatry",
+    "commonBrands": [
+      { "name": "Zoloft", "manufacturer": "Pfizer", "mrp": 180 },
+      { "name": "Serta", "manufacturer": "Cipla", "mrp": 120 },
+      { "name": "Daxid", "manufacturer": "Pfizer", "mrp": 150 }
+    ],
+    "janAushadhiPrice": 15,
+    "description": "An SSRI antidepressant that increases serotonin levels in the brain, treating depression, anxiety, and OCD.",
+    "howToTake": "Take once daily with or without food; takes 4–6 weeks for full effect; do not stop abruptly.",
+    "commonSideEffects": ["Nausea", "Insomnia", "Sexual dysfunction", "Diarrhoea"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Pregabalin",
+    "dosages": ["25mg", "75mg", "150mg", "300mg"],
+    "formulation": "capsule",
+    "category": "Neurology",
+    "commonBrands": [
+      { "name": "Lyrica", "manufacturer": "Pfizer", "mrp": 250 },
+      { "name": "Pregabalin Stada", "manufacturer": "STADA", "mrp": 200 },
+      { "name": "Pregeb", "manufacturer": "Sun Pharma", "mrp": 180 }
+    ],
+    "janAushadhiPrice": 20,
+    "description": "An anticonvulsant used for nerve pain, fibromyalgia, epilepsy, and generalized anxiety disorder.",
+    "howToTake": "Take 2–3 times daily with or without food; do not stop abruptly without medical guidance.",
+    "commonSideEffects": ["Dizziness", "Drowsiness", "Weight gain", "Blurred vision"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Glibenclamide",
+    "dosages": ["2.5mg", "5mg"],
+    "formulation": "tablet",
+    "category": "Diabetes",
+    "commonBrands": [
+      { "name": "Daonil", "manufacturer": "Sanofi", "mrp": 30 },
+      { "name": "Semi-Daonil", "manufacturer": "Sanofi", "mrp": 25 },
+      { "name": "Euglucon", "manufacturer": "Roche", "mrp": 35 }
+    ],
+    "janAushadhiPrice": 3,
+    "description": "A first-generation sulfonylurea that stimulates insulin release from the pancreas to lower blood sugar in Type 2 diabetes.",
+    "howToTake": "Take with or just before the first meal of the day; avoid missing meals.",
+    "commonSideEffects": ["Hypoglycemia", "Weight gain", "Nausea", "Liver enzyme changes"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Bisoprolol",
+    "dosages": ["2.5mg", "5mg", "10mg"],
+    "formulation": "tablet",
+    "category": "Cardiac",
+    "commonBrands": [
+      { "name": "Concor", "manufacturer": "Merck", "mrp": 90 },
+      { "name": "Biselect", "manufacturer": "Sun Pharma", "mrp": 75 },
+      { "name": "Corbis", "manufacturer": "Cipla", "mrp": 70 }
+    ],
+    "janAushadhiPrice": 7,
+    "description": "A selective beta-1 blocker used for heart failure, hypertension, and angina by reducing heart rate and workload.",
+    "howToTake": "Take once daily in the morning with or without food; do not stop abruptly.",
+    "commonSideEffects": ["Fatigue", "Cold extremities", "Bradycardia", "Dizziness"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Furosemide",
+    "dosages": ["20mg", "40mg", "80mg"],
+    "formulation": "tablet",
+    "category": "Cardiac",
+    "commonBrands": [
+      { "name": "Lasix", "manufacturer": "Sanofi", "mrp": 30 },
+      { "name": "Frusemide", "manufacturer": "IPCA", "mrp": 25 },
+      { "name": "Furoped", "manufacturer": "Cipla", "mrp": 22 }
+    ],
+    "janAushadhiPrice": 3,
+    "description": "A loop diuretic (water pill) that removes excess fluid from the body, used for heart failure, kidney disease, and high BP.",
+    "howToTake": "Take in the morning to avoid nighttime urination; take with food if stomach upset occurs.",
+    "commonSideEffects": ["Frequent urination", "Low potassium", "Dizziness", "Dehydration"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Spironolactone",
+    "dosages": ["25mg", "50mg", "100mg"],
+    "formulation": "tablet",
+    "category": "Cardiac",
+    "commonBrands": [
+      { "name": "Aldactone", "manufacturer": "Pfizer", "mrp": 60 },
+      { "name": "Spiromide", "manufacturer": "IPCA", "mrp": 50 },
+      { "name": "Lasilactone", "manufacturer": "Sanofi", "mrp": 70 }
+    ],
+    "janAushadhiPrice": 6,
+    "description": "A potassium-sparing diuretic and aldosterone antagonist used for heart failure, fluid retention, and resistant hypertension.",
+    "howToTake": "Take with food at the same time each day; monitor potassium levels regularly.",
+    "commonSideEffects": ["High potassium", "Breast tenderness (men)", "Dizziness", "Menstrual irregularities"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Isosorbide Mononitrate",
+    "dosages": ["10mg", "20mg", "40mg", "60mg"],
+    "formulation": "tablet",
+    "category": "Cardiac",
+    "commonBrands": [
+      { "name": "Imdur", "manufacturer": "AstraZeneca", "mrp": 80 },
+      { "name": "Ismo", "manufacturer": "Sun Pharma", "mrp": 65 },
+      { "name": "Monosorb", "manufacturer": "Torrent", "mrp": 60 }
+    ],
+    "janAushadhiPrice": 7,
+    "description": "A long-acting nitrate that dilates blood vessels to prevent angina (chest pain) in heart disease patients.",
+    "howToTake": "Take in the morning on an empty stomach; extended-release should be swallowed whole, not crushed.",
+    "commonSideEffects": ["Headache", "Dizziness", "Low blood pressure", "Flushing"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Phenytoin",
+    "dosages": ["50mg", "100mg", "300mg"],
+    "formulation": "tablet",
+    "category": "Neurology",
+    "commonBrands": [
+      { "name": "Eptoin", "manufacturer": "Abbott", "mrp": 45 },
+      { "name": "Dilantin", "manufacturer": "Pfizer", "mrp": 80 },
+      { "name": "Fenitoina", "manufacturer": "Pfizer", "mrp": 75 }
+    ],
+    "janAushadhiPrice": 5,
+    "description": "An anticonvulsant that stabilizes nerve membranes to prevent and control epileptic seizures.",
+    "howToTake": "Take with food to reduce stomach upset; take at the same time(s) each day for consistent blood levels.",
+    "commonSideEffects": ["Gum overgrowth", "Drowsiness", "Nystagmus", "Rash"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Hydroxychloroquine",
+    "dosages": ["200mg", "400mg"],
+    "formulation": "tablet",
+    "category": "Immunology",
+    "commonBrands": [
+      { "name": "Plaquenil", "manufacturer": "Sanofi", "mrp": 120 },
+      { "name": "HCQS", "manufacturer": "Ipca", "mrp": 95 },
+      { "name": "Hydroquin", "manufacturer": "Cadila", "mrp": 90 }
+    ],
+    "janAushadhiPrice": 12,
+    "description": "An antimalarial drug also used for autoimmune conditions like rheumatoid arthritis and lupus to reduce inflammation.",
+    "howToTake": "Take with food or milk; regular eye checkups are recommended with long-term use.",
+    "commonSideEffects": ["Nausea", "Skin rash", "Eye damage (long-term)", "Headache"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Prednisolone",
+    "dosages": ["5mg", "10mg", "20mg", "40mg"],
+    "formulation": "tablet",
+    "category": "Immunology",
+    "commonBrands": [
+      { "name": "Omnacortil", "manufacturer": "Macleods", "mrp": 40 },
+      { "name": "Wysolone", "manufacturer": "Pfizer", "mrp": 50 },
+      { "name": "Deltacortril", "manufacturer": "Pfizer", "mrp": 45 }
+    ],
+    "janAushadhiPrice": 4,
+    "description": "A corticosteroid that suppresses the immune system and reduces inflammation, used for allergies, asthma, and autoimmune diseases.",
+    "howToTake": "Take with food in the morning; never stop abruptly after prolonged use — taper gradually as directed.",
+    "commonSideEffects": ["Weight gain", "Blood sugar rise", "Mood changes", "Osteoporosis (long-term)"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Pantoprazole + Domperidone",
+    "dosages": ["40mg+10mg"],
+    "formulation": "capsule",
+    "category": "Gastric",
+    "commonBrands": [
+      { "name": "Pantodac DSR", "manufacturer": "Zydus", "mrp": 75 },
+      { "name": "Pan-D", "manufacturer": "Alkem", "mrp": 70 },
+      { "name": "Razo-D", "manufacturer": "Sun Pharma", "mrp": 80 }
+    ],
+    "janAushadhiPrice": 10,
+    "description": "A combination that reduces acid production and improves stomach motility, used for acid reflux, bloating, and nausea.",
+    "howToTake": "Take 30 minutes before breakfast; swallow the delayed-release capsule whole.",
+    "commonSideEffects": ["Headache", "Diarrhoea", "Dry mouth", "Dizziness"],
+    "prescriptionRequired": false
+  },
+  {
+    "genericName": "Amoxicillin + Clavulanate",
+    "dosages": ["250mg+125mg", "500mg+125mg", "875mg+125mg"],
+    "formulation": "tablet",
+    "category": "Antibiotics",
+    "commonBrands": [
+      { "name": "Augmentin", "manufacturer": "GSK", "mrp": 150 },
+      { "name": "Moxclav", "manufacturer": "Cipla", "mrp": 120 },
+      { "name": "Clavam", "manufacturer": "Alembic", "mrp": 110 }
+    ],
+    "janAushadhiPrice": 18,
+    "description": "A combination antibiotic where clavulanate protects amoxicillin from resistance, extending its effectiveness against tougher bacteria.",
+    "howToTake": "Take at the start of a meal to reduce stomach upset and improve absorption; complete the full course.",
+    "commonSideEffects": ["Diarrhoea", "Nausea", "Skin rash", "Oral thrush"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Amlodipine + Telmisartan",
+    "dosages": ["5mg+40mg", "5mg+80mg", "10mg+40mg"],
+    "formulation": "tablet",
+    "category": "Blood Pressure",
+    "commonBrands": [
+      { "name": "Telma AM", "manufacturer": "Glenmark", "mrp": 120 },
+      { "name": "Twynsta", "manufacturer": "Boehringer", "mrp": 180 },
+      { "name": "Tazloc AM", "manufacturer": "USV", "mrp": 110 }
+    ],
+    "janAushadhiPrice": 12,
+    "description": "A combination antihypertensive that blocks calcium channels and angiotensin receptors for better blood pressure control.",
+    "howToTake": "Take once daily with or without food at the same time each day.",
+    "commonSideEffects": ["Ankle swelling", "Dizziness", "Headache", "Fatigue"],
+    "prescriptionRequired": true
+  }
+]
