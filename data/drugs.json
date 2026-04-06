@@ -847,5 +847,197 @@
     "howToTake": "Take once daily with or without food at the same time each day.",
     "commonSideEffects": ["Ankle swelling", "Dizziness", "Headache", "Fatigue"],
     "prescriptionRequired": true
+  },
+  {
+    "genericName": "Teneligliptin",
+    "dosages": ["20mg", "40mg"],
+    "formulation": "tablet",
+    "category": "Diabetes",
+    "commonBrands": [
+      { "name": "Teneli", "manufacturer": "Zydus", "mrp": 180 },
+      { "name": "Tenepure", "manufacturer": "Mankind", "mrp": 165 },
+      { "name": "Ziten", "manufacturer": "Glenmark", "mrp": 170 }
+    ],
+    "janAushadhiPrice": 25,
+    "description": "A DPP-4 inhibitor that helps regulate blood sugar by increasing insulin release after meals and reducing glucose production.",
+    "howToTake": "Take once daily with or without food, preferably at the same time each day.",
+    "commonSideEffects": ["Hypoglycemia", "Upper respiratory infection", "Headache", "Nausea"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Risperidone",
+    "dosages": ["1mg", "2mg", "3mg", "4mg"],
+    "formulation": "tablet",
+    "category": "Psychiatry",
+    "commonBrands": [
+      { "name": "Sizodon", "manufacturer": "Sun Pharma", "mrp": 85 },
+      { "name": "Risperdal", "manufacturer": "Janssen", "mrp": 150 },
+      { "name": "Rozap", "manufacturer": "Torrent", "mrp": 75 }
+    ],
+    "janAushadhiPrice": 8,
+    "description": "An atypical antipsychotic that balances dopamine and serotonin in the brain, used for schizophrenia, bipolar disorder, and irritability in autism.",
+    "howToTake": "Take once or twice daily with or without food; dose is gradually increased by your doctor.",
+    "commonSideEffects": ["Weight gain", "Drowsiness", "Tremors", "Elevated prolactin"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Quetiapine",
+    "dosages": ["25mg", "50mg", "100mg", "200mg", "300mg"],
+    "formulation": "tablet",
+    "category": "Psychiatry",
+    "commonBrands": [
+      { "name": "Qutipin", "manufacturer": "Sun Pharma", "mrp": 120 },
+      { "name": "Seroquel", "manufacturer": "AstraZeneca", "mrp": 200 },
+      { "name": "Qutan", "manufacturer": "Intas", "mrp": 100 }
+    ],
+    "janAushadhiPrice": 12,
+    "description": "An atypical antipsychotic used for schizophrenia, bipolar disorder, and as an add-on for depression. Works on dopamine and serotonin receptors.",
+    "howToTake": "Take once or twice daily; extended-release tablets should be swallowed whole, not crushed.",
+    "commonSideEffects": ["Drowsiness", "Weight gain", "Dry mouth", "Dizziness"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Lorazepam",
+    "dosages": ["0.5mg", "1mg", "2mg"],
+    "formulation": "tablet",
+    "category": "Psychiatry",
+    "commonBrands": [
+      { "name": "Ativan", "manufacturer": "Pfizer", "mrp": 60 },
+      { "name": "Lopez", "manufacturer": "Intas", "mrp": 45 },
+      { "name": "Calmese", "manufacturer": "Cipla", "mrp": 40 }
+    ],
+    "janAushadhiPrice": 5,
+    "description": "A benzodiazepine used for short-term relief of severe anxiety, insomnia, and as a pre-anesthetic sedative.",
+    "howToTake": "Take as directed, usually 2-3 times daily; do not stop abruptly after prolonged use.",
+    "commonSideEffects": ["Drowsiness", "Dizziness", "Weakness", "Dependence"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Clonazepam",
+    "dosages": ["0.25mg", "0.5mg", "1mg", "2mg"],
+    "formulation": "tablet",
+    "category": "Psychiatry",
+    "commonBrands": [
+      { "name": "Rivotril", "manufacturer": "Abbott", "mrp": 55 },
+      { "name": "Clonafit", "manufacturer": "Mankind", "mrp": 40 },
+      { "name": "Petril", "manufacturer": "Sun Pharma", "mrp": 35 }
+    ],
+    "janAushadhiPrice": 4,
+    "description": "A benzodiazepine anticonvulsant used for epilepsy, panic disorder, and certain movement disorders.",
+    "howToTake": "Take 1-3 times daily as directed; do not stop abruptly — taper gradually under medical supervision.",
+    "commonSideEffects": ["Drowsiness", "Coordination problems", "Dependence", "Memory impairment"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Clonidine",
+    "dosages": ["0.1mg", "0.2mg", "0.3mg"],
+    "formulation": "tablet",
+    "category": "Blood Pressure",
+    "commonBrands": [
+      { "name": "Arkamin", "manufacturer": "Torrent", "mrp": 35 },
+      { "name": "Catapres", "manufacturer": "Boehringer", "mrp": 50 },
+      { "name": "Cloneon", "manufacturer": "Micro Labs", "mrp": 30 }
+    ],
+    "janAushadhiPrice": 4,
+    "description": "A centrally-acting antihypertensive that reduces heart rate and relaxes blood vessels by stimulating alpha-2 receptors in the brain.",
+    "howToTake": "Take 2-3 times daily at the same times; never stop abruptly as it can cause a dangerous rebound spike in blood pressure.",
+    "commonSideEffects": ["Drowsiness", "Dry mouth", "Dizziness", "Constipation"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Olmesartan",
+    "dosages": ["10mg", "20mg", "40mg"],
+    "formulation": "tablet",
+    "category": "Blood Pressure",
+    "commonBrands": [
+      { "name": "Olmezest", "manufacturer": "Macleods", "mrp": 90 },
+      { "name": "Benicar", "manufacturer": "Daiichi Sankyo", "mrp": 130 },
+      { "name": "Olmy", "manufacturer": "Cipla", "mrp": 80 }
+    ],
+    "janAushadhiPrice": 10,
+    "description": "An ARB antihypertensive that blocks angiotensin II receptors, effectively lowering blood pressure and protecting the kidneys.",
+    "howToTake": "Take once daily with or without food at the same time each day.",
+    "commonSideEffects": ["Dizziness", "Diarrhoea", "Upper respiratory infection", "Back pain"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Olmesartan + Amlodipine",
+    "dosages": ["20mg+5mg", "40mg+5mg", "40mg+10mg"],
+    "formulation": "tablet",
+    "category": "Blood Pressure",
+    "commonBrands": [
+      { "name": "Olmezest AM", "manufacturer": "Macleods", "mrp": 120 },
+      { "name": "Olmy AM", "manufacturer": "Cipla", "mrp": 110 },
+      { "name": "Azor", "manufacturer": "Daiichi Sankyo", "mrp": 160 }
+    ],
+    "janAushadhiPrice": 15,
+    "description": "A combination antihypertensive that blocks angiotensin receptors and calcium channels for superior blood pressure control.",
+    "howToTake": "Take once daily with or without food; monitor for ankle swelling or dizziness.",
+    "commonSideEffects": ["Ankle swelling", "Dizziness", "Headache", "Fatigue"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Atorvastatin + Ezetimibe",
+    "dosages": ["10mg+10mg", "20mg+10mg", "40mg+10mg"],
+    "formulation": "tablet",
+    "category": "Cholesterol",
+    "commonBrands": [
+      { "name": "Lipiez", "manufacturer": "Sun Pharma", "mrp": 180 },
+      { "name": "Atoze", "manufacturer": "Torrent", "mrp": 160 },
+      { "name": "Zetia Plus", "manufacturer": "MSD", "mrp": 200 }
+    ],
+    "janAushadhiPrice": 20,
+    "description": "A dual cholesterol-lowering combination: atorvastatin blocks cholesterol production in the liver while ezetimibe blocks cholesterol absorption in the gut.",
+    "howToTake": "Take once daily at any time with or without food; taking at bedtime may be slightly more effective.",
+    "commonSideEffects": ["Muscle pain", "Headache", "Diarrhoea", "Joint pain"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Escitalopram",
+    "dosages": ["5mg", "10mg", "15mg", "20mg"],
+    "formulation": "tablet",
+    "category": "Psychiatry",
+    "commonBrands": [
+      { "name": "Nexito", "manufacturer": "Sun Pharma", "mrp": 100 },
+      { "name": "Escital", "manufacturer": "Torrent", "mrp": 85 },
+      { "name": "Stalopam", "manufacturer": "Cipla", "mrp": 90 }
+    ],
+    "janAushadhiPrice": 10,
+    "description": "An SSRI antidepressant that increases serotonin in the brain, used for depression, generalized anxiety disorder, and panic disorder.",
+    "howToTake": "Take once daily in the morning or evening with or without food; takes 2-4 weeks for full effect.",
+    "commonSideEffects": ["Nausea", "Insomnia", "Sexual dysfunction", "Headache"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Chlordiazepoxide",
+    "dosages": ["5mg", "10mg", "25mg"],
+    "formulation": "tablet",
+    "category": "Psychiatry",
+    "commonBrands": [
+      { "name": "Placida", "manufacturer": "Abbott", "mrp": 30 },
+      { "name": "Librium", "manufacturer": "Abbott", "mrp": 45 },
+      { "name": "Equilibrium", "manufacturer": "Sun Pharma", "mrp": 25 }
+    ],
+    "janAushadhiPrice": 3,
+    "description": "A long-acting benzodiazepine used for anxiety, alcohol withdrawal, and as a pre-operative sedative.",
+    "howToTake": "Take 1-3 times daily as directed; use the lowest effective dose for the shortest possible duration.",
+    "commonSideEffects": ["Drowsiness", "Confusion", "Ataxia", "Dependence"],
+    "prescriptionRequired": true
+  },
+  {
+    "genericName": "Bromhexine",
+    "dosages": ["4mg", "8mg"],
+    "formulation": "tablet",
+    "category": "Respiratory",
+    "commonBrands": [
+      { "name": "Bisolvon", "manufacturer": "Boehringer", "mrp": 50 },
+      { "name": "Bromhexin", "manufacturer": "Cipla", "mrp": 35 },
+      { "name": "Solvin", "manufacturer": "Ipca", "mrp": 30 }
+    ],
+    "janAushadhiPrice": 4,
+    "description": "A mucolytic agent that thins and loosens mucus in the airways, making it easier to cough up in respiratory infections and chronic bronchitis.",
+    "howToTake": "Take 2-3 times daily with plenty of fluids; works best when well hydrated.",
+    "commonSideEffects": ["Nausea", "Stomach upset", "Diarrhoea", "Headache"],
+    "prescriptionRequired": false
   }
 ]

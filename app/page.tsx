@@ -1,65 +1,162 @@
-import Image from "next/image";
+'use client';
+
+import { useState, useRef, useCallback } from 'react';
+import LandingPage from '@/components/LandingPage';
+import UploadScreen from '@/components/UploadScreen';
+import ProcessingScreen from '@/components/ProcessingScreen';
+import ResultsScreen from '@/components/ResultsScreen';
+
+// ============================================================
+// APP STATES
+// ============================================================
+
+type AppScreen = 'landing' | 'upload' | 'processing' | 'results';
 
 export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+  const [screen, setScreen] = useState<AppScreen>('landing');
+  const [analysisResult, setAnalysisResult] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  // Track whether API has returned while animation is still playing
+  const apiDoneRef = useRef(false);
+  const animDoneRef = useRef(false);
+  const apiResultRef = useRef<any>(null);
+
+  // ----------------------------------------------------------
+  // Transition to results — only when BOTH api and animation done
+  // ----------------------------------------------------------
+  const tryShowResults = useCallback(() => {
+    if (apiDoneRef.current && animDoneRef.current) {
+      if (apiResultRef.current?.error) {
+        setError(apiResultRef.current.error);
+        setScreen('upload');
+      } else {
+        setAnalysisResult(apiResultRef.current);
+        setScreen('results');
+      }
+    }
+  }, []);
+
+  // ----------------------------------------------------------
+  // Called when processing animation finishes
+  // ----------------------------------------------------------
+  const handleAnimationComplete = useCallback(() => {
+    animDoneRef.current = true;
+    tryShowResults();
+  }, [tryShowResults]);
+
+  // ----------------------------------------------------------
+  // Called when user confirms an image in the upload screen
+  // ----------------------------------------------------------
+  const handleImageSelected = useCallback(async (file: File) => {
+    // Reset state
+    apiDoneRef.current = false;
+    animDoneRef.current = false;
+    apiResultRef.current = null;
+    setError(null);
+
+    // Move to processing screen immediately
+    setScreen('processing');
+
+    try {
+      // Convert image to base64
+      const base64 = await fileToBase64(file);
+      const mimeType = file.type || 'image/jpeg';
+
+      // Call the scan API
+      const response = await fetch('/api/scan-prescription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: base64, mimeType }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        apiResultRef.current = {
+          error: data.error || data.message || 'Something went wrong. Please try again.',
+        };
+      } else {
+        apiResultRef.current = data.data;
+      }
+    } catch (err) {
+      console.error('API call failed:', err);
+      apiResultRef.current = {
+        error: 'Could not connect to the server. Please check your internet and try again.',
+      };
+    }
+
+    apiDoneRef.current = true;
+    tryShowResults();
+  }, [tryShowResults]);
+
+  // ----------------------------------------------------------
+  // RENDER — show the active screen
+  // ----------------------------------------------------------
+
+  if (screen === 'landing') {
+    return (
+      <LandingPage
+        onScanClick={() => setScreen('upload')}
+        onTrySample={() => setScreen('upload')}
+      />
+    );
+  }
+
+  if (screen === 'upload') {
+    return (
+      <>
+        {error && (
+          <div className="fixed top-0 left-0 right-0 z-50 bg-red-500 text-white text-sm text-center py-3 px-4">
+            {error}
+            <button
+              onClick={() => setError(null)}
+              className="ml-3 underline font-medium"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+              Dismiss
+            </button>
+          </div>
+        )}
+        <UploadScreen onImageSelected={handleImageSelected} onBack={() => setScreen('landing')} />
+      </>
+    );
+  }
+
+  if (screen === 'processing') {
+    return <ProcessingScreen onComplete={handleAnimationComplete} onBack={() => setScreen('landing')} />;
+  }
+
+  if (screen === 'results' && analysisResult) {
+    return (
+      <ResultsScreen
+        result={analysisResult}
+        onScanAnother={() => {
+          setAnalysisResult(null);
+          setScreen('upload');
+        }}
+        onBack={() => setScreen('landing')}
+      />
+    );
+  }
+
+  // Fallback
+  return null;
+}
+
+// ============================================================
+// UTILITY: Convert File to raw base64 (no data: prefix)
+// ============================================================
+
+function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      // Strip the "data:image/jpeg;base64," prefix
+      const base64 = result.split(',')[1];
+      resolve(base64);
+    };
+    reader.onerror = () => reject(new Error('Failed to read file'));
+    reader.readAsDataURL(file);
+  });
 }
