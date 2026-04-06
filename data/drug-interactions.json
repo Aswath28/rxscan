@@ -628,5 +628,140 @@
     "mechanism": "Fluoroquinolones stimulate insulin secretion and may inhibit gluconeogenesis through unclear mechanisms.",
     "recommendation": "Monitor blood glucose more frequently during fluoroquinolone antibiotic courses.",
     "clinicalSignificance": "Low to moderate — blood glucose monitoring is the key intervention."
+  },
+  {
+    "id": "INT071",
+    "drugs": ["Risperidone", "Lorazepam"],
+    "severity": "moderate",
+    "effect": "Combined CNS depression causing excessive sedation, respiratory depression, and risk of falls.",
+    "mechanism": "Risperidone has sedative properties; lorazepam enhances GABA-mediated CNS inhibition. Effects are additive.",
+    "recommendation": "Use lowest effective doses of both; monitor for excessive sedation especially when starting treatment.",
+    "clinicalSignificance": "Moderate — commonly co-prescribed in acute psychosis but requires monitoring."
+  },
+  {
+    "id": "INT072",
+    "drugs": ["Quetiapine", "Lorazepam"],
+    "severity": "moderate",
+    "effect": "Significant additive sedation and risk of respiratory depression, particularly in elderly patients.",
+    "mechanism": "Both drugs cause CNS depression through different mechanisms — quetiapine via histamine/alpha blockade, lorazepam via GABA enhancement.",
+    "recommendation": "Start with low doses; avoid in patients with sleep apnea or respiratory conditions.",
+    "clinicalSignificance": "Moderate to high — respiratory monitoring recommended in vulnerable patients."
+  },
+  {
+    "id": "INT073",
+    "drugs": ["Quetiapine", "Clonazepam"],
+    "severity": "moderate",
+    "effect": "Additive sedation and psychomotor impairment; increased fall risk in elderly patients.",
+    "mechanism": "Both are CNS depressants — quetiapine blocks histamine and alpha receptors, clonazepam enhances GABA.",
+    "recommendation": "Monitor closely; use lowest effective doses. Avoid driving or operating machinery.",
+    "clinicalSignificance": "Moderate — commonly used together in psychiatry but requires careful dose titration."
+  },
+  {
+    "id": "INT074",
+    "drugs": ["Risperidone", "Clonazepam"],
+    "severity": "moderate",
+    "effect": "Increased sedation and risk of orthostatic hypotension and falls.",
+    "mechanism": "Additive CNS depressant effects; risperidone also causes alpha-adrenergic blockade leading to postural hypotension.",
+    "recommendation": "Titrate doses slowly; advise patients to rise slowly from sitting or lying positions.",
+    "clinicalSignificance": "Moderate — standard combination in schizophrenia management."
+  },
+  {
+    "id": "INT075",
+    "drugs": ["Escitalopram", "Lorazepam"],
+    "severity": "mild",
+    "effect": "Mild additive sedation; generally well tolerated when used together.",
+    "mechanism": "Escitalopram can cause mild drowsiness; lorazepam adds to this effect.",
+    "recommendation": "Safe combination commonly used during the first weeks of SSRI treatment to manage initial anxiety.",
+    "clinicalSignificance": "Low — standard practice in anxiety treatment."
+  },
+  {
+    "id": "INT076",
+    "drugs": ["Escitalopram", "Risperidone"],
+    "severity": "moderate",
+    "effect": "Escitalopram may increase risperidone blood levels, enhancing both therapeutic and side effects.",
+    "mechanism": "Escitalopram inhibits CYP2D6, the primary enzyme that metabolizes risperidone to its active metabolite.",
+    "recommendation": "Monitor for increased risperidone side effects (tremor, stiffness, restlessness); may need dose reduction.",
+    "clinicalSignificance": "Moderate — dose adjustment may be needed."
+  },
+  {
+    "id": "INT077",
+    "drugs": ["Quetiapine", "Metformin"],
+    "severity": "moderate",
+    "effect": "Quetiapine causes significant weight gain and insulin resistance, counteracting metformin's glucose-lowering effect.",
+    "mechanism": "Atypical antipsychotics promote metabolic syndrome via histamine and serotonin receptor effects, increasing blood glucose.",
+    "recommendation": "Monitor blood glucose, HbA1c, and weight regularly; metformin dose may need to be increased.",
+    "clinicalSignificance": "Moderate to high — metabolic monitoring is mandatory with all atypical antipsychotics."
+  },
+  {
+    "id": "INT078",
+    "drugs": ["Risperidone", "Metformin"],
+    "severity": "moderate",
+    "effect": "Risperidone can cause weight gain and glucose dysregulation, reducing metformin's effectiveness.",
+    "mechanism": "Atypical antipsychotics alter glucose metabolism and promote insulin resistance.",
+    "recommendation": "Monitor fasting glucose and HbA1c every 3 months; consider switching to a metabolically neutral antipsychotic if possible.",
+    "clinicalSignificance": "Moderate — metabolic syndrome screening is recommended for all patients on atypical antipsychotics."
+  },
+  {
+    "id": "INT079",
+    "drugs": ["Clonidine", "Atenolol"],
+    "severity": "moderate",
+    "effect": "Both drugs lower heart rate; combination can cause severe bradycardia. Abrupt clonidine withdrawal with beta-blocker on board can trigger rebound hypertensive crisis.",
+    "mechanism": "Additive sympatholytic effects — clonidine reduces central sympathetic outflow, atenolol blocks peripheral beta receptors.",
+    "recommendation": "Monitor heart rate closely; never stop clonidine abruptly. If stopping, taper clonidine first while continuing beta-blocker.",
+    "clinicalSignificance": "High — the rebound hypertension risk is clinically significant and potentially dangerous."
+  },
+  {
+    "id": "INT080",
+    "drugs": ["Clonidine", "Amlodipine"],
+    "severity": "mild",
+    "effect": "Additive blood pressure lowering; risk of hypotension and dizziness, especially at initiation.",
+    "mechanism": "Complementary antihypertensive mechanisms — central sympatholytic plus calcium channel blockade.",
+    "recommendation": "Monitor blood pressure; start with low doses and titrate gradually.",
+    "clinicalSignificance": "Low to moderate — intentional combination for resistant hypertension."
+  },
+  {
+    "id": "INT081",
+    "drugs": ["Sertraline", "Clonazepam"],
+    "severity": "mild",
+    "effect": "Additive sedation; generally a well-tolerated and commonly prescribed combination for anxiety disorders.",
+    "mechanism": "Sertraline's mild sedative effects add to clonazepam's GABA-mediated CNS depression.",
+    "recommendation": "Use standard doses; clonazepam can be tapered once SSRI reaches therapeutic effect at 4-6 weeks.",
+    "clinicalSignificance": "Low — standard combination in psychiatric practice."
+  },
+  {
+    "id": "INT082",
+    "drugs": ["Sertraline", "Risperidone"],
+    "severity": "moderate",
+    "effect": "Sertraline significantly increases risperidone plasma levels via CYP2D6 inhibition.",
+    "mechanism": "Sertraline is a moderate CYP2D6 inhibitor; risperidone is primarily metabolized by CYP2D6.",
+    "recommendation": "Monitor for extrapyramidal symptoms; risperidone dose may need reduction.",
+    "clinicalSignificance": "Moderate — clinically relevant pharmacokinetic interaction."
+  },
+  {
+    "id": "INT083",
+    "drugs": ["Chlordiazepoxide", "Alcohol"],
+    "severity": "severe",
+    "effect": "Profound CNS depression — severe drowsiness, respiratory depression, coma, and potentially death.",
+    "mechanism": "Both enhance GABA-mediated inhibition in the brain; effects are synergistic, not merely additive.",
+    "recommendation": "Strictly avoid alcohol during treatment. Paradoxically, chlordiazepoxide IS used to treat alcohol withdrawal but only under medical supervision.",
+    "clinicalSignificance": "High — one of the most dangerous drug-alcohol combinations."
+  },
+  {
+    "id": "INT084",
+    "drugs": ["Olmesartan", "Spironolactone"],
+    "severity": "severe",
+    "effect": "Risk of hyperkalemia is significantly elevated; can cause life-threatening cardiac arrhythmias.",
+    "mechanism": "ARBs block aldosterone signaling; spironolactone antagonizes aldosterone receptors — additive potassium retention.",
+    "recommendation": "Monitor potassium and renal function regularly; adjust doses as needed.",
+    "clinicalSignificance": "High — requires regular electrolyte monitoring."
+  },
+  {
+    "id": "INT085",
+    "drugs": ["Escitalopram", "Tramadol"],
+    "severity": "severe",
+    "effect": "Risk of serotonin syndrome — agitation, confusion, rapid heart rate, high temperature, and muscle rigidity.",
+    "mechanism": "Escitalopram blocks serotonin reuptake; tramadol also increases serotonin — combined effect can cause dangerous serotonin excess.",
+    "recommendation": "Avoid combination if possible; if necessary, use lowest doses and monitor for serotonin syndrome symptoms.",
+    "clinicalSignificance": "High — serotonin syndrome can be life-threatening."
   }
 ]
