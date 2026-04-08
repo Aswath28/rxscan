@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { savePrescription } from '@/lib/prescriptionHistory';
+
 // ============================================================
 // MOCK DATA — Realistic prescription result from your API pipeline
 // This mirrors what /api/scan-prescription + fuzzy match + interactions returns
@@ -114,10 +116,10 @@ const MOCK_RESULT = {
 // ============================================================
 
 function SavingsBanner({ medicines }: { medicines: any[] }) {
-  const brandTotal = medicines.reduce((sum, m) => sum + m.brandPrice, 0);
-  const genericTotal = medicines.reduce((sum, m) => sum + m.genericPrice, 0);
+  const brandTotal = medicines.reduce((sum, m) => sum + (m.brandPrice || 0), 0);
+  const genericTotal = medicines.reduce((sum, m) => sum + (m.genericPrice || 0), 0);
   const savings = brandTotal - genericTotal;
-  const savingsPercent = Math.round((savings / brandTotal) * 100);
+  const savingsPercent = brandTotal > 0 ? Math.round((savings / brandTotal) * 100) : 0;
 
   return (
     <div className="rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 p-5 text-white shadow-lg">
@@ -132,7 +134,6 @@ function SavingsBanner({ medicines }: { medicines: any[] }) {
         by switching to generic alternatives
       </p>
 
-      {/* Price comparison bar */}
       <div className="mt-4 space-y-2">
         <div className="flex items-center justify-between text-sm">
           <span className="text-emerald-200">Branded</span>
@@ -149,7 +150,7 @@ function SavingsBanner({ medicines }: { medicines: any[] }) {
         <div className="h-3 w-full rounded-full bg-white/20 overflow-hidden">
           <div
             className="h-full rounded-full bg-emerald-300"
-            style={{ width: `${(genericTotal / brandTotal) * 100}%` }}
+            style={{ width: `${brandTotal > 0 ? (genericTotal / brandTotal) * 100 : 0}%` }}
           />
         </div>
       </div>
@@ -175,7 +176,7 @@ function ConfidenceBadge({ level }: { level: 'high' | 'medium' | 'low' }) {
   const c = config[level];
 
   return (
-    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border ${c.bg}`}>
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border whitespace-nowrap flex-shrink-0 ${c.bg}`}>
       <span>{c.emoji}</span> {c.label}
     </span>
   );
@@ -188,22 +189,21 @@ function ConfidenceBadge({ level }: { level: 'high' | 'medium' | 'low' }) {
 
 function MedicineCard({ medicine, index }: { medicine: any; index: number }) {
   const [expanded, setExpanded] = useState(false);
-  const savingsPercent = Math.round(((medicine.brandPrice - medicine.genericPrice) / medicine.brandPrice) * 100);
+  const savingsPercent = medicine.brandPrice > 0
+    ? Math.round(((medicine.brandPrice - medicine.genericPrice) / medicine.brandPrice) * 100)
+    : 0;
 
   return (
     <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md">
-      {/* Card Header — always visible */}
       <button
         onClick={() => setExpanded(!expanded)}
         className="w-full text-left p-4 flex items-start gap-3"
       >
-        {/* Medicine number pill */}
         <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center text-sm font-bold mt-0.5">
           {index + 1}
         </div>
 
         <div className="flex-1 min-w-0">
-          {/* OCR reading → matched name */}
           <div className="flex items-start justify-between gap-2">
             <div>
               <h3 className="font-semibold text-slate-900 text-base leading-tight">
@@ -216,7 +216,6 @@ function MedicineCard({ medicine, index }: { medicine: any; index: number }) {
             <ConfidenceBadge level={medicine.confidence} />
           </div>
 
-          {/* Dosage + frequency summary */}
           <div className="mt-2 flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-slate-100 text-xs font-medium text-slate-600">
               💊 {medicine.dosage}
@@ -234,17 +233,17 @@ function MedicineCard({ medicine, index }: { medicine: any; index: number }) {
             )}
           </div>
 
-          {/* Savings teaser */}
-          <div className="mt-2 flex items-center gap-2 text-sm">
-            <span className="text-slate-400 line-through">₹{medicine.brandPrice}</span>
-            <span className="font-semibold text-emerald-600">₹{medicine.genericPrice} generic</span>
-            <span className="text-xs text-emerald-600 font-medium bg-emerald-50 px-1.5 py-0.5 rounded">
-              Save {savingsPercent}%
-            </span>
-          </div>
+          {medicine.brandPrice > 0 && medicine.genericPrice > 0 && (
+            <div className="mt-2 flex items-center gap-2 text-sm">
+              <span className="text-slate-400 line-through">₹{medicine.brandPrice}</span>
+              <span className="font-semibold text-emerald-600">₹{medicine.genericPrice} generic</span>
+              <span className="text-xs text-emerald-600 font-medium bg-emerald-50 px-1.5 py-0.5 rounded">
+                Save {savingsPercent}%
+              </span>
+            </div>
+          )}
         </div>
 
-        {/* Expand chevron */}
         <div className="flex-shrink-0 mt-1">
           <svg
             className={`w-5 h-5 text-slate-400 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
@@ -255,70 +254,74 @@ function MedicineCard({ medicine, index }: { medicine: any; index: number }) {
         </div>
       </button>
 
-      {/* Expanded content */}
       {expanded && (
         <div className="px-4 pb-4 pt-0 border-t border-slate-100">
           <div className="mt-4 space-y-4">
-            {/* What it is */}
-            <div>
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-                What this medicine is
-              </h4>
-              <p className="text-sm text-slate-700 leading-relaxed">{medicine.whatItIs}</p>
-            </div>
-
-            {/* What it does */}
-            <div>
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-                What it does for you
-              </h4>
-              <p className="text-sm text-slate-700 leading-relaxed">{medicine.whatItDoes}</p>
-            </div>
-
-            {/* How to take */}
-            <div>
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-                How to take it
-              </h4>
-              <p className="text-sm text-slate-700 leading-relaxed">{medicine.howToTake}</p>
-            </div>
-
-            {/* Side effects */}
-            <div>
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-                Common side effects
-              </h4>
-              <div className="flex flex-wrap gap-1.5">
-                {(medicine.sideEffects || []).map((effect: string, i: number) => (
-                  <span key={i} className="px-2 py-1 rounded-md bg-orange-50 text-xs text-orange-700 border border-orange-100">
-                    {effect}
-                  </span>
-                ))}
+            {medicine.whatItIs && (
+              <div>
+                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
+                  What this medicine is
+                </h4>
+                <p className="text-sm text-slate-700 leading-relaxed">{medicine.whatItIs}</p>
               </div>
-            </div>
+            )}
 
-            {/* Generic alternative box */}
-            <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h4 className="text-xs font-semibold text-emerald-800 uppercase tracking-wider">
-                    Generic Alternative
-                  </h4>
-                  <p className="text-sm font-medium text-emerald-900 mt-0.5">{medicine.genericName}</p>
-                </div>
-                <div className="text-right">
-                  <div className="text-lg font-bold text-emerald-700">₹{medicine.genericPrice}</div>
-                  <div className="text-xs text-slate-500 line-through">₹{medicine.brandPrice}</div>
+            {medicine.whatItDoes && (
+              <div>
+                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
+                  What it does for you
+                </h4>
+                <p className="text-sm text-slate-700 leading-relaxed">{medicine.whatItDoes}</p>
+              </div>
+            )}
+
+            {medicine.howToTake && (
+              <div>
+                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
+                  How to take it
+                </h4>
+                <p className="text-sm text-slate-700 leading-relaxed">{medicine.howToTake}</p>
+              </div>
+            )}
+
+            {medicine.sideEffects && medicine.sideEffects.length > 0 && (
+              <div>
+                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
+                  Common side effects
+                </h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {(medicine.sideEffects || []).map((effect: string, i: number) => (
+                    <span key={i} className="px-2 py-1 rounded-md bg-orange-50 text-xs text-orange-700 border border-orange-100">
+                      {effect}
+                    </span>
+                  ))}
                 </div>
               </div>
-              {medicine.janAushadhiAvailable && (
-                <div className="mt-2 flex items-center gap-1.5">
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700 border border-blue-200">
-                    🏪 Available at Jan Aushadhi Kendra
-                  </span>
+            )}
+
+            {medicine.genericName && medicine.genericPrice > 0 && (
+              <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-xs font-semibold text-emerald-800 uppercase tracking-wider">
+                      Generic Alternative
+                    </h4>
+                    <p className="text-sm font-medium text-emerald-900 mt-0.5">{medicine.genericName}</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-bold text-emerald-700">₹{medicine.genericPrice}</div>
+                    <div className="text-xs text-slate-500 line-through">₹{medicine.brandPrice}</div>
+                  </div>
                 </div>
-              )}
-            </div>
+                {medicine.janAushadhiAvailable && (
+                  <div className="mt-2 flex items-center gap-1.5">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700 border border-blue-200">
+                      🏪 Available at Jan Aushadhi Kendra
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -337,7 +340,7 @@ function InteractionAlert({ interaction }: { interaction: any }) {
     moderate: { bg: 'bg-amber-50 border-amber-300', icon: '🟡', label: 'Moderate', text: 'text-amber-800' },
     mild: { bg: 'bg-blue-50 border-blue-200', icon: '🔵', label: 'Mild', text: 'text-blue-800' },
   };
-  const config = severityConfig[interaction.severity];
+  const config = severityConfig[interaction.severity as keyof typeof severityConfig] || severityConfig.moderate;
 
   return (
     <div className={`rounded-xl border-2 ${config.bg} p-4`}>
@@ -379,7 +382,7 @@ function PrescriptionHeader({ doctorName, date, readability }: {
     fair: { label: 'Partially legible', color: 'text-amber-600' },
     poor: { label: 'Hard to read', color: 'text-red-600' },
   };
-  const r = readabilityConfig[readability];
+  const r = readabilityConfig[readability] || readabilityConfig.fair;
 
   return (
     <div className="flex items-center justify-between py-3">
@@ -400,6 +403,25 @@ function PrescriptionHeader({ doctorName, date, readability }: {
 
 
 // ============================================================
+// COMPONENT: Share Success Toast
+// ============================================================
+
+function Toast({ message, visible }: { message: string; visible: boolean }) {
+  if (!visible) return null;
+  return (
+    <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
+      <div className="bg-slate-900 text-white text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2">
+        <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+        {message}
+      </div>
+    </div>
+  );
+}
+
+
+// ============================================================
 // MAIN: Results Screen
 // ============================================================
 
@@ -410,17 +432,39 @@ interface ResultsScreenProps {
 }
 
 export default function ResultsScreen({ result, onScanAnother, onBack }: ResultsScreenProps) {
-  // Map API response to what the components expect
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [isSaved, setIsSaved] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    if (result.isDemo) return false;
+    try {
+      const saved = JSON.parse(localStorage.getItem('rxscan_prescriptions') || '[]');
+      return saved.some((rx: any) =>
+        rx.doctorName === result.doctorName &&
+        rx.date === result.date &&
+        rx.medicines?.length === result.medicines?.length
+      );
+    } catch {
+      return false;
+    }
+  });
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setToastVisible(true);
+    setTimeout(() => setToastVisible(false), 2500);
+  };
+
   const medicines = (result.medicines || []).map((med: any) => ({
     ...med,
     name: med.ocrReading || med.name,
     matchedDrug: med.matchedDrug || med.genericName || med.name,
     genericName: med.genericName || null,
     category: med.category || null,
-    whatItIs: med.description || null,
-    whatItDoes: med.description || null,
+    whatItIs: med.whatItIs || med.description || null,
+    whatItDoes: med.whatItDoes || med.description || null,
     howToTake: med.howToTake || med.instructions || null,
-    sideEffects: med.commonSideEffects || [],
+    sideEffects: med.sideEffects || med.commonSideEffects || [],
     brandPrice: med.brandPrice || 0,
     genericPrice: med.genericPrice || 0,
     janAushadhiAvailable: med.janAushadhiAvailable || false,
@@ -442,50 +486,97 @@ export default function ResultsScreen({ result, onScanAnother, onBack }: Results
 
   const hasInteractions = interactions.length > 0;
 
-  // Build share text
   const brandTotal = medicines.reduce((s: number, m: any) => s + (m.brandPrice || 0), 0);
   const genericTotal = medicines.reduce((s: number, m: any) => s + (m.genericPrice || 0), 0);
   const savingsAmount = brandTotal - genericTotal;
 
-  const shareText = [
-    `💊 RxScan Report`,
-    result.doctorName ? `Scanned ${medicines.length} medicines from ${result.doctorName}'s prescription` : `Scanned ${medicines.length} medicines`,
-    ``,
-    `💰 You could save ₹${savingsAmount} by switching to generics!`,
-    ``,
-    `Branded cost: ₹${brandTotal}`,
-    `Generic cost: ₹${genericTotal}`,
-    ``,
-    `Try RxScan free: https://rxscan.vercel.app`,
-  ].join('\n');
+  const buildShareText = () => {
+    const medicineCount = medicines.length;
+    const doctorName = result.doctorName || 'your doctor';
+
+    const medicineLines = medicines
+      .map((med: any) => {
+        const name = med.name;
+        const generic = med.genericName;
+        if (generic && med.brandPrice > 0 && med.genericPrice > 0) {
+          return `  • ${name} → ${generic} (₹${med.brandPrice} → ₹${med.genericPrice})`;
+        }
+        return `  • ${name}`;
+      })
+      .join('\n');
+
+    let message = `💊 *RxScan Report*\n`;
+    message += `Scanned ${medicineCount} medicine${medicineCount !== 1 ? 's' : ''} from ${doctorName}'s prescription\n\n`;
+
+    if (savingsAmount > 0) {
+      message += `💰 *You could save ₹${savingsAmount} by switching to generics!*\n\n`;
+      message += `Branded cost: ₹${brandTotal}\n`;
+      message += `Generic cost: ₹${genericTotal}\n\n`;
+    }
+
+    message += `*Medicines:*\n${medicineLines}\n\n`;
+
+    if (hasInteractions) {
+      message += `⚠️ ${interactions.length} drug interaction${interactions.length !== 1 ? 's' : ''} detected — discuss with your doctor\n\n`;
+    }
+
+    message += `Scan your prescription free → https://rxscan.vercel.app`;
+
+    return message;
+  };
 
   const handleShareWhatsApp = () => {
-    const url = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+    const text = buildShareText();
+    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank');
   };
 
   const handleShare = async () => {
-    // Use native share if available (mobile), otherwise copy to clipboard
+    const text = buildShareText();
+
     if (navigator.share) {
       try {
-        await navigator.share({ title: 'RxScan Report', text: shareText });
+        await navigator.share({ title: 'RxScan Report', text });
+        return;
       } catch {
-        // User cancelled — do nothing
-      }
-    } else {
-      try {
-        await navigator.clipboard.writeText(shareText);
-        alert('Report copied to clipboard!');
-      } catch {
-        // Fallback — open WhatsApp
-        handleShareWhatsApp();
+        // User cancelled or share failed
       }
     }
+
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast('Report copied to clipboard!');
+    } catch {
+      handleShareWhatsApp();
+    }
+  };
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.origin);
+      showToast('Link copied!');
+    } catch {
+      // Silently fail
+    }
+  };
+
+  const handleShareApp = () => {
+    const text = `Hey! Check out RxScan — you scan your doctor's prescription and it reads the handwriting, shows what each medicine does, and finds generic alternatives that can save you 50-90%. Totally free.\n\nTry it → https://rxscan.vercel.app`;
+    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+  };
+
+  const handleSaveToHistory = () => {
+    if (isSaved) return;
+    savePrescription(result);
+    setIsSaved(true);
+    showToast('Saved to My Medicines!');
   };
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Top bar */}
+      <Toast message={toastMessage} visible={toastVisible} />
+
       <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
           <button onClick={onBack} className="text-slate-600 hover:text-slate-900 flex items-center gap-1 text-sm font-medium">
@@ -505,19 +596,15 @@ export default function ResultsScreen({ result, onScanAnother, onBack }: Results
         </div>
       </header>
 
-      {/* Content */}
-      <main className="max-w-lg mx-auto px-4 pb-32">
-        {/* Doctor + date */}
+      <main className="max-w-lg mx-auto px-4 pb-40">
         <PrescriptionHeader
           doctorName={result.doctorName || null}
           date={result.date || null}
           readability={result.overallReadability || 'fair'}
         />
 
-        {/* Savings banner */}
         <SavingsBanner medicines={medicines} />
 
-        {/* Interaction alerts */}
         {hasInteractions && (
           <div className="mt-5 space-y-3">
             <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
@@ -529,7 +616,6 @@ export default function ResultsScreen({ result, onScanAnother, onBack }: Results
           </div>
         )}
 
-        {/* Medicine cards */}
         <div className="mt-5 space-y-3">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
@@ -542,41 +628,141 @@ export default function ResultsScreen({ result, onScanAnother, onBack }: Results
           ))}
         </div>
 
-        {/* OCR disclaimer */}
         <div className="mt-6 rounded-lg bg-slate-100 p-3">
           <p className="text-xs text-slate-500 leading-relaxed">
-            ⓘ AI-powered reading may not be 100% accurate. Please verify each medicine 
+            ⓘ AI-powered reading may not be 100% accurate. Please verify each medicine
             name and dosage against your prescription before relying on this information.
           </p>
+        </div>
+
+        <div className="mt-6 rounded-xl border border-slate-200 bg-white p-4">
+          <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+            Understanding your prescription
+          </h3>
+          <div className="space-y-3">
+            <div>
+              <h4 className="text-xs font-semibold text-slate-700 mb-1">Common abbreviations</h4>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                {[
+                  ['OD', 'Once daily'],
+                  ['BD', 'Twice daily'],
+                  ['TDS', 'Three times daily'],
+                  ['SOS', 'As needed'],
+                  ['1-0-1', 'Morning – skip – night'],
+                  ['1-1-1', 'Morning – afternoon – night'],
+                  ['AC', 'Before food'],
+                  ['PC', 'After food'],
+                  ['HS', 'At bedtime'],
+                  ['Tab', 'Tablet'],
+                  ['Cap', 'Capsule'],
+                  ['Syp', 'Syrup'],
+                ].map(([abbr, meaning], i) => (
+                  <div key={i} className="flex items-baseline gap-1.5">
+                    <span className="text-xs font-mono font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">{abbr}</span>
+                    <span className="text-xs text-slate-600">{meaning}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-slate-100 pt-3">
+              <h4 className="text-xs font-semibold text-slate-700 mb-1">What is a generic medicine?</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                A generic medicine contains the same active ingredient, in the same dosage and form, as the branded version.
+                CDSCO (India's drug regulator) certifies them as bioequivalent — meaning they work the same way in your body.
+                The price difference is because you're not paying for the brand name, marketing, or packaging.
+              </p>
+            </div>
+
+            <div className="border-t border-slate-100 pt-3">
+              <h4 className="text-xs font-semibold text-slate-700 mb-1">What is a drug interaction?</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                When two medicines affect each other — one might reduce the other's effectiveness, or together they might
+                increase the risk of side effects. Your doctor may have prescribed them intentionally, but it's always
+                worth confirming at your next visit.
+              </p>
+            </div>
+          </div>
         </div>
       </main>
 
       {/* Bottom action bar — fixed */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
-        <div className="max-w-lg mx-auto flex gap-3">
-          <button onClick={handleShareWhatsApp} className="flex-1 flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl text-sm transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-            </svg>
-            Share on WhatsApp
-          </button>
-          <button onClick={onScanAnother} className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-xl text-sm transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            Scan New
-          </button>
+        <div className="max-w-lg mx-auto space-y-2">
+          {/* Primary row — WhatsApp share (real prescriptions only) */}
+          {!result.isDemo && (
+            <div className="flex gap-3">
+              <button onClick={handleShareWhatsApp} className="flex-1 flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl text-sm transition-colors">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Share on WhatsApp
+              </button>
+            </div>
+          )}
+          {/* Secondary row — Save + Scan New */}
+          <div className="flex gap-3">
+            {!result.isDemo && (
+              <button
+                onClick={handleSaveToHistory}
+                className={`flex-1 flex items-center justify-center gap-2 font-semibold py-2.5 px-4 rounded-xl text-sm transition-all duration-300 ${
+                  isSaved
+                    ? 'bg-emerald-50 border-[1.5px] border-emerald-300 text-emerald-700'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                }`}
+              >
+                {isSaved ? (
+                  <svg className="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                ) : (
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                  </svg>
+                )}
+                {isSaved ? 'Saved to My Medicines' : 'Save to My Medicines'}
+              </button>
+            )}
+            <button onClick={onScanAnother} className="flex-1 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-4 rounded-xl text-sm transition-colors">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              Scan New
+            </button>
+          </div>
+          {/* Recommend row — demo only */}
+          {result.isDemo && (
+            <div className="flex gap-3">
+              <button onClick={handleShareApp} className="flex-1 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-4 rounded-xl text-sm transition-colors">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Recommend RxScan
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Global disclaimer */}
-      <div className="max-w-lg mx-auto px-4 pb-6 mt-2">
+      <div className="h-4" />
+
+      <div className="max-w-lg mx-auto px-4 pb-6">
         <p className="text-[11px] text-slate-400 leading-relaxed text-center">
-          RxScan helps you understand your prescription. It is NOT medical advice. 
+          RxScan helps you understand your prescription. It is NOT medical advice.
           Always confirm with your doctor or pharmacist before making any changes to your medication.
         </p>
       </div>
+
+      <style jsx>{`
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(-8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.3s ease-out;
+        }
+      `}</style>
     </div>
   );
 }
