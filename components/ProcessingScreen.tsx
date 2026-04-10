@@ -129,9 +129,8 @@ export default function ProcessingScreen({ onComplete, onBack }: ProcessingScree
     if (activeStep >= STEPS.length) {
       // All steps done — brief pause then trigger completion
       setAllDone(true);
-      const timer = setTimeout(() => {
-        onComplete?.();
-      }, 800);
+      // Don't auto-call onComplete — let page.tsx handle it
+      // when the API actually returns
       return () => clearTimeout(timer);
     }
 
@@ -164,8 +163,7 @@ export default function ProcessingScreen({ onComplete, onBack }: ProcessingScree
           {allDone ? 'Your results are ready!' : 'Analyzing your prescription'}
         </h2>
         <p className="text-sm text-slate-500 mt-1 text-center">
-          {allDone ? 'Let\'s see what we found' : 'This usually takes a few seconds'}
-        </p>
+{allDone ? 'Let\'s see what we found' : activeStep >= STEPS.length ? 'Almost there — still processing...' : 'This usually takes a few seconds'}        </p>
 
         {/* Steps list */}
         <div className="w-full max-w-sm mt-8 space-y-2">

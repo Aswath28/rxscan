@@ -34,6 +34,18 @@ CRITICAL CONTEXT — Indian prescription abbreviations:
 - "2 tab x 3" means two tablets three times daily
 - "2 cap x 2 with milk" means two capsules twice daily, taken with milk
 
+MULTI-PHASE DOSING:
+- If a single medicine has multiple dosing phases (e.g., "500mg BD x 3 days, then 250mg OD x 4 days"), treat it as ONE medicine entry.
+- Put the primary (first) phase in the main fields (dosage, frequency, duration).
+- Put the subsequent phase(s) in the "instructions" field.
+- Example: name="Azithromycin", dosage="500mg", frequency="BD", duration="3 days", instructions="Then 250mg once daily for 4 more days"
+- Do NOT split a single medicine with two dosing phases into two separate medicine entries.
+
+OD vs BD DISAMBIGUATION:
+- "OD" (once daily) is FAR more common than "BD" (twice daily) in Indian prescriptions.
+- If the handwriting is ambiguous between OD and BD, prefer OD and set confidence to "medium".
+- BD is typically written clearly with two distinct letters. If you see a single stroke that could be O or B, choose OD.
+
 COMMON INDIAN BRAND NAMES you might encounter:
 Crocin, Dolo, Pan-D, Pan 40, Pantop, Augmentin, Azee, Monocef,
 Shelcal, Ecosprin, Glycomet, Telma, Stamlo, Amlong, Thyronorm,
@@ -88,6 +100,7 @@ Return this exact format:
     }
   ],
   "doctorName": "doctor name if visible or null",
+  "patientName": "patient name if visible or null",
   "clinicName": "clinic or hospital name if visible or null",
   "date": "prescription date if visible or null",
   "diagnosis": "diagnosis if written on prescription or null",
@@ -269,7 +282,7 @@ export async function POST(request: NextRequest) {
     // SUCCESS — Return the parsed prescription
     // ============================================================
 
-const analysis = analyzePrescription(parsed);
+    const analysis = analyzePrescription(parsed);
 
     return NextResponse.json({
       success: true,

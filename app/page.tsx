@@ -172,21 +172,40 @@ export default function Home() {
       const base64 = await fileToBase64(file);
       const mimeType = file.type || 'image/jpeg';
 
-      // Call the scan API
-      const response = await fetch('/api/scan-prescription', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: base64, mimeType }),
-      });
+      // Timeout after 30 seconds
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 30000);
 
-      const data = await response.json();
+      try {
+        const res = await fetch('/api/scan-prescription', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: base64, mimeType }),
+          signal: controller.signal,
+        });
+        clearTimeout(timeout);
 
-      if (!response.ok || !data.success) {
-        apiResultRef.current = {
-          error: data.error || data.message || 'Something went wrong. Please try again.',
-        };
-      } else {
-        apiResultRef.current = data.data;
+        const data = await res.json();
+
+        if (!res.ok) {
+          apiResultRef.current = {
+            error: data.error || 'Analysis failed. Please try again.',
+          };
+        } else {
+          apiResultRef.current = data.data;
+        }
+      } catch (err: any) {
+        clearTimeout(timeout);
+        if (err.name === 'AbortError') {
+          apiResultRef.current = {
+            error: 'Analysis is taking longer than expected. Please try again with a clearer photo.',
+          };
+        } else {
+          console.error('API call failed:', err);
+          apiResultRef.current = {
+            error: 'Could not connect to the server. Please check your internet and try again.',
+          };
+        }
       }
     } catch (err) {
       console.error('API call failed:', err);
@@ -220,14 +239,26 @@ export default function Home() {
     return (
       <>
         {error && (
-          <div className="fixed top-0 left-0 right-0 z-50 bg-red-500 text-white text-sm text-center py-3 px-4">
-            {error}
-            <button
-              onClick={() => setError(null)}
-              className="ml-3 underline font-medium"
-            >
-              Dismiss
-            </button>
+          <div className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-red-200 shadow-lg px-4 py-4 animate-fade-in">
+            <div className="max-w-lg mx-auto flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg className="w-4 h-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-slate-800">Something went wrong</p>
+                <p className="text-sm text-slate-600 mt-0.5">{error}</p>
+              </div>
+              <button
+                onClick={() => setError(null)}
+                className="text-slate-400 hover:text-slate-600 p-1"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
           </div>
         )}
         <UploadScreen onImageSelected={handleImageSelected} onBack={() => setScreen('landing')} />

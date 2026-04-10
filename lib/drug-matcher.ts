@@ -20,6 +20,7 @@ interface OCRMedicine {
 interface OCRResult {
   medicines: OCRMedicine[];
   doctorName: string | null;
+  patientName: string | null;
   clinicName: string | null;
   date: string | null;
   diagnosis: string | null;
@@ -58,6 +59,7 @@ interface AnalysisResult {
     savingsPercent: number;
   };
   doctorName: string | null;
+  patientName: string | null;
   clinicName: string | null;
   date: string | null;
   diagnosis: string | null;
@@ -120,18 +122,33 @@ function matchBrand(ocrName: string): { generic: string; dosage: string } | null
     }
   }
 
-  // 3. Fuzzy match — Levenshtein distance ≤ 2 on the name part (before any numbers)
+  // 3. Fuzzy match — dynamic Levenshtein tolerance based on word length
+  //    Short names (3-5 chars): max 1 edit (strict — "Pan" shouldn't match "Ran")
+  //    Medium names (6-9 chars): max 2 edits
+  //    Long names (10+ chars): max 3 edits
+  //    Also uses similarity ratio (1 - distance/maxLen) to pick the best match
+  //    This reduces inconsistency between phone and browser OCR (Bug #2)
   const ocrNamePart = normalized.replace(/\d+.*/g, '').trim();
   if (ocrNamePart.length < 3) return null; // too short to fuzzy match reliably
 
-  let bestMatch: { brand: string; mapping: { generic: string; dosage: string }; distance: number } | null = null;
+  const maxDistance = ocrNamePart.length <= 5 ? 1 : ocrNamePart.length <= 9 ? 2 : 3;
+
+  let bestMatch: { brand: string; mapping: { generic: string; dosage: string }; distance: number; ratio: number } | null = null;
 
   for (const [brand, mapping] of Object.entries(brandMap)) {
     const brandNamePart = normalize(brand).replace(/\d+.*/g, '').trim();
+    
+    // Skip if length difference is too large — no point computing Levenshtein
+    if (Math.abs(ocrNamePart.length - brandNamePart.length) > maxDistance) continue;
+    
     const distance = levenshtein(ocrNamePart, brandNamePart);
+    const maxLen = Math.max(ocrNamePart.length, brandNamePart.length);
+    const ratio = 1 - (distance / maxLen); // 1.0 = perfect, 0.0 = no match
 
-    if (distance <= 2 && (!bestMatch || distance < bestMatch.distance)) {
-      bestMatch = { brand, mapping, distance };
+    if (distance <= maxDistance && ratio >= 0.6) {
+      if (!bestMatch || ratio > bestMatch.ratio || (ratio === bestMatch.ratio && distance < bestMatch.distance)) {
+        bestMatch = { brand, mapping, distance, ratio };
+      }
     }
   }
 
@@ -284,6 +301,7 @@ export function analyzePrescription(ocrResult: OCRResult): AnalysisResult {
       savingsPercent,
     },
     doctorName: ocrResult.doctorName,
+    patientName: ocrResult.patientName || null,
     clinicName: ocrResult.clinicName,
     date: ocrResult.date,
     diagnosis: ocrResult.diagnosis,

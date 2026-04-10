@@ -763,5 +763,667 @@
     "mechanism": "Escitalopram blocks serotonin reuptake; tramadol also increases serotonin — combined effect can cause dangerous serotonin excess.",
     "recommendation": "Avoid combination if possible; if necessary, use lowest doses and monitor for serotonin syndrome symptoms.",
     "clinicalSignificance": "High — serotonin syndrome can be life-threatening."
+  },
+  
+  {
+    "id": "INT086",
+    "drugs": [
+      "Warfarin",
+      "Aspirin"
+    ],
+    "severity": "severe",
+    "effect": "Greatly increased bleeding risk from combined anticoagulant and antiplatelet effects.",
+    "mechanism": "Aspirin impairs platelet function while warfarin inhibits clotting factors \u2014 dual pathway bleeding risk.",
+    "recommendation": "Avoid unless specifically indicated; if combined, use lowest aspirin dose with close INR monitoring.",
+    "clinicalSignificance": "High \u2014 major bleeding events reported."
+  },
+  {
+    "id": "INT087",
+    "drugs": [
+      "Warfarin",
+      "Azithromycin"
+    ],
+    "severity": "moderate",
+    "effect": "Azithromycin may increase warfarin's anticoagulant effect, raising bleeding risk.",
+    "mechanism": "Azithromycin may alter gut flora involved in vitamin K synthesis and weakly inhibit CYP3A4.",
+    "recommendation": "Monitor INR closely during and after antibiotic course.",
+    "clinicalSignificance": "Moderate \u2014 INR increases reported."
+  },
+  {
+    "id": "INT088",
+    "drugs": [
+      "Warfarin",
+      "Metronidazole"
+    ],
+    "severity": "severe",
+    "effect": "Metronidazole significantly increases warfarin levels, causing dangerous over-anticoagulation.",
+    "mechanism": "Metronidazole inhibits CYP2C9, the enzyme that metabolizes the more potent S-warfarin enantiomer.",
+    "recommendation": "Reduce warfarin dose by 25-50% and monitor INR frequently; consider alternative antibiotic.",
+    "clinicalSignificance": "High \u2014 INR can increase dramatically within days."
+  },
+  {
+    "id": "INT089",
+    "drugs": [
+      "Warfarin",
+      "Omeprazole"
+    ],
+    "severity": "mild",
+    "effect": "Omeprazole may modestly increase warfarin levels through CYP2C19 inhibition.",
+    "mechanism": "Omeprazole inhibits CYP2C19 which metabolizes R-warfarin (less potent enantiomer).",
+    "recommendation": "Monitor INR when starting or stopping PPI; effect is usually minor.",
+    "clinicalSignificance": "Mild \u2014 clinically significant mainly in CYP2C19 poor metabolizers."
+  },
+  {
+    "id": "INT090",
+    "drugs": [
+      "Warfarin",
+      "Paracetamol"
+    ],
+    "severity": "moderate",
+    "effect": "Regular paracetamol use (>2g/day for several days) can increase INR and bleeding risk.",
+    "mechanism": "Paracetamol's metabolite NAPQI inhibits vitamin K-dependent carboxylase enzymes.",
+    "recommendation": "Occasional use is safe; monitor INR if using >2g/day for more than 3 days.",
+    "clinicalSignificance": "Moderate \u2014 often overlooked; significant with chronic use."
+  },
+  {
+    "id": "INT091",
+    "drugs": [
+      "Dapagliflozin",
+      "Furosemide"
+    ],
+    "severity": "moderate",
+    "effect": "Both cause fluid loss; combination increases risk of dehydration, hypotension, and acute kidney injury.",
+    "mechanism": "SGLT2 inhibitors cause osmotic diuresis; loop diuretics cause natriuresis \u2014 additive volume depletion.",
+    "recommendation": "Monitor volume status, blood pressure, and renal function; may need to reduce diuretic dose.",
+    "clinicalSignificance": "Moderate \u2014 particularly important in elderly patients."
+  },
+  {
+    "id": "INT092",
+    "drugs": [
+      "Empagliflozin",
+      "Furosemide"
+    ],
+    "severity": "moderate",
+    "effect": "Increased risk of dehydration and hypotension from combined diuretic effects.",
+    "mechanism": "Additive volume depletion from osmotic diuresis (SGLT2i) and loop diuresis (furosemide).",
+    "recommendation": "Ensure adequate hydration; monitor kidney function and electrolytes.",
+    "clinicalSignificance": "Moderate \u2014 dose adjustment of diuretic may be needed."
+  },
+  {
+    "id": "INT093",
+    "drugs": [
+      "Dapagliflozin",
+      "Insulin"
+    ],
+    "severity": "moderate",
+    "effect": "Increased risk of hypoglycemia; also increases risk of diabetic ketoacidosis (euglycemic DKA).",
+    "mechanism": "SGLT2i lowers glucose independently; with insulin, combined effect may cause low blood sugar. SGLT2i also promotes ketogenesis.",
+    "recommendation": "Reduce insulin dose by 10-20% when starting SGLT2i; educate about DKA symptoms even with normal glucose.",
+    "clinicalSignificance": "Moderate to high \u2014 euglycemic DKA is a serious but often missed complication."
+  },
+  {
+    "id": "INT094",
+    "drugs": [
+      "Rivaroxaban",
+      "Aspirin"
+    ],
+    "severity": "moderate",
+    "effect": "Significantly increased bleeding risk from combined anticoagulant and antiplatelet effects.",
+    "mechanism": "Rivaroxaban inhibits Factor Xa; aspirin inhibits platelets \u2014 dual pathway bleeding risk.",
+    "recommendation": "Use only when specifically indicated (e.g., post-ACS); lowest aspirin dose (75mg); gastroprotection recommended.",
+    "clinicalSignificance": "High \u2014 major bleeding events increased by 50%."
+  },
+  {
+    "id": "INT095",
+    "drugs": [
+      "Rivaroxaban",
+      "Ibuprofen"
+    ],
+    "severity": "severe",
+    "effect": "NSAIDs significantly increase bleeding risk with direct oral anticoagulants.",
+    "mechanism": "NSAIDs impair platelet function and damage GI mucosa; combined with anticoagulant effect of rivaroxaban.",
+    "recommendation": "Avoid NSAIDs; use paracetamol for pain relief instead.",
+    "clinicalSignificance": "High \u2014 GI bleeding risk is substantially elevated."
+  },
+  {
+    "id": "INT096",
+    "drugs": [
+      "Apixaban",
+      "Aspirin"
+    ],
+    "severity": "moderate",
+    "effect": "Increased bleeding risk from combined anticoagulant and antiplatelet effects.",
+    "mechanism": "Apixaban inhibits Factor Xa; aspirin inhibits COX-1 platelets \u2014 additive bleeding risk.",
+    "recommendation": "Use lowest effective aspirin dose if combination is necessary; prescribe PPI cover.",
+    "clinicalSignificance": "High \u2014 bleeding risk requires careful monitoring."
+  },
+  {
+    "id": "INT097",
+    "drugs": [
+      "Digoxin",
+      "Furosemide"
+    ],
+    "severity": "severe",
+    "effect": "Furosemide-induced low potassium greatly increases risk of fatal digoxin toxicity.",
+    "mechanism": "Hypokalemia from furosemide allows digoxin to bind more avidly to cardiac Na/K ATPase, causing arrhythmias.",
+    "recommendation": "Monitor potassium closely; supplement potassium or use potassium-sparing diuretic alongside.",
+    "clinicalSignificance": "High \u2014 hypokalemia + digoxin is a classic life-threatening interaction."
+  },
+  {
+    "id": "INT098",
+    "drugs": [
+      "Digoxin",
+      "Amiodarone"
+    ],
+    "severity": "severe",
+    "effect": "Amiodarone increases digoxin blood levels by 70-100%, causing toxicity (nausea, visual changes, arrhythmias).",
+    "mechanism": "Amiodarone inhibits P-glycoprotein and reduces renal clearance of digoxin.",
+    "recommendation": "Reduce digoxin dose by 50% when starting amiodarone; monitor digoxin levels closely.",
+    "clinicalSignificance": "High \u2014 one of the most well-known pharmacokinetic interactions."
+  },
+  {
+    "id": "INT099",
+    "drugs": [
+      "Digoxin",
+      "Amlodipine"
+    ],
+    "severity": "mild",
+    "effect": "Amlodipine may modestly increase digoxin levels.",
+    "mechanism": "Weak inhibition of P-glycoprotein-mediated digoxin excretion.",
+    "recommendation": "Monitor digoxin levels when adding amlodipine; usually clinically insignificant.",
+    "clinicalSignificance": "Low \u2014 dose adjustment rarely needed."
+  },
+  {
+    "id": "INT100",
+    "drugs": [
+      "Amiodarone",
+      "Warfarin"
+    ],
+    "severity": "severe",
+    "effect": "Amiodarone dramatically increases warfarin levels, causing dangerous over-anticoagulation.",
+    "mechanism": "Amiodarone potently inhibits CYP2C9 (metabolizes S-warfarin) and CYP3A4.",
+    "recommendation": "Reduce warfarin dose by 30-50% when starting amiodarone; monitor INR weekly for at least 8 weeks.",
+    "clinicalSignificance": "High \u2014 one of the most important drug interactions in cardiology."
+  },
+  {
+    "id": "INT101",
+    "drugs": [
+      "Amiodarone",
+      "Atorvastatin"
+    ],
+    "severity": "moderate",
+    "effect": "Amiodarone significantly increases statin levels, raising the risk of muscle damage (rhabdomyolysis).",
+    "mechanism": "Amiodarone inhibits CYP3A4, which metabolizes atorvastatin.",
+    "recommendation": "Limit atorvastatin to 20mg/day when combined with amiodarone; monitor for muscle symptoms.",
+    "clinicalSignificance": "Moderate to high \u2014 rhabdomyolysis cases reported."
+  },
+  {
+    "id": "INT102",
+    "drugs": [
+      "Methotrexate",
+      "Ibuprofen"
+    ],
+    "severity": "severe",
+    "effect": "NSAIDs reduce methotrexate renal clearance, causing dangerous accumulation and toxicity.",
+    "mechanism": "NSAIDs reduce renal blood flow and compete with methotrexate for renal tubular secretion.",
+    "recommendation": "Avoid NSAIDs with high-dose methotrexate; use with extreme caution even at low doses.",
+    "clinicalSignificance": "High \u2014 methotrexate toxicity can be fatal (bone marrow suppression, hepatotoxicity)."
+  },
+  {
+    "id": "INT103",
+    "drugs": [
+      "Methotrexate",
+      "Trimethoprim"
+    ],
+    "severity": "severe",
+    "effect": "Both drugs inhibit folate metabolism, causing severe bone marrow suppression.",
+    "mechanism": "Additive anti-folate effect \u2014 methotrexate inhibits DHFR; trimethoprim also inhibits DHFR at bacterial and human levels.",
+    "recommendation": "Avoid this combination; use alternative antibiotics for UTIs in methotrexate patients.",
+    "clinicalSignificance": "High \u2014 pancytopenia and fatal outcomes reported."
+  },
+  {
+    "id": "INT104",
+    "drugs": [
+      "Lithium",
+      "Ibuprofen"
+    ],
+    "severity": "severe",
+    "effect": "NSAIDs increase lithium levels by 15-30%, risking toxicity (tremor, confusion, seizures, renal failure).",
+    "mechanism": "NSAIDs reduce renal prostaglandin synthesis, decreasing lithium clearance.",
+    "recommendation": "Avoid regular NSAID use; if essential, monitor lithium levels closely and reduce dose. Paracetamol is safe.",
+    "clinicalSignificance": "High \u2014 lithium has a very narrow therapeutic index."
+  },
+  {
+    "id": "INT105",
+    "drugs": [
+      "Lithium",
+      "Ramipril"
+    ],
+    "severity": "severe",
+    "effect": "ACE inhibitors significantly increase lithium levels, risking severe toxicity.",
+    "mechanism": "ACE inhibitors reduce renal sodium and water excretion, increasing lithium reabsorption in the proximal tubule.",
+    "recommendation": "Monitor lithium levels closely when starting or changing ACE inhibitor dose; reduce lithium dose if needed.",
+    "clinicalSignificance": "High \u2014 lithium toxicity is a medical emergency."
+  },
+  {
+    "id": "INT106",
+    "drugs": [
+      "Lithium",
+      "Furosemide"
+    ],
+    "severity": "severe",
+    "effect": "Furosemide causes sodium loss, leading to compensatory lithium reabsorption and toxicity.",
+    "mechanism": "Volume depletion and sodium depletion from diuretics cause increased proximal tubular lithium reabsorption.",
+    "recommendation": "Use with extreme caution; monitor lithium levels and renal function. Thiazides are even more dangerous.",
+    "clinicalSignificance": "High \u2014 dehydration from any cause can precipitate lithium toxicity."
+  },
+  {
+    "id": "INT107",
+    "drugs": [
+      "Tamsulosin",
+      "Amlodipine"
+    ],
+    "severity": "moderate",
+    "effect": "Additive blood pressure lowering can cause significant first-dose hypotension and dizziness.",
+    "mechanism": "Tamsulosin blocks alpha-1 receptors (vasodilation); amlodipine blocks calcium channels (vasodilation) \u2014 additive effect.",
+    "recommendation": "Start tamsulosin at bedtime; warn about postural hypotension; monitor BP.",
+    "clinicalSignificance": "Moderate \u2014 particularly important in elderly patients."
+  },
+  {
+    "id": "INT108",
+    "drugs": [
+      "Sildenafil",
+      "Amlodipine"
+    ],
+    "severity": "moderate",
+    "effect": "Additive blood pressure lowering may cause symptomatic hypotension.",
+    "mechanism": "Both drugs cause vasodilation \u2014 sildenafil via PDE5 inhibition, amlodipine via calcium channel blockade.",
+    "recommendation": "Use lower sildenafil dose (25mg); avoid if blood pressure is already low.",
+    "clinicalSignificance": "Moderate \u2014 particularly dangerous with nitrates (see below)."
+  },
+  {
+    "id": "INT109",
+    "drugs": [
+      "Sildenafil",
+      "Isosorbide Mononitrate"
+    ],
+    "severity": "severe",
+    "effect": "Potentially fatal drop in blood pressure \u2014 combination is absolutely contraindicated.",
+    "mechanism": "Nitrates release NO; sildenafil blocks cGMP breakdown \u2014 combined effect causes profound vasodilation and hypotension.",
+    "recommendation": "NEVER combine. Wait at least 24 hours after sildenafil before using nitrates (48 hours for tadalafil).",
+    "clinicalSignificance": "High \u2014 deaths have been reported. This is an absolute contraindication."
+  },
+  {
+    "id": "INT110",
+    "drugs": [
+      "Tadalafil",
+      "Isosorbide Mononitrate"
+    ],
+    "severity": "severe",
+    "effect": "Potentially fatal hypotension \u2014 combination is absolutely contraindicated.",
+    "mechanism": "Same NO-cGMP synergy as sildenafil but tadalafil has a longer half-life (17 hours), extending the danger window.",
+    "recommendation": "NEVER combine. Wait at least 48 hours after tadalafil before using any nitrate.",
+    "clinicalSignificance": "High \u2014 absolute contraindication; the longer half-life makes this even more dangerous."
+  },
+  {
+    "id": "INT111",
+    "drugs": [
+      "Isotretinoin",
+      "Doxycycline"
+    ],
+    "severity": "severe",
+    "effect": "Both drugs can cause raised intracranial pressure (pseudotumor cerebri) \u2014 combination greatly increases risk.",
+    "mechanism": "Both independently cause benign intracranial hypertension; additive effect when combined.",
+    "recommendation": "NEVER combine isotretinoin with tetracycline antibiotics; wait until one is fully stopped before starting the other.",
+    "clinicalSignificance": "High \u2014 can cause permanent vision loss if not recognized early."
+  },
+  {
+    "id": "INT112",
+    "drugs": [
+      "Isotretinoin",
+      "Methotrexate"
+    ],
+    "severity": "severe",
+    "effect": "Additive hepatotoxicity risk \u2014 both drugs are individually toxic to the liver.",
+    "mechanism": "Both cause dose-dependent liver damage through different mechanisms.",
+    "recommendation": "Avoid combination; if unavoidable, monitor liver function tests frequently.",
+    "clinicalSignificance": "High \u2014 liver failure risk."
+  },
+  {
+    "id": "INT113",
+    "drugs": [
+      "Carbamazepine",
+      "Azithromycin"
+    ],
+    "severity": "moderate",
+    "effect": "Azithromycin may increase carbamazepine levels, causing toxicity (diplopia, ataxia, nausea).",
+    "mechanism": "Weak CYP3A4 inhibition by azithromycin reduces carbamazepine metabolism.",
+    "recommendation": "Monitor for carbamazepine toxicity symptoms during antibiotic course; check levels if concerned.",
+    "clinicalSignificance": "Moderate \u2014 carbamazepine has a narrow therapeutic index."
+  },
+  {
+    "id": "INT114",
+    "drugs": [
+      "Carbamazepine",
+      "Oral Contraceptive Pills"
+    ],
+    "severity": "severe",
+    "effect": "Carbamazepine dramatically reduces contraceptive effectiveness, causing unplanned pregnancies.",
+    "mechanism": "Carbamazepine strongly induces CYP3A4, which metabolizes ethinylestradiol and progestins.",
+    "recommendation": "Use alternative contraception (IUD, depot injection) or higher-dose OCP with specialist advice.",
+    "clinicalSignificance": "High \u2014 one of the most clinically important drug interactions for women of childbearing age."
+  },
+  {
+    "id": "INT115",
+    "drugs": [
+      "Fluconazole",
+      "Glimepiride"
+    ],
+    "severity": "moderate",
+    "effect": "Fluconazole increases glimepiride levels, causing potentially severe hypoglycemia.",
+    "mechanism": "Fluconazole inhibits CYP2C9, the enzyme that metabolizes glimepiride.",
+    "recommendation": "Monitor blood glucose closely during fluconazole treatment; may need to reduce glimepiride dose.",
+    "clinicalSignificance": "Moderate to high \u2014 severe hypoglycemia reported."
+  },
+  {
+    "id": "INT116",
+    "drugs": [
+      "Fluconazole",
+      "Atorvastatin"
+    ],
+    "severity": "moderate",
+    "effect": "Fluconazole increases statin levels, raising the risk of muscle damage.",
+    "mechanism": "Fluconazole inhibits CYP3A4 and CYP2C9, reducing atorvastatin clearance.",
+    "recommendation": "Use lower statin dose during fluconazole course; monitor for muscle pain.",
+    "clinicalSignificance": "Moderate \u2014 short antifungal courses are lower risk."
+  },
+  {
+    "id": "INT117",
+    "drugs": [
+      "Fluconazole",
+      "Warfarin"
+    ],
+    "severity": "severe",
+    "effect": "Fluconazole significantly increases warfarin levels, causing dangerous over-anticoagulation.",
+    "mechanism": "Fluconazole potently inhibits CYP2C9 (S-warfarin metabolism) and CYP3A4 (R-warfarin metabolism).",
+    "recommendation": "Reduce warfarin dose and monitor INR every 2-3 days during antifungal treatment.",
+    "clinicalSignificance": "High \u2014 major bleeding events reported."
+  },
+  {
+    "id": "INT118",
+    "drugs": [
+      "Levodopa + Carbidopa",
+      "Domperidone"
+    ],
+    "severity": "mild",
+    "effect": "Domperidone can be beneficial \u2014 it blocks peripheral dopamine receptors, reducing levodopa-induced nausea without crossing BBB.",
+    "mechanism": "Domperidone antagonizes peripheral dopamine D2 receptors in the chemoreceptor trigger zone but doesn't cross blood-brain barrier.",
+    "recommendation": "This is actually a beneficial combination; domperidone is the preferred anti-emetic with levodopa.",
+    "clinicalSignificance": "Low \u2014 intentional and beneficial combination."
+  },
+  {
+    "id": "INT119",
+    "drugs": [
+      "Levodopa + Carbidopa",
+      "Metoclopramide"
+    ],
+    "severity": "severe",
+    "effect": "Metoclopramide blocks dopamine receptors in the brain, directly opposing levodopa's therapeutic effect.",
+    "mechanism": "Metoclopramide crosses the blood-brain barrier and blocks central D2 receptors, worsening Parkinson's symptoms.",
+    "recommendation": "AVOID metoclopramide in Parkinson's patients; use domperidone instead for nausea.",
+    "clinicalSignificance": "High \u2014 can cause acute worsening of Parkinson's symptoms."
+  },
+  {
+    "id": "INT120",
+    "drugs": [
+      "Gabapentin",
+      "Tramadol"
+    ],
+    "severity": "moderate",
+    "effect": "Additive CNS depression causing excessive sedation, respiratory depression, and risk of overdose.",
+    "mechanism": "Both have CNS depressant properties; gabapentin enhances opioid-induced respiratory depression.",
+    "recommendation": "Start with lowest doses; titrate carefully; educate patient about sedation and respiratory depression signs.",
+    "clinicalSignificance": "Moderate to high \u2014 FDA warning issued about gabapentinoid + opioid combination."
+  },
+  {
+    "id": "INT121",
+    "drugs": [
+      "Sacubitril + Valsartan",
+      "Ramipril"
+    ],
+    "severity": "severe",
+    "effect": "Combination causes life-threatening angioedema from excessive bradykinin accumulation.",
+    "mechanism": "Sacubitril inhibits neprilysin (which degrades bradykinin); ACE inhibitors also increase bradykinin \u2014 dual pathway accumulation.",
+    "recommendation": "NEVER combine. Must wash out ACE inhibitor for 36 hours before starting sacubitril/valsartan.",
+    "clinicalSignificance": "High \u2014 absolute contraindication; angioedema can be fatal."
+  },
+  {
+    "id": "INT122",
+    "drugs": [
+      "Sacubitril + Valsartan",
+      "Spironolactone"
+    ],
+    "severity": "severe",
+    "effect": "Significantly increased risk of hyperkalemia from combined RAAS blockade.",
+    "mechanism": "Sacubitril/valsartan blocks RAAS; spironolactone blocks aldosterone \u2014 additive potassium retention.",
+    "recommendation": "Monitor potassium and renal function closely; commonly used together in heart failure but requires careful monitoring.",
+    "clinicalSignificance": "High \u2014 intentional combination in HF but requires regular monitoring."
+  },
+  {
+    "id": "INT123",
+    "drugs": [
+      "Aceclofenac",
+      "Pantoprazole"
+    ],
+    "severity": "mild",
+    "effect": "Pantoprazole provides beneficial gastroprotection when prescribed alongside NSAIDs.",
+    "mechanism": "PPIs reduce NSAID-induced gastric acid damage by blocking proton pumps.",
+    "recommendation": "This is a beneficial combination; PPIs are recommended with regular NSAID use.",
+    "clinicalSignificance": "Low \u2014 intentional protective combination."
+  },
+  {
+    "id": "INT124",
+    "drugs": [
+      "Aceclofenac",
+      "Ramipril"
+    ],
+    "severity": "moderate",
+    "effect": "NSAIDs reduce antihypertensive effect and increase risk of acute kidney injury.",
+    "mechanism": "Prostaglandin inhibition reduces renal blood flow and sodium excretion, opposing ACE inhibitor effects.",
+    "recommendation": "Avoid regular NSAID use; if necessary, monitor BP and renal function. Use paracetamol instead.",
+    "clinicalSignificance": "Moderate to high \u2014 triple whammy risk with diuretic."
+  },
+  {
+    "id": "INT125",
+    "drugs": [
+      "Diclofenac",
+      "Telmisartan"
+    ],
+    "severity": "moderate",
+    "effect": "NSAIDs reduce the blood pressure-lowering effect of ARBs and can impair kidney function.",
+    "mechanism": "Prostaglandin inhibition counteracts ARB-mediated vasodilation and reduces renal perfusion.",
+    "recommendation": "Avoid long-term NSAID use; monitor BP and renal function if short-term use is necessary.",
+    "clinicalSignificance": "Moderate \u2014 very common combination in clinical practice."
+  },
+  {
+    "id": "INT126",
+    "drugs": [
+      "Rifampicin",
+      "Atorvastatin"
+    ],
+    "severity": "severe",
+    "effect": "Rifampicin reduces atorvastatin levels by up to 80%, making it largely ineffective.",
+    "mechanism": "Rifampicin is one of the most potent CYP3A4 inducers known; it massively accelerates statin metabolism.",
+    "recommendation": "Increase statin dose significantly or switch to rosuvastatin (less affected); monitor lipid levels.",
+    "clinicalSignificance": "High \u2014 cholesterol management fails during TB treatment without dose adjustment."
+  },
+  {
+    "id": "INT127",
+    "drugs": [
+      "Rifampicin",
+      "Warfarin"
+    ],
+    "severity": "severe",
+    "effect": "Rifampicin dramatically reduces warfarin levels, causing loss of anticoagulation and thromboembolic events.",
+    "mechanism": "Rifampicin induces CYP2C9, CYP3A4, and CYP1A2, accelerating warfarin metabolism by all pathways.",
+    "recommendation": "Warfarin dose may need to increase by 2-5 fold; monitor INR very frequently during and after TB treatment.",
+    "clinicalSignificance": "High \u2014 failure to adjust can cause stroke or DVT."
+  },
+  {
+    "id": "INT128",
+    "drugs": [
+      "Rifampicin",
+      "Metformin"
+    ],
+    "severity": "mild",
+    "effect": "Rifampicin may modestly increase metformin levels by inducing organic cation transporters.",
+    "mechanism": "Rifampicin induces OCT1 in the liver, increasing metformin hepatic uptake and potentially its effect.",
+    "recommendation": "Monitor blood glucose; effect is usually mild and may actually improve glucose control.",
+    "clinicalSignificance": "Mild \u2014 generally not clinically significant."
+  },
+  {
+    "id": "INT129",
+    "drugs": [
+      "Enoxaparin",
+      "Aspirin"
+    ],
+    "severity": "moderate",
+    "effect": "Combined anticoagulant and antiplatelet effect significantly increases bleeding risk.",
+    "mechanism": "Enoxaparin inhibits Factor Xa; aspirin inhibits platelet aggregation \u2014 dual antihaemostatic effect.",
+    "recommendation": "Use only when clearly indicated (e.g., ACS); monitor for bleeding signs; use PPI for GI protection.",
+    "clinicalSignificance": "Moderate to high \u2014 common in hospital settings for ACS management."
+  },
+  {
+    "id": "INT130",
+    "drugs": [
+      "Enoxaparin",
+      "Ibuprofen"
+    ],
+    "severity": "severe",
+    "effect": "NSAIDs significantly increase the risk of bleeding when combined with low molecular weight heparin.",
+    "mechanism": "NSAIDs impair platelet function and damage GI mucosa; combined with anticoagulant effect.",
+    "recommendation": "Avoid NSAIDs during enoxaparin therapy; use paracetamol for pain.",
+    "clinicalSignificance": "High \u2014 major bleeding events reported."
+  },
+  {
+    "id": "INT131",
+    "drugs": [
+      "Duloxetine",
+      "Tramadol"
+    ],
+    "severity": "severe",
+    "effect": "Risk of serotonin syndrome \u2014 agitation, confusion, rapid heart rate, high temperature, muscle rigidity.",
+    "mechanism": "Both drugs increase serotonin: duloxetine blocks serotonin reuptake, tramadol also increases serotonin release.",
+    "recommendation": "Avoid combination; if necessary, use lowest doses and monitor for serotonin syndrome symptoms.",
+    "clinicalSignificance": "High \u2014 serotonin syndrome can be life-threatening."
+  },
+  {
+    "id": "INT132",
+    "drugs": [
+      "Duloxetine",
+      "Metoprolol"
+    ],
+    "severity": "moderate",
+    "effect": "Duloxetine increases metoprolol levels, causing excessive heart rate slowing and hypotension.",
+    "mechanism": "Duloxetine inhibits CYP2D6, the primary enzyme metabolizing metoprolol.",
+    "recommendation": "Monitor heart rate and blood pressure; consider reducing metoprolol dose.",
+    "clinicalSignificance": "Moderate \u2014 clinically relevant pharmacokinetic interaction."
+  },
+  {
+    "id": "INT133",
+    "drugs": [
+      "Olanzapine",
+      "Metformin"
+    ],
+    "severity": "moderate",
+    "effect": "Olanzapine causes significant weight gain and insulin resistance, counteracting metformin's glucose-lowering effect.",
+    "mechanism": "Olanzapine promotes metabolic syndrome via histamine and serotonin receptor effects.",
+    "recommendation": "Monitor blood glucose, HbA1c, and weight regularly; metformin dose may need increase.",
+    "clinicalSignificance": "Moderate to high \u2014 metabolic monitoring is mandatory."
+  },
+  {
+    "id": "INT134",
+    "drugs": [
+      "Olanzapine",
+      "Lorazepam"
+    ],
+    "severity": "severe",
+    "effect": "IM injection of both together can cause severe hypotension, respiratory depression, and death.",
+    "mechanism": "Additive CNS depression through different mechanisms; particularly dangerous when given intramuscularly.",
+    "recommendation": "If both needed, wait at least 1 hour between IM injections; monitor vital signs closely.",
+    "clinicalSignificance": "High \u2014 FDA warning specifically about IM co-administration."
+  },
+  {
+    "id": "INT135",
+    "drugs": [
+      "Vildagliptin",
+      "Insulin"
+    ],
+    "severity": "moderate",
+    "effect": "Increased risk of hypoglycemia when DPP-4 inhibitor is combined with insulin.",
+    "mechanism": "Vildagliptin increases incretin-mediated insulin secretion, adding to exogenous insulin effect.",
+    "recommendation": "May need to reduce insulin dose when adding vildagliptin; monitor blood glucose closely.",
+    "clinicalSignificance": "Moderate \u2014 insulin dose reduction often needed."
+  },
+  {
+    "id": "INT136",
+    "drugs": [
+      "Gabapentin",
+      "Alcohol"
+    ],
+    "severity": "moderate",
+    "effect": "Additive CNS depression causing excessive sedation, dizziness, and impaired coordination.",
+    "mechanism": "Both have CNS depressant properties; alcohol enhances gabapentin absorption.",
+    "recommendation": "Avoid or significantly limit alcohol intake during gabapentin treatment.",
+    "clinicalSignificance": "Moderate \u2014 risk of falls, accidents, and respiratory depression."
+  },
+  {
+    "id": "INT137",
+    "drugs": [
+      "Tamoxifen",
+      "Sertraline"
+    ],
+    "severity": "moderate",
+    "effect": "Sertraline may reduce tamoxifen's anticancer effectiveness by inhibiting its activation.",
+    "mechanism": "Sertraline inhibits CYP2D6, which converts tamoxifen to its active metabolite endoxifen.",
+    "recommendation": "Consider switching to citalopram or venlafaxine (weaker CYP2D6 inhibitors) for depression in breast cancer patients.",
+    "clinicalSignificance": "Moderate to high \u2014 can compromise breast cancer treatment."
+  },
+  {
+    "id": "INT138",
+    "drugs": [
+      "Ondansetron",
+      "Azithromycin"
+    ],
+    "severity": "moderate",
+    "effect": "Both drugs prolong QT interval; combination increases risk of cardiac arrhythmias.",
+    "mechanism": "Both independently block cardiac hERG potassium channels.",
+    "recommendation": "Use with caution; consider alternative anti-emetic. Get ECG if both are necessary.",
+    "clinicalSignificance": "Moderate \u2014 important in hospitalized patients receiving both drugs."
+  },
+  {
+    "id": "INT139",
+    "drugs": [
+      "Donepezil",
+      "Atenolol"
+    ],
+    "severity": "moderate",
+    "effect": "Additive bradycardic effect can cause significant heart rate slowing, syncope, and falls.",
+    "mechanism": "Donepezil increases acetylcholine (slows heart); atenolol blocks sympathetic drive to the heart \u2014 additive bradycardia.",
+    "recommendation": "Monitor heart rate regularly; watch for dizziness and falls, especially in elderly patients.",
+    "clinicalSignificance": "Moderate \u2014 important in Alzheimer's patients who are often elderly."
+  },
+  {
+    "id": "INT140",
+    "drugs": [
+      "Allopurinol",
+      "Azathioprine"
+    ],
+    "severity": "severe",
+    "effect": "Allopurinol dramatically increases azathioprine toxicity, causing life-threatening bone marrow suppression.",
+    "mechanism": "Allopurinol inhibits xanthine oxidase, which normally metabolizes azathioprine. Drug accumulation is massive.",
+    "recommendation": "Reduce azathioprine dose by 75% if allopurinol must be used; frequent blood count monitoring is mandatory.",
+    "clinicalSignificance": "High \u2014 one of the most dangerous drug interactions; fatal pancytopenia reported."
   }
+
 ]

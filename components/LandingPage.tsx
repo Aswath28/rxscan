@@ -86,9 +86,9 @@ function StatBar() {
   return (
     <div className="flex items-center justify-center gap-6 py-4">
       {[
-        { value: '1,800+', label: 'Medicines' },
-        { value: '₹500+', label: 'Avg savings' },
-        { value: '94%', label: 'OCR accuracy' },
+{ value: '400+', label: 'Medicines in database' },       
+ { value: '₹500+', label: 'Avg savings' },
+{ value: '4,000+', label: 'Brand names recognized' },
       ].map((stat, i) => (
         <div key={i} className="text-center">
           <div className="text-lg font-bold text-emerald-600">{stat.value}</div>
@@ -108,6 +108,7 @@ const DID_YOU_KNOW_FACTS = [
   "The Indian government runs 12,000+ Jan Aushadhi stores selling generic medicines at up to 90% less than branded versions. Same molecule, same quality — just without the brand markup.",
   "The same Paracetamol 500mg tablet costs ₹30 as Crocin and ₹5 as a generic — same molecule, same CDSCO certification.",
   "India has the world's largest generic pharmaceutical industry — but most patients never benefit because doctors prescribe by brand name.",
+  "Elderly patients seeing 2–3 specialists often end up on medicines that interact with each other. No pharmacist in India routinely checks for this.",
   "CDSCO certifies generic medicines as bioequivalent — meaning they work the same way in your body as the branded version.",
 ];
 
