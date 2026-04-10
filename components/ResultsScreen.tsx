@@ -121,6 +121,33 @@ function SavingsBanner({ medicines }: { medicines: any[] }) {
   const savings = brandTotal - genericTotal;
   const savingsPercent = brandTotal > 0 ? Math.round((savings / brandTotal) * 100) : 0;
 
+  // BUG #4 FIX: Show contextual message when no pricing data is available
+  const hasPricingData = medicines.some((m) => m.brandPrice > 0 || m.genericPrice > 0);
+
+  if (!hasPricingData) {
+    return (
+      <div className="rounded-2xl bg-gradient-to-br from-slate-500 to-slate-700 p-5 text-white shadow-lg">
+        <div className="flex items-start gap-3">
+          <span className="text-2xl mt-0.5">💊</span>
+          <div>
+            <div className="text-sm font-semibold text-white">
+              Pricing data not available
+            </div>
+            <p className="mt-1 text-sm text-slate-200 leading-relaxed">
+              We couldn't find pricing information for the medicines in this prescription.
+              This usually means these medicines aren't in our database yet. You can still
+              review the medicine details below.
+            </p>
+            <p className="mt-2 text-xs text-slate-300 leading-relaxed">
+              Ask your pharmacist about generic alternatives — they may be available at
+              a Jan Aushadhi Kendra near you.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 p-5 text-white shadow-lg">
       <div className="text-sm font-medium text-emerald-100 tracking-wide uppercase">
@@ -372,8 +399,9 @@ function InteractionAlert({ interaction }: { interaction: any }) {
 // COMPONENT: Prescription Header
 // ============================================================
 
-function PrescriptionHeader({ doctorName, date, readability }: {
+function PrescriptionHeader({ doctorName, patientName, date, readability }: {
   doctorName: string | null;
+  patientName: string | null;
   date: string | null;
   readability: 'good' | 'fair' | 'poor';
 }) {
@@ -387,8 +415,13 @@ function PrescriptionHeader({ doctorName, date, readability }: {
   return (
     <div className="flex items-center justify-between py-3">
       <div>
+        {patientName && (
+          <h2 className="font-semibold text-slate-800 text-base">{patientName}</h2>
+        )}
         {doctorName && (
-          <h2 className="font-semibold text-slate-800 text-base">{doctorName}</h2>
+          <p className={`text-sm ${patientName ? 'text-slate-500' : 'font-semibold text-slate-800 text-base'}`}>
+            {doctorName}
+          </p>
         )}
         {date && (
           <p className="text-sm text-slate-500">{date}</p>
@@ -560,6 +593,178 @@ export default function ResultsScreen({ result, onScanAnother, onBack }: Results
     }
   };
 
+  // ---- Download shareable image card ----
+  const handleDownloadCard = async () => {
+    const canvas = document.createElement('canvas');
+    const scale = 2; // 2x for retina
+    const w = 540;
+    const medCount = Math.min(result.medicines.length, 8);
+    const h = Math.min(340 + medCount * 58 + (result.interactions.length > 0 ? 52 : 0) + (result.medicines.length > 8 ? 28 : 0), 900);
+    canvas.width = w * scale;
+    canvas.height = h * scale;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.scale(scale, scale);
+
+    // Background gradient
+    const grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, '#047857');
+    grad.addColorStop(0.3, '#065f46');
+    grad.addColorStop(1, '#064e3b');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.roundRect(0, 0, w, h, 16);
+    ctx.fill();
+
+    // Logo
+    ctx.font = '500 22px system-ui, -apple-system, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('Rx', 32, 44);
+    const rxW = ctx.measureText('Rx').width;
+    ctx.fillStyle = '#6ee7b7';
+    ctx.fillText('Scan', 32 + rxW, 44);
+
+    // Savings section
+    const savingsAmount = result.savings?.savingsAmount || 0;
+    const savingsPercent = result.savings?.savingsPercent || 0;
+    const hasPricing = savingsAmount > 0;
+
+    let y = 70;
+    if (hasPricing) {
+      ctx.font = '11px system-ui, -apple-system, sans-serif';
+      ctx.fillStyle = '#6ee7b7';
+      ctx.fillText('POTENTIAL SAVINGS', 32, y);
+      y += 48;
+
+      ctx.font = '500 48px system-ui, -apple-system, sans-serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(`₹${savingsAmount.toLocaleString('en-IN')}`, 32, y);
+      y += 28;
+
+      ctx.font = '14px system-ui, -apple-system, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.6)';
+      ctx.fillText(`${savingsPercent}% less with generic alternatives`, 32, y);
+      y += 36;
+    } else {
+      ctx.font = '12px system-ui, -apple-system, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.5)';
+      ctx.fillText('Prescription analysis', 32, y);
+      y += 28;
+    }
+
+    // Medicines label
+    ctx.font = '11px system-ui, -apple-system, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.fillText('MEDICINES', 32, y);
+    y += 18;
+
+    // Medicine rows — name + generic only, no prices
+    const medsToShow = result.medicines.slice(0, 8);
+    for (const med of medsToShow) {
+      ctx.fillStyle = 'rgba(255,255,255,0.06)';
+      ctx.beginPath(); ctx.roundRect(32, y, w - 64, 48, 8); ctx.fill();
+
+      ctx.font = '500 14px system-ui, -apple-system, sans-serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(med.ocrReading || med.name, 48, y + 20);
+
+      if (med.genericName) {
+        ctx.font = '12px system-ui, -apple-system, sans-serif';
+        ctx.fillStyle = '#6ee7b7';
+        const genText = `→ ${med.genericName}`;
+        ctx.fillText(genText.length > 45 ? genText.substring(0, 42) + '...' : genText, 48, y + 38);
+      }
+
+      y += 56;
+    }
+
+    if (result.medicines.length > 8) {
+      ctx.font = '12px system-ui, -apple-system, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.4)';
+      ctx.fillText(`+${result.medicines.length - 8} more medicines`, 48, y + 6);
+      y += 26;
+    }
+
+    // Interaction warning
+    if (result.interactions && result.interactions.length > 0) {
+      y += 6;
+      ctx.fillStyle = 'rgba(251,191,36,0.1)';
+      ctx.beginPath(); ctx.roundRect(32, y, w - 64, 34, 6); ctx.fill();
+      ctx.font = '13px system-ui, -apple-system, sans-serif';
+      ctx.fillStyle = '#fbbf24';
+      ctx.fillText(`⚠ ${result.interactions.length} drug interaction${result.interactions.length > 1 ? 's' : ''} detected`, 48, y + 22);
+      y += 44;
+    }
+
+    // Doctor name
+    y += 8;
+    ctx.font = '12px system-ui, -apple-system, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    const doctorLine = [result.doctorName, `${result.medicines.length} medicines`].filter(Boolean).join('  ·  ');
+    ctx.fillText(doctorLine, 32, y);
+
+    // Divider
+    y += 18;
+    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+    ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(32, y); ctx.lineTo(w - 32, y); ctx.stroke();
+
+    // CTA
+    y += 28;
+    ctx.font = '500 16px system-ui, -apple-system, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('Are you overpaying for medicines?', 32, y);
+    y += 22;
+    ctx.font = '14px system-ui, -apple-system, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.fillText('Scan your prescription free', 32, y);
+
+    // CTA button
+    y += 16;
+    ctx.fillStyle = '#6ee7b7';
+    ctx.beginPath(); ctx.roundRect(32, y, 170, 36, 8); ctx.fill();
+    ctx.font = '500 13px system-ui, -apple-system, sans-serif';
+    ctx.fillStyle = '#064e3b';
+    ctx.fillText('rxscan.vercel.app', 50, y + 23);
+
+    // Disclaimer
+    y += 52;
+    ctx.font = '10px system-ui, -apple-system, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    ctx.fillText('Generic alternatives are CDSCO-certified. Consult your doctor before switching.', 32, y);
+
+    // Convert to blob and share/download
+    canvas.toBlob(async (blob) => {
+      if (!blob) return;
+      const file = new File([blob], 'rxscan-report.png', { type: 'image/png' });
+
+      // Try native share first (mobile)
+      if (navigator.share && navigator.canShare?.({ files: [file] })) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: 'RxScan Prescription Report',
+            text: `I could save ₹${savingsAmount} by switching to generic medicines! Try RxScan free.`,
+          });
+          return;
+        } catch {
+          // User cancelled or share failed — fall through to download
+        }
+      }
+
+      // Fallback: download
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'rxscan-report.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Image saved!');
+    }, 'image/png');
+  };
+
   const handleShareApp = () => {
     const text = `Hey! Check out RxScan — you scan your doctor's prescription and it reads the handwriting, shows what each medicine does, and finds generic alternatives that can save you 50-90%. Totally free.\n\nTry it → https://rxscan.vercel.app`;
     const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
@@ -597,8 +802,10 @@ export default function ResultsScreen({ result, onScanAnother, onBack }: Results
       </header>
 
       <main className="max-w-lg mx-auto px-4 pb-40">
+        {/* BUG #3 FIX: Pass patientName to header */}
         <PrescriptionHeader
           doctorName={result.doctorName || null}
+          patientName={result.patientName || null}
           date={result.date || null}
           readability={result.overallReadability || 'fair'}
         />
@@ -697,6 +904,12 @@ export default function ResultsScreen({ result, onScanAnother, onBack }: Results
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                 </svg>
                 Share on WhatsApp
+              </button>
+              <button onClick={handleDownloadCard} className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-900 text-white font-semibold py-3 px-4 rounded-xl text-sm transition-colors">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Card
               </button>
             </div>
           )}

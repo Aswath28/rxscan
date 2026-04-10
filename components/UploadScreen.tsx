@@ -49,7 +49,10 @@ function CameraCapture({ onCapture, onClose }: {
     ctx.drawImage(video, 0, 0);
     canvas.toBlob((blob) => {
       if (blob) {
-        const file = new File([blob], 'prescription.jpg', { type: 'image/jpeg' });
+        // BUG #6 FIX: Use the blob's actual type instead of hardcoding image/jpeg.
+        // Android Chrome sometimes produces WebP even when JPEG is requested.
+        const ext = blob.type === 'image/png' ? 'png' : blob.type === 'image/webp' ? 'webp' : 'jpg';
+        const file = new File([blob], `prescription.${ext}`, { type: blob.type });
         stopCamera();
         onCapture(file);
       }
@@ -316,7 +319,7 @@ export default function UploadScreen({ onImageSelected, onBack }: UploadScreenPr
                 Upload from gallery
               </span>
               <span className="text-xs text-slate-400">
-                JPG, PNG — max 10MB
+                JPG, PNG, WebP — max 10MB
               </span>
             </button>
 
