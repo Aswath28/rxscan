@@ -292,10 +292,11 @@ export async function POST(request: NextRequest) {
       savings: analysis.savings,
     });
 
-  } catch (error) {
-    console.error('Scan error:', error);
+  } catch (error: any) {
+    console.error('Scan error:', error?.message || error);
+    console.error('Stack:', error?.stack);
     return NextResponse.json(
-      { error: 'Something went wrong processing your prescription' },
+      { error: `Something went wrong: ${error?.message || 'Unknown error'}` },
       { status: 500 }
     );
   }
