@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import LandingPage from '@/components/LandingPage';
 import UploadScreen from '@/components/UploadScreen';
 import ProcessingScreen from '@/components/ProcessingScreen';
@@ -126,41 +126,40 @@ export default function Home() {
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Track whether API has returned while animation is still playing
-  const apiDoneRef = useRef(false);
-  const animDoneRef = useRef(false);
+  // Track whether API and animation are done — using STATE so React re-renders
   const apiResultRef = useRef<any>(null);
+  const [apiDone, setApiDone] = useState(false);
+  const [animDone, setAnimDone] = useState(false);
 
   // ----------------------------------------------------------
-  // Transition to results — only when BOTH api and animation done
+  // Transition to results — fires when BOTH apiDone and animDone
   // ----------------------------------------------------------
-  const tryShowResults = useCallback(() => {
-    if (apiDoneRef.current && animDoneRef.current) {
+  useEffect(() => {
+    if (apiDone && animDone) {
       if (apiResultRef.current?.error) {
         setError(apiResultRef.current.error);
         setScreen('upload');
-      } else {
+      } else if (apiResultRef.current) {
         setAnalysisResult(apiResultRef.current);
         setScreen('results');
       }
     }
-  }, []);
+  }, [apiDone, animDone]);
 
   // ----------------------------------------------------------
   // Called when processing animation finishes
   // ----------------------------------------------------------
   const handleAnimationComplete = useCallback(() => {
-    animDoneRef.current = true;
-    tryShowResults();
-  }, [tryShowResults]);
+    setAnimDone(true);
+  }, []);
 
   // ----------------------------------------------------------
   // Called when user confirms an image in the upload screen
   // ----------------------------------------------------------
   const handleImageSelected = useCallback(async (file: File) => {
     // Reset state
-    apiDoneRef.current = false;
-    animDoneRef.current = false;
+    setApiDone(false);
+    setAnimDone(false);
     apiResultRef.current = null;
     setError(null);
 
@@ -214,9 +213,8 @@ export default function Home() {
       };
     }
 
-    apiDoneRef.current = true;
-    tryShowResults();
-  }, [tryShowResults]);
+    setApiDone(true);
+  }, []);
 
   // ----------------------------------------------------------
   // RENDER — show the active screen
