@@ -127,10 +127,10 @@ export default function ProcessingScreen({ onComplete, onBack }: ProcessingScree
 
   useEffect(() => {
     if (activeStep >= STEPS.length) {
-      // All steps done — brief pause then trigger completion
       setAllDone(true);
-      // Don't auto-call onComplete — let page.tsx handle it
-      // when the API actually returns
+      const timer = setTimeout(() => {
+        onComplete?.();
+      }, 800);
       return () => clearTimeout(timer);
     }
 
