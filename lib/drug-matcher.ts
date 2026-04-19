@@ -6,7 +6,7 @@ import interactionsData from '@/data/drug-interactions.json';
 // TYPES
 // ============================================================
 
-interface OCRMedicine {
+export interface OCRMedicine {
   name: string;
   dosage: string | null;
   frequency: string;
@@ -17,7 +17,12 @@ interface OCRMedicine {
   formulation: string;
 }
 
-interface OCRResult {
+export interface DoctorNote {
+  kind: 'condition' | 'symptom';
+  value: string;
+}
+
+export interface OCRResult {
   medicines: OCRMedicine[];
   doctorName: string | null;
   patientName: string | null;
@@ -26,9 +31,19 @@ interface OCRResult {
   diagnosis: string | null;
   overallReadability: 'good' | 'fair' | 'poor';
   totalMedicines: number;
+  doctorNotes?: DoctorNote[];
+  aiSummary?: string | null;
+  aiConfidence?: number | null;
 }
 
-interface MatchedMedicine extends OCRMedicine {
+// NEW — how confidently did we identify this medicine?
+// 'exact'      : brand name matched exactly (Augmentin → Augmentin)
+// 'prefix'     : one is a prefix of the other (Pan → Pan 40)
+// 'fuzzy'      : Levenshtein close enough to pass threshold (risky)
+// 'unmatched'  : no match at all — show OCR reading only
+export type MatchMethod = 'exact' | 'prefix' | 'fuzzy' | 'unmatched';
+
+export interface MatchedMedicine extends OCRMedicine {
   ocrReading: string;
   matchedDrug: string | null;
   genericName: string | null;
@@ -39,9 +54,12 @@ interface MatchedMedicine extends OCRMedicine {
   brandPrice: number | null;
   genericPrice: number | null;
   janAushadhiAvailable: boolean;
+  matchMethod: MatchMethod;        // NEW
+  showMatchedName: boolean;        // NEW — UI guard
+  showPricing: boolean;            // NEW — UI guard
 }
 
-interface Interaction {
+export interface Interaction {
   drug1: string;
   drug2: string;
   severity: 'severe' | 'moderate' | 'mild';
@@ -49,7 +67,7 @@ interface Interaction {
   recommendation: string;
 }
 
-interface AnalysisResult {
+export interface AnalysisResult {
   medicines: MatchedMedicine[];
   interactions: Interaction[];
   savings: {
@@ -64,18 +82,19 @@ interface AnalysisResult {
   date: string | null;
   diagnosis: string | null;
   overallReadability: 'good' | 'fair' | 'poor';
+  doctorNotes: DoctorNote[];
+  aiSummary: string | null;
+  aiConfidence: number | null;
 }
 
 // ============================================================
 // HELPERS
 // ============================================================
 
-// Normalize a string for comparison: lowercase, trim, remove extra spaces
 function normalize(str: string): string {
   return str.toLowerCase().trim().replace(/\s+/g, ' ');
 }
 
-// Levenshtein distance between two strings
 function levenshtein(a: string, b: string): number {
   const matrix: number[][] = [];
   for (let i = 0; i <= b.length; i++) matrix[i] = [i];
@@ -87,9 +106,9 @@ function levenshtein(a: string, b: string): number {
         matrix[i][j] = matrix[i - 1][j - 1];
       } else {
         matrix[i][j] = Math.min(
-          matrix[i - 1][j - 1] + 1, // substitution
-          matrix[i][j - 1] + 1,     // insertion
-          matrix[i - 1][j] + 1      // deletion
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1
         );
       }
     }
@@ -98,78 +117,74 @@ function levenshtein(a: string, b: string): number {
 }
 
 // ============================================================
-// BRAND MATCHING — exact match, then fuzzy
+// BRAND MATCHING — now also reports the method used
 // ============================================================
 
 const brandMap = brandMappings as Record<string, { generic: string; dosage: string }>;
 const drugs = drugsData as any[];
 const interactions = interactionsData as any[];
 
-function matchBrand(ocrName: string): { generic: string; dosage: string } | null {
+interface BrandMatchResult {
+  mapping: { generic: string; dosage: string };
+  method: 'exact' | 'prefix' | 'fuzzy';
+}
+
+function matchBrand(ocrName: string): BrandMatchResult | null {
   const normalized = normalize(ocrName);
 
-  // 1. Exact match (case-insensitive)
+  // 1. Exact
   for (const [brand, mapping] of Object.entries(brandMap)) {
     if (normalize(brand) === normalized) {
-      return mapping;
+      return { mapping, method: 'exact' };
     }
   }
 
-  // 2. Starts-with match (e.g., "Augmentin" matches "Augmentin 625")
+  // 2. Starts-with (either direction)
   for (const [brand, mapping] of Object.entries(brandMap)) {
     if (normalize(brand).startsWith(normalized) || normalized.startsWith(normalize(brand))) {
-      return mapping;
+      return { mapping, method: 'prefix' };
     }
   }
 
-  // 3. Fuzzy match — dynamic Levenshtein tolerance based on word length
-  //    Short names (3-5 chars): max 1 edit (strict — "Pan" shouldn't match "Ran")
-  //    Medium names (6-9 chars): max 2 edits
-  //    Long names (10+ chars): max 3 edits
-  //    Also uses similarity ratio (1 - distance/maxLen) to pick the best match
-  //    This reduces inconsistency between phone and browser OCR (Bug #2)
+  // 3. Fuzzy
   const ocrNamePart = normalized.replace(/\d+.*/g, '').trim();
-  if (ocrNamePart.length < 3) return null; // too short to fuzzy match reliably
+  if (ocrNamePart.length < 3) return null;
 
   const maxDistance = ocrNamePart.length <= 5 ? 1 : ocrNamePart.length <= 9 ? 2 : 3;
 
-  let bestMatch: { brand: string; mapping: { generic: string; dosage: string }; distance: number; ratio: number } | null = null;
+  let bestMatch: { mapping: { generic: string; dosage: string }; distance: number; ratio: number } | null = null;
 
   for (const [brand, mapping] of Object.entries(brandMap)) {
     const brandNamePart = normalize(brand).replace(/\d+.*/g, '').trim();
-    
-    // Skip if length difference is too large — no point computing Levenshtein
     if (Math.abs(ocrNamePart.length - brandNamePart.length) > maxDistance) continue;
-    
+
     const distance = levenshtein(ocrNamePart, brandNamePart);
     const maxLen = Math.max(ocrNamePart.length, brandNamePart.length);
-    const ratio = 1 - (distance / maxLen); // 1.0 = perfect, 0.0 = no match
+    const ratio = 1 - (distance / maxLen);
 
     if (distance <= maxDistance && ratio >= 0.6) {
       if (!bestMatch || ratio > bestMatch.ratio || (ratio === bestMatch.ratio && distance < bestMatch.distance)) {
-        bestMatch = { brand, mapping, distance, ratio };
+        bestMatch = { mapping, distance, ratio };
       }
     }
   }
 
-  return bestMatch ? bestMatch.mapping : null;
+  return bestMatch ? { mapping: bestMatch.mapping, method: 'fuzzy' } : null;
 }
 
 // ============================================================
-// DRUG DATABASE LOOKUP — find the drug entry by generic name
+// DRUG DATABASE LOOKUP — unchanged
 // ============================================================
 
 function findDrugByGeneric(genericName: string): any | null {
   const normalized = normalize(genericName);
 
-  // Exact match
   for (const drug of drugs) {
     if (normalize(drug.genericName) === normalized) {
       return drug;
     }
   }
 
-  // Partial match — generic name contains or is contained by
   for (const drug of drugs) {
     const drugNorm = normalize(drug.genericName);
     if (drugNorm.includes(normalized) || normalized.includes(drugNorm)) {
@@ -177,7 +192,6 @@ function findDrugByGeneric(genericName: string): any | null {
     }
   }
 
-  // Match on first component of combination drugs (e.g., "Pantoprazole + Domperidone")
   const firstComponent = normalized.split('+')[0].split('/')[0].trim();
   if (firstComponent.length >= 4) {
     for (const drug of drugs) {
@@ -192,7 +206,7 @@ function findDrugByGeneric(genericName: string): any | null {
 }
 
 // ============================================================
-// INTERACTION CHECKER — check all medicine pairs
+// INTERACTION CHECKER — unchanged
 // ============================================================
 
 function checkInteractions(genericNames: string[]): Interaction[] {
@@ -202,7 +216,6 @@ function checkInteractions(genericNames: string[]): Interaction[] {
   for (const interaction of interactions) {
     const interactionDrugs = interaction.drugs.map((d: string) => normalize(d));
 
-    // Check if both drugs in the interaction pair are present
     const drug1Present = normalizedNames.some(
       (name) => interactionDrugs[0] && (name.includes(interactionDrugs[0]) || interactionDrugs[0].includes(name))
     );
@@ -225,7 +238,7 @@ function checkInteractions(genericNames: string[]): Interaction[] {
 }
 
 // ============================================================
-// MAIN: analyzePrescription — the full pipeline
+// MAIN: analyzePrescription
 // ============================================================
 
 export function analyzePrescription(ocrResult: OCRResult): AnalysisResult {
@@ -233,55 +246,76 @@ export function analyzePrescription(ocrResult: OCRResult): AnalysisResult {
   const genericNames: string[] = [];
 
   for (const med of ocrResult.medicines) {
-    // Step 1: Try to match the OCR name to a brand
     const brandMatch = matchBrand(med.name);
-
-    // Step 2: Look up drug details from the database
-    const genericName = brandMatch?.generic || med.name;
+    const genericName = brandMatch?.mapping.generic || med.name;
     const drugEntry = findDrugByGeneric(genericName);
 
-    // Step 3: Find brand price from the drug entry
+    // Determine match method — the single source of truth for trust
+    let matchMethod: MatchMethod;
+    if (brandMatch?.method === 'exact' && drugEntry) {
+      matchMethod = 'exact';
+    } else if (brandMatch?.method === 'prefix' && drugEntry) {
+      matchMethod = 'prefix';
+    } else if (brandMatch?.method === 'fuzzy' && drugEntry) {
+      matchMethod = 'fuzzy';
+    } else if (!brandMatch && drugEntry) {
+      // Direct generic lookup succeeded — treat as exact
+      matchMethod = 'exact';
+    } else {
+      matchMethod = 'unmatched';
+    }
+
+    // Trust gates for the UI
+    const showMatchedName = matchMethod === 'exact' || matchMethod === 'prefix';
+    const showPricing = matchMethod === 'exact' || matchMethod === 'prefix';
+
+    // Brand price lookup
     let brandPrice: number | null = null;
     if (drugEntry && drugEntry.commonBrands && drugEntry.commonBrands.length > 0) {
-      // Try to find the exact brand, otherwise use the first one
       const exactBrand = drugEntry.commonBrands.find(
-        (b: any) => normalize(b.name) === normalize(med.name) ||
+        (b: any) =>
+          normalize(b.name) === normalize(med.name) ||
           normalize(med.name).includes(normalize(b.name))
       );
       brandPrice = exactBrand ? exactBrand.mrp : drugEntry.commonBrands[0].mrp;
     }
 
-    // Step 4: Build the matched medicine object
+    // If match is untrusted, null out pricing + description regardless of what DB said
+    const finalBrandPrice = showPricing ? brandPrice : null;
+    const finalGenericPrice = showPricing ? drugEntry?.janAushadhiPrice ?? null : null;
+
     const matched: MatchedMedicine = {
       ...med,
       ocrReading: med.name,
-      matchedDrug: brandMatch
-        ? `${brandMatch.generic} ${brandMatch.dosage}`
-        : drugEntry
+      matchedDrug: showMatchedName && brandMatch
+        ? `${brandMatch.mapping.generic} ${brandMatch.mapping.dosage}`
+        : showMatchedName && drugEntry
         ? `${drugEntry.genericName} ${med.dosage || ''}`
         : null,
-      genericName: brandMatch?.generic || drugEntry?.genericName || null,
-      category: drugEntry?.category || null,
-      description: drugEntry?.description || null,
-      howToTake: drugEntry?.howToTake || null,
-      commonSideEffects: drugEntry?.commonSideEffects || [],
-      brandPrice: brandPrice,
-      genericPrice: drugEntry?.janAushadhiPrice || null,
-      janAushadhiAvailable: drugEntry?.janAushadhiPrice != null,
+      genericName: showMatchedName ? (brandMatch?.mapping.generic || drugEntry?.genericName || null) : null,
+      category: showMatchedName ? drugEntry?.category || null : null,
+      description: showMatchedName ? drugEntry?.description || null : null,
+      howToTake: showMatchedName ? drugEntry?.howToTake || null : null,
+      commonSideEffects: showMatchedName ? drugEntry?.commonSideEffects || [] : [],
+      brandPrice: finalBrandPrice,
+      genericPrice: finalGenericPrice,
+      janAushadhiAvailable: showPricing && drugEntry?.janAushadhiPrice != null,
+      matchMethod,
+      showMatchedName,
+      showPricing,
     };
 
     matchedMedicines.push(matched);
 
-    // Collect generic names for interaction checking
+    // Only count genericName for interactions when trusted
     if (matched.genericName) {
       genericNames.push(matched.genericName);
     }
   }
 
-  // Step 5: Check interactions across all medicines
   const foundInteractions = checkInteractions(genericNames);
 
-  // Step 6: Calculate savings
+  // Savings — only sum trusted matches
   let brandTotal = 0;
   let genericTotal = 0;
   for (const med of matchedMedicines) {
@@ -306,5 +340,8 @@ export function analyzePrescription(ocrResult: OCRResult): AnalysisResult {
     date: ocrResult.date,
     diagnosis: ocrResult.diagnosis,
     overallReadability: ocrResult.overallReadability,
+    doctorNotes: Array.isArray(ocrResult.doctorNotes) ? ocrResult.doctorNotes : [],
+    aiSummary: ocrResult.aiSummary ?? null,
+    aiConfidence: typeof ocrResult.aiConfidence === 'number' ? ocrResult.aiConfidence : null,
   };
 }
