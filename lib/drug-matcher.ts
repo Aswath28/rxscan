@@ -269,6 +269,21 @@ export function analyzePrescription(ocrResult: OCRResult): AnalysisResult {
     const showMatchedName = matchMethod === 'exact' || matchMethod === 'prefix';
     const showPricing = matchMethod === 'exact' || matchMethod === 'prefix';
 
+    // Confidence override — our match strength outranks Vision's self-doubt.
+    // If Vision said "medium" but we got an exact or prefix brand match,
+    // the match is confident enough to show as "high". This fixes the
+    // "Tap to verify" pill firing on obvious matches like Paracetamol.
+    let finalConfidence = med.confidence;
+    if (med.confidence === 'medium' && (matchMethod === 'exact' || matchMethod === 'prefix')) {
+      finalConfidence = 'high';
+    }
+    // If Vision said "high" but we couldn't match, downgrade to medium —
+    // Vision read it confidently but it's not in our database, so the user
+    // should still verify.
+    if (med.confidence === 'high' && matchMethod === 'unmatched') {
+      finalConfidence = 'medium';
+    }
+
     // Brand price lookup
     let brandPrice: number | null = null;
     if (drugEntry && drugEntry.commonBrands && drugEntry.commonBrands.length > 0) {
@@ -286,6 +301,7 @@ export function analyzePrescription(ocrResult: OCRResult): AnalysisResult {
 
     const matched: MatchedMedicine = {
       ...med,
+      confidence: finalConfidence,
       ocrReading: med.name,
       matchedDrug: showMatchedName && brandMatch
         ? `${brandMatch.mapping.generic} ${brandMatch.mapping.dosage}`
