@@ -90,10 +90,15 @@ IMPORTANT DISTINCTIONS:
 - "AC" means before food, "PC" means after food — these go in "instructions" field
 - "B/F" means before food, same as AC
 
-CONFIDENCE RULES:
-- "high" = you can clearly read the text
-- "medium" = you're fairly sure but handwriting is ambiguous
-- "low" = you're guessing — the handwriting is very unclear
+CONFIDENCE RULES — be strict about this. Most well-known brand names and clear text should be "high". Reserve "medium" for cases where YOU would meaningfully struggle to read the text.
+
+- "high" = DEFAULT. Use this when you can read the text clearly, OR when the handwriting is slightly messy but the brand name is well-known (Crocin, Dolo, Augmentin, Pan-D, Telma, Amlong, Glycomet, Metformin, Paracetamol, Amoxicillin, etc.). If a brand name is commonly prescribed in India and you can recognize it, mark "high" even if handwriting has mild stylization.
+
+- "medium" = ONLY when the handwriting is genuinely ambiguous AND the brand name is not obvious. For example: strokes that could be O or B, letters that could be ambiguous (c/e, n/u, a/o), or unusual/rare brand names where you're making a judgment call. Do NOT use "medium" just because the handwriting is a bit messy if the drug is still recognizable.
+
+- "low" = you are guessing. The handwriting is very unclear AND the drug name is uncommon enough that you can't recognize it from context.
+
+STRONG HINT: If the text you're reading matches a well-known Indian brand name or a common generic (Paracetamol, Metformin, Telmisartan, Amlodipine, Atorvastatin, Pantoprazole, Amoxicillin, Azithromycin, Cetirizine, Levocetirizine, Montelukast, Domperidone, Ondansetron, Losartan, Ramipril, Aspirin, Clopidogrel, Rosuvastatin, Glimepiride, Vildagliptin, Sitagliptin, Dapagliflozin, Empagliflozin, Thyroxine), default to "high". These drugs are prescribed daily across India — doctors don't write them exotically.
 
 === NEW FIELDS YOU MUST RETURN ===
 
