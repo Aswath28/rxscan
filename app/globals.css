@@ -1,28 +1,123 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FBF8F3;
+  --foreground: #1A1512;
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* ──────────────────────────────────────────────────
+     RXSCAN — Apothecary Bold palette
+     Warm neutrals + saturated emerald + category hues
+     ────────────────────────────────────────────────── */
+
+  /* Warm neutrals */
+  --color-rx-bg: #FBF8F3;
+  --color-rx-card: #FFFFFF;
+  --color-rx-surface: #F5F1EA;
+  --color-rx-hairline: #EAE4DA;
+
+  /* Ink — warm dark */
+  --color-rx-ink: #1A1512;
+  --color-rx-ink-muted: #6B6762;
+  --color-rx-ink-subtle: #A6A199;
+
+  /* Primary — saturated emerald (replaces old pine) */
+  --color-rx-pine-50: #ECFDF5;
+  --color-rx-pine-100: #D1FAE5;
+  --color-rx-pine-500: #10B981;
+  --color-rx-pine-600: #059669;
+  --color-rx-pine-700: #047857;
+  --color-rx-pine-900: #064E3B;
+
+  /* Dark hero treatment */
+  --color-rx-hero-bg: #1A3A2F;
+  --color-rx-hero-border: #285145;
+  --color-rx-mint: #6EE7B7;
+  --color-rx-cream: #ECFDF5;
+  --color-rx-cream-muted: #A7D4BE;
+
+  /* Clay / alert (warmer, more saturated) */
+  --color-rx-clay-50: #FEE4D9;
+  --color-rx-clay-100: #FECDB8;
+  --color-rx-clay-500: #E85D3C;
+  --color-rx-clay-600: #D9441F;
+  --color-rx-clay-700: #9A2B0F;
+  --color-rx-clay-900: #5A1A08;
+
+  /* Sand / warning */
+  --color-rx-sand-50: #FEF3C7;
+  --color-rx-sand-100: #FDE68A;
+  --color-rx-sand-500: #F59E0B;
+  --color-rx-sand-700: #B45309;
+
+  /* Dust (kept for AI summary styling — now a softer blue) */
+  --color-rx-dust-50: #E0F2FE;
+  --color-rx-dust-100: #BAE6FD;
+  --color-rx-dust-500: #38BDF8;
+  --color-rx-dust-600: #0284C7;
+  --color-rx-dust-700: #0369A1;
+  --color-rx-dust-900: #0C4A6E;
+
+  /* ──────────────────────────────────────────────────
+     CATEGORY COLORS — for medicine card avatars
+     Each category gets a pastel 50 + saturated 700
+     ────────────────────────────────────────────────── */
+
+  /* Coral — antibiotics */
+  --color-rx-coral-50: #FFF1F2;
+  --color-rx-coral-100: #FFE4E6;
+  --color-rx-coral-500: #FB7185;
+  --color-rx-coral-700: #BE123C;
+
+  /* Amber — gastric / anti-emetic */
+  --color-rx-amber-50: #FEF3C7;
+  --color-rx-amber-100: #FDE68A;
+  --color-rx-amber-500: #F59E0B;
+  --color-rx-amber-700: #B45309;
+
+  /* Lavender — antihistamine / allergy */
+  --color-rx-lavender-50: #F3EDFC;
+  --color-rx-lavender-100: #E9DFFA;
+  --color-rx-lavender-500: #A78BFA;
+  --color-rx-lavender-700: #6D28D9;
+
+  /* Sky — respiratory / cough / mucolytic */
+  --color-rx-sky-50: #E0F2FE;
+  --color-rx-sky-100: #BAE6FD;
+  --color-rx-sky-500: #38BDF8;
+  --color-rx-sky-700: #0369A1;
+
+  /* Rose — cardiac / BP / hypertension */
+  --color-rx-rose-50: #FFE4E6;
+  --color-rx-rose-100: #FECDD3;
+  --color-rx-rose-500: #F43F5E;
+  --color-rx-rose-700: #BE123C;
+
+  /* Peach — pain / fever / NSAID */
+  --color-rx-peach-50: #FFEDD5;
+  --color-rx-peach-100: #FED7AA;
+  --color-rx-peach-500: #FB923C;
+  --color-rx-peach-700: #C2410C;
+
+  /* Mint — diabetes / metabolic */
+  --color-rx-diabetes-50: #D1FAE5;
+  --color-rx-diabetes-100: #A7F3D0;
+  --color-rx-diabetes-500: #10B981;
+  --color-rx-diabetes-700: #047857;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Minimum touch targets for mobile accessibility */
@@ -30,5 +125,27 @@ body {
   button, a, [role="button"] {
     min-height: 44px;
     min-width: 44px;
+  }
+}
+
+/* Depth utilities */
+@layer utilities {
+  .shadow-rx-card {
+    box-shadow:
+      0 1px 2px rgba(26, 21, 18, 0.04),
+      0 2px 8px rgba(26, 21, 18, 0.04);
+  }
+  .shadow-rx-float {
+    box-shadow:
+      0 2px 4px rgba(26, 21, 18, 0.05),
+      0 8px 24px rgba(26, 21, 18, 0.06);
+  }
+  .shadow-rx-hero {
+    box-shadow:
+      0 4px 12px rgba(26, 58, 47, 0.20),
+      0 16px 40px rgba(26, 58, 47, 0.15);
+  }
+  .shadow-rx-press {
+    box-shadow: 0 1px 2px rgba(26, 21, 18, 0.08);
   }
 }

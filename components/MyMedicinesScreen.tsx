@@ -13,33 +13,92 @@ import {
 } from '@/lib/prescriptionHistory';
 
 // ============================================================
-// COMPONENT: Summary Dashboard
+// ICONS
+// ============================================================
+
+function IconPill({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="3" y="9" width="18" height="6" rx="3" stroke="currentColor" strokeWidth="1.6" />
+      <line x1="12" y1="9" x2="12" y2="15" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  );
+}
+
+function IconDocument({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <path d="M7 3h7l5 5v13H7z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M14 3v5h5M9 13h6M9 17h4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconAlert({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <path d="M12 3l9 17H3L12 3z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M12 10v4M12 17v.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconCamera({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="12" cy="13.5" r="3.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  );
+}
+
+function IconPlus({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconBulb({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8 1 1.5 2.5 1.5 3.5h5c0-1 .7-2.5 1.5-3.5A6 6 0 0 0 12 3z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+// ============================================================
+// SUMMARY DASHBOARD
 // ============================================================
 
 function SummaryDashboard({ stats }: {
   stats: { totalBrand: number; totalGeneric: number; totalSavings: number; prescriptionCount: number; medicineCount: number };
 }) {
   return (
-    <div className="rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 p-5 text-white shadow-lg">
-      <h2 className="text-sm font-medium text-slate-300 tracking-wide uppercase">
-        My Medicine Summary
+    <div className="rounded-2xl bg-rx-pine-900 p-5 text-rx-surface">
+      <h2 className="text-xs font-medium text-rx-pine-50/80 tracking-[0.06em] uppercase">
+        My medicine summary
       </h2>
       <div className="mt-3 grid grid-cols-3 gap-4">
         <div>
-          <div className="text-2xl font-bold">{stats.prescriptionCount}</div>
-          <div className="text-xs text-slate-400 mt-0.5">
+          <div className="text-2xl font-medium">{stats.prescriptionCount}</div>
+          <div className="text-xs text-rx-pine-50/70 mt-0.5">
             Prescription{stats.prescriptionCount !== 1 ? 's' : ''}
           </div>
         </div>
         <div>
-          <div className="text-2xl font-bold">{stats.medicineCount}</div>
-          <div className="text-xs text-slate-400 mt-0.5">
+          <div className="text-2xl font-medium">{stats.medicineCount}</div>
+          <div className="text-xs text-rx-pine-50/70 mt-0.5">
             Medicine{stats.medicineCount !== 1 ? 's' : ''}
           </div>
         </div>
         <div>
-          <div className="text-2xl font-bold text-emerald-400">₹{stats.totalSavings}</div>
-          <div className="text-xs text-slate-400 mt-0.5">Total savings</div>
+          <div className="text-2xl font-medium text-rx-pine-50">
+            {stats.totalSavings > 0 ? `₹${stats.totalSavings}` : '—'}
+          </div>
+          <div className="text-xs text-rx-pine-50/70 mt-0.5">Total savings</div>
         </div>
       </div>
     </div>
@@ -47,37 +106,37 @@ function SummaryDashboard({ stats }: {
 }
 
 // ============================================================
-// COMPONENT: Cross-Prescription Interaction Alert
+// CROSS INTERACTION ALERT
 // ============================================================
 
 function CrossInteractionAlert({ alert }: { alert: CrossPrescriptionAlert }) {
   const severityConfig = {
-    severe: { bg: 'bg-red-50 border-red-300', icon: '🔴', label: 'Severe', text: 'text-red-800' },
-    moderate: { bg: 'bg-amber-50 border-amber-300', icon: '🟡', label: 'Moderate', text: 'text-amber-800' },
-    mild: { bg: 'bg-blue-50 border-blue-200', icon: '🔵', label: 'Mild', text: 'text-blue-800' },
+    severe: { bg: 'bg-rx-clay-50', border: 'border-rx-clay-100', text: 'text-rx-clay-900', muted: 'text-rx-clay-700', label: 'Severe' },
+    moderate: { bg: 'bg-rx-sand-50', border: 'border-rx-hairline', text: 'text-rx-sand-700', muted: 'text-rx-sand-700', label: 'Moderate' },
+    mild: { bg: 'bg-rx-dust-50', border: 'border-rx-hairline', text: 'text-rx-dust-900', muted: 'text-rx-dust-600', label: 'Mild' },
   };
   const config = severityConfig[alert.severity] || severityConfig.moderate;
 
   return (
-    <div className={`rounded-xl border-2 ${config.bg} p-4`}>
+    <div className={`rounded-xl border ${config.border} ${config.bg} p-4`}>
       <div className="flex items-start gap-3">
-        <span className="text-xl mt-0.5">{config.icon}</span>
+        <IconAlert className={`w-5 h-5 flex-shrink-0 mt-0.5 ${config.text}`} />
         <div>
-          <h4 className={`font-semibold text-sm ${config.text}`}>
-            {config.label} Cross-Prescription Interaction
+          <h4 className={`font-medium text-sm ${config.text}`}>
+            {config.label} cross-prescription interaction
           </h4>
-          <p className="text-sm text-slate-600 mt-1">
+          <p className={`text-sm mt-1 ${config.muted}`}>
             <span className="font-medium">{alert.drug1}</span>
-            <span className="text-slate-400"> from {alert.drug1Doctor}</span>
+            <span className="opacity-70"> from {alert.drug1Doctor}</span>
             {' + '}
             <span className="font-medium">{alert.drug2}</span>
-            <span className="text-slate-400"> from {alert.drug2Doctor}</span>
+            <span className="opacity-70"> from {alert.drug2Doctor}</span>
           </p>
-          <p className="text-sm text-slate-600 mt-1 leading-relaxed">
+          <p className={`text-sm mt-1 leading-relaxed ${config.muted}`}>
             {alert.effect}
           </p>
-          <p className="text-sm text-slate-700 mt-2 font-medium">
-            💡 {alert.recommendation}
+          <p className={`text-sm mt-2 font-medium ${config.text}`}>
+            {alert.recommendation}
           </p>
         </div>
       </div>
@@ -86,7 +145,7 @@ function CrossInteractionAlert({ alert }: { alert: CrossPrescriptionAlert }) {
 }
 
 // ============================================================
-// COMPONENT: Saved Prescription Card
+// PRESCRIPTION CARD
 // ============================================================
 
 function PrescriptionCard({
@@ -101,92 +160,83 @@ function PrescriptionCard({
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   const savedDate = new Date(prescription.savedAt);
-  const formattedDate = savedDate.toLocaleDateString('en-IN', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
-  const formattedTime = savedDate.toLocaleTimeString('en-IN', {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+  const formattedDate = savedDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  const formattedTime = savedDate.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+
+  // Use date as primary label if no doctor name
+  const primaryLabel = prescription.doctorName
+    ? prescription.doctorName
+    : `Prescription — ${prescription.date || formattedDate}`;
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+    <div className="rounded-xl border border-rx-hairline bg-rx-card overflow-hidden">
       <div className="p-4">
-        {/* Header row */}
         <div className="flex items-start justify-between">
           <div>
-            <h3 className="font-semibold text-slate-900 text-base">
-              {prescription.doctorName || 'Unknown Doctor'}
-            </h3>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <h3 className="font-medium text-rx-ink text-base">{primaryLabel}</h3>
+            <p className="text-xs text-rx-ink-subtle mt-0.5">
               Saved {formattedDate} at {formattedTime}
             </p>
-            {prescription.date && (
-              <p className="text-xs text-slate-500 mt-0.5">
+            {prescription.date && prescription.doctorName && (
+              <p className="text-xs text-rx-ink-muted mt-0.5">
                 Prescription date: {prescription.date}
               </p>
             )}
           </div>
           {prescription.totalSavings > 0 && (
             <div className="text-right">
-              <div className="text-lg font-bold text-emerald-600">₹{prescription.totalSavings}</div>
-              <div className="text-xs text-slate-400">savings</div>
+              <div className="text-lg font-medium text-rx-pine-700">₹{prescription.totalSavings}</div>
+              <div className="text-xs text-rx-ink-subtle">savings</div>
             </div>
           )}
         </div>
 
-        {/* Medicine pills */}
         <div className="mt-3 flex flex-wrap gap-1.5">
           {prescription.medicines.map((med, i) => (
             <span
               key={i}
-              className="inline-flex items-center px-2 py-1 rounded-md bg-slate-100 text-xs font-medium text-slate-600"
+              className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-rx-surface text-xs font-medium text-rx-ink-muted"
             >
-              💊 {med.name}
+              <IconPill className="w-3 h-3" />
+              {med.name}
             </span>
           ))}
         </div>
 
-        {/* Within-prescription interactions */}
         {prescription.interactions.length > 0 && (
-          <div className="mt-3">
-            <span className="text-xs font-medium text-amber-600">
-              ⚠️ {prescription.interactions.length} interaction{prescription.interactions.length !== 1 ? 's' : ''} flagged
+          <div className="mt-3 flex items-center gap-1.5">
+            <IconAlert className="w-3.5 h-3.5 text-rx-clay-600" />
+            <span className="text-xs font-medium text-rx-clay-700">
+              {prescription.interactions.length} interaction{prescription.interactions.length !== 1 ? 's' : ''} flagged
             </span>
           </div>
         )}
 
-        {/* Action buttons */}
         <div className="mt-3 flex gap-2">
           <button
             onClick={() => onView(prescription)}
-            className="flex-1 text-center py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-sm font-medium text-slate-700 transition-colors"
+            className="flex-1 text-center py-2 px-3 rounded-lg bg-rx-surface hover:bg-rx-pine-50 text-sm font-medium text-rx-ink transition-colors"
           >
-            View Details
+            View details
           </button>
           {!showConfirmDelete ? (
             <button
               onClick={() => setShowConfirmDelete(true)}
-              className="py-2 px-3 rounded-lg hover:bg-red-50 text-sm font-medium text-slate-400 hover:text-red-500 transition-colors"
+              className="py-2 px-3 rounded-lg hover:bg-rx-clay-50 text-sm font-medium text-rx-ink-subtle hover:text-rx-clay-700 transition-colors"
             >
               Delete
             </button>
           ) : (
             <div className="flex gap-1">
               <button
-                onClick={() => {
-                  onDelete(prescription.id);
-                  setShowConfirmDelete(false);
-                }}
-                className="py-2 px-3 rounded-lg bg-red-500 text-white text-sm font-medium"
+                onClick={() => { onDelete(prescription.id); setShowConfirmDelete(false); }}
+                className="py-2 px-3 rounded-lg bg-rx-clay-600 text-rx-surface text-sm font-medium"
               >
                 Confirm
               </button>
               <button
                 onClick={() => setShowConfirmDelete(false)}
-                className="py-2 px-3 rounded-lg bg-slate-100 text-sm font-medium text-slate-600"
+                className="py-2 px-3 rounded-lg bg-rx-surface text-sm font-medium text-rx-ink-muted"
               >
                 Cancel
               </button>
@@ -199,7 +249,7 @@ function PrescriptionCard({
 }
 
 // ============================================================
-// COMPONENT: All Medicines View (deduplicated)
+// ALL MEDICINES VIEW
 // ============================================================
 
 function AllMedicinesView() {
@@ -208,7 +258,7 @@ function AllMedicinesView() {
   if (medicines.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="text-sm text-slate-400">No medicines saved yet.</p>
+        <p className="text-sm text-rx-ink-subtle">No medicines saved yet.</p>
       </div>
     );
   }
@@ -216,32 +266,24 @@ function AllMedicinesView() {
   return (
     <div className="space-y-2">
       {medicines.map((med, i) => (
-        <div key={i} className="rounded-lg border border-slate-200 bg-white p-3">
+        <div key={i} className="rounded-lg border border-rx-hairline bg-rx-card p-3">
           <div className="flex items-start justify-between">
             <div>
-              <h4 className="font-semibold text-slate-900 text-sm">{med.name}</h4>
-              <p className="text-xs text-slate-500">{med.matchedDrug}</p>
+              <h4 className="font-medium text-rx-ink text-sm">{med.name}</h4>
+              <p className="text-xs text-rx-ink-muted">{med.matchedDrug}</p>
               <div className="mt-1.5 flex flex-wrap gap-1.5">
-                <span className="text-xs px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
-                  {med.dosage}
-                </span>
-                <span className="text-xs px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
-                  {med.frequencyPlain}
-                </span>
-                <span className="text-xs px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
-                  {med.duration}
-                </span>
+                <span className="text-xs px-1.5 py-0.5 rounded bg-rx-surface text-rx-ink-muted">{med.dosage}</span>
+                <span className="text-xs px-1.5 py-0.5 rounded bg-rx-surface text-rx-ink-muted">{med.frequencyPlain}</span>
+                <span className="text-xs px-1.5 py-0.5 rounded bg-rx-surface text-rx-ink-muted">{med.duration}</span>
               </div>
               {med.fromDoctor && (
-                <p className="text-xs text-slate-400 mt-1.5">
-                  Prescribed by {med.fromDoctor}
-                </p>
+                <p className="text-xs text-rx-ink-subtle mt-1.5">Prescribed by {med.fromDoctor}</p>
               )}
             </div>
             {med.brandPrice > 0 && med.genericPrice > 0 && (
               <div className="text-right flex-shrink-0">
-                <div className="text-xs text-slate-400 line-through">₹{med.brandPrice}</div>
-                <div className="text-sm font-bold text-emerald-600">₹{med.genericPrice}</div>
+                <div className="text-xs text-rx-ink-subtle line-through">₹{med.brandPrice}</div>
+                <div className="text-sm font-medium text-rx-pine-700">₹{med.genericPrice}</div>
               </div>
             )}
           </div>
@@ -252,33 +294,32 @@ function AllMedicinesView() {
 }
 
 // ============================================================
-// COMPONENT: Empty State
+// EMPTY STATE
 // ============================================================
 
 function EmptyState({ onScan }: { onScan: () => void }) {
   return (
     <div className="text-center py-16 px-6">
-      <div className="text-5xl mb-4">📋</div>
-      <h3 className="text-lg font-semibold text-slate-800">No saved prescriptions yet</h3>
-      <p className="text-sm text-slate-500 mt-2 max-w-xs mx-auto leading-relaxed">
-        Scan a prescription and tap "Save to My Medicines" to start building your medicine history.
+      <div className="mx-auto mb-4 w-14 h-14 rounded-2xl bg-rx-surface flex items-center justify-center">
+        <IconDocument className="w-7 h-7 text-rx-ink-subtle" />
+      </div>
+      <h3 className="text-lg font-medium text-rx-ink">No saved prescriptions yet</h3>
+      <p className="text-sm text-rx-ink-muted mt-2 max-w-xs mx-auto leading-relaxed">
+        Scan a prescription and tap "Save" to start building your medicine history.
       </p>
       <button
         onClick={onScan}
-        className="mt-6 inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl text-sm transition-colors"
+        className="mt-6 inline-flex items-center gap-2 bg-rx-pine-700 hover:bg-rx-pine-900 text-rx-surface font-medium py-3 px-6 rounded-xl text-sm transition-colors"
       >
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-        Scan a Prescription
+        <IconCamera className="w-4 h-4" />
+        Scan a prescription
       </button>
     </div>
   );
 }
 
 // ============================================================
-// MAIN: My Medicines Screen
+// MAIN
 // ============================================================
 
 interface MyMedicinesScreenProps {
@@ -293,20 +334,17 @@ export default function MyMedicinesScreen({ onBack, onScan, onViewPrescription }
   const [activeTab, setActiveTab] = useState<'prescriptions' | 'all-medicines'>('prescriptions');
   const [showClearConfirm, setShowClearConfirm] = useState(false);
 
-  // Load data on mount
   useEffect(() => {
     setPrescriptions(getAllPrescriptions());
     setCrossAlerts(checkCrossPrescriptionInteractions());
   }, []);
 
-  // Stats for dashboard
   const savings = getTotalSavings();
   const allMedicines = getAllMedicines();
 
   const handleDelete = (id: string) => {
     deletePrescription(id);
-    const updated = getAllPrescriptions();
-    setPrescriptions(updated);
+    setPrescriptions(getAllPrescriptions());
     setCrossAlerts(checkCrossPrescriptionInteractions());
   };
 
@@ -320,31 +358,29 @@ export default function MyMedicinesScreen({ onBack, onScan, onViewPrescription }
   const isEmpty = prescriptions.length === 0;
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Top bar */}
-      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-slate-200">
+    <div className="min-h-screen bg-rx-bg">
+      <header className="sticky top-0 z-10 bg-rx-card/80 backdrop-blur-md border-b border-rx-hairline">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
-          <button onClick={onBack} className="text-slate-600 hover:text-slate-900 flex items-center gap-1 text-sm font-medium">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <button onClick={onBack} className="text-rx-ink-muted hover:text-rx-ink flex items-center gap-1 text-sm font-medium">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
             Back
           </button>
-          <h1 onClick={onBack} className="font-bold text-slate-900 text-lg tracking-tight cursor-pointer">
-            Rx<span className="text-emerald-600">Scan</span>
+          <h1 onClick={onBack} className="font-medium text-rx-ink text-lg tracking-tight cursor-pointer">
+            Rx<span className="text-rx-pine-700">Scan</span>
           </h1>
-        {!isEmpty && (
+          {!isEmpty ? (
             <button
               onClick={onScan}
-              className="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-full transition-colors"
+              className="flex items-center gap-1.5 bg-rx-pine-50 hover:bg-rx-pine-100 px-3 py-1.5 rounded-full transition-colors"
             >
-              <svg className="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-              </svg>
-              <span className="text-xs font-semibold text-emerald-600">Scan</span>
+              <IconPlus className="w-3.5 h-3.5 text-rx-pine-700" />
+              <span className="text-xs font-medium text-rx-pine-700">Scan</span>
             </button>
+          ) : (
+            <div className="w-12" />
           )}
-          {isEmpty && <div className="w-12" />}
         </div>
       </header>
 
@@ -353,36 +389,27 @@ export default function MyMedicinesScreen({ onBack, onScan, onViewPrescription }
           <EmptyState onScan={onScan} />
         ) : (
           <>
-            {/* Summary dashboard */}
             <div className="mt-4">
-              <SummaryDashboard
-                stats={{
-                  ...savings,
-                  medicineCount: allMedicines.length,
-                }}
-              />
+              <SummaryDashboard stats={{ ...savings, medicineCount: allMedicines.length }} />
             </div>
 
-            {/* Cross-prescription interaction alerts */}
             {crossAlerts.length > 0 && (
               <div className="mt-5 space-y-3">
-                <h3 className="text-xs font-semibold text-red-500 uppercase tracking-wider flex items-center gap-1">
-                  ⚠️ Cross-Prescription Alerts ({crossAlerts.length})
+                <h3 className="text-xs font-medium text-rx-clay-700 uppercase tracking-wider flex items-center gap-1.5">
+                  <IconAlert className="w-3.5 h-3.5" />
+                  Cross-prescription alerts ({crossAlerts.length})
                 </h3>
-                {crossAlerts.map((alert, i) => (
-                  <CrossInteractionAlert key={i} alert={alert} />
-                ))}
+                {crossAlerts.map((alert, i) => <CrossInteractionAlert key={i} alert={alert} />)}
               </div>
             )}
 
-            {/* Tab switcher */}
-            <div className="mt-5 flex rounded-lg bg-slate-200 p-1">
+            <div className="mt-5 flex rounded-lg bg-rx-surface p-1">
               <button
                 onClick={() => setActiveTab('prescriptions')}
                 className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
                   activeTab === 'prescriptions'
-                    ? 'bg-white text-slate-900 shadow-sm'
-                    : 'text-slate-500 hover:text-slate-700'
+                    ? 'bg-rx-card text-rx-ink'
+                    : 'text-rx-ink-muted hover:text-rx-ink'
                 }`}
               >
                 Prescriptions ({prescriptions.length})
@@ -391,55 +418,48 @@ export default function MyMedicinesScreen({ onBack, onScan, onViewPrescription }
                 onClick={() => setActiveTab('all-medicines')}
                 className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
                   activeTab === 'all-medicines'
-                    ? 'bg-white text-slate-900 shadow-sm'
-                    : 'text-slate-500 hover:text-slate-700'
+                    ? 'bg-rx-card text-rx-ink'
+                    : 'text-rx-ink-muted hover:text-rx-ink'
                 }`}
               >
-                All Medicines ({allMedicines.length})
+                All medicines ({allMedicines.length})
               </button>
             </div>
 
-            {/* Tab content */}
             <div className="mt-4">
               {activeTab === 'prescriptions' && (
                 <div className="space-y-3">
                   {prescriptions.map((rx) => (
-                    <PrescriptionCard
-                      key={rx.id}
-                      prescription={rx}
-                      onDelete={handleDelete}
-                      onView={onViewPrescription}
-                    />
+                    <PrescriptionCard key={rx.id} prescription={rx} onDelete={handleDelete} onView={onViewPrescription} />
                   ))}
                 </div>
               )}
               {activeTab === 'all-medicines' && <AllMedicinesView />}
             </div>
 
-            {/* Clear all */}
             <div className="mt-8 text-center">
               {!showClearConfirm ? (
                 <button
                   onClick={() => setShowClearConfirm(true)}
-                  className="text-xs text-slate-400 hover:text-red-500 transition-colors"
+                  className="text-xs text-rx-ink-subtle hover:text-rx-clay-700 transition-colors"
                 >
                   Clear all history
                 </button>
               ) : (
                 <div className="space-y-2">
-                  <p className="text-xs text-red-500 font-medium">
+                  <p className="text-xs text-rx-clay-700 font-medium">
                     This will delete all saved prescriptions. Are you sure?
                   </p>
                   <div className="flex justify-center gap-2">
                     <button
                       onClick={handleClearAll}
-                      className="px-4 py-2 rounded-lg bg-red-500 text-white text-xs font-semibold"
+                      className="px-4 py-2 rounded-lg bg-rx-clay-600 text-rx-surface text-xs font-medium"
                     >
                       Yes, clear all
                     </button>
                     <button
                       onClick={() => setShowClearConfirm(false)}
-                      className="px-4 py-2 rounded-lg bg-slate-100 text-xs font-semibold text-slate-600"
+                      className="px-4 py-2 rounded-lg bg-rx-surface text-xs font-medium text-rx-ink-muted"
                     >
                       Cancel
                     </button>
@@ -450,9 +470,8 @@ export default function MyMedicinesScreen({ onBack, onScan, onViewPrescription }
           </>
         )}
 
-        {/* Disclaimer */}
         <div className="mt-8">
-          <p className="text-[11px] text-slate-400 leading-relaxed text-center">
+          <p className="text-[11px] text-rx-ink-subtle leading-relaxed text-center">
             Your prescription history is stored only on this device. RxScan does not store
             any medical data on servers. Clearing your browser data will remove this history.
           </p>

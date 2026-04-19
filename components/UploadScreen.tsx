@@ -3,7 +3,74 @@
 import { useState, useRef, useCallback } from 'react';
 
 // ============================================================
-// COMPONENT: Camera Viewfinder (mobile)
+// ICONS
+// ============================================================
+
+function IconCamera({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="12" cy="13.5" r="3.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  );
+}
+
+function IconUpload({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <path d="M12 15V3M7 8l5-5 5 5M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function IconSun({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconRuler({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="3" y="9" width="18" height="6" rx="1" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M7 9v2M11 9v3M15 9v2M19 9v3" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  );
+}
+
+function IconSearch({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconHand({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <path d="M8 13V6a2 2 0 1 1 4 0v4M12 10V4a2 2 0 1 1 4 0v8M16 10V6a2 2 0 1 1 4 0v9a6 6 0 0 1-12 0v-3l-2-3a2 2 0 1 1 3-2l1 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function IconImage({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="9" cy="10" r="1.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M4 18l5-5 5 5 3-3 3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+// ============================================================
+// CAMERA CAPTURE
 // ============================================================
 
 function CameraCapture({ onCapture, onClose }: {
@@ -49,8 +116,6 @@ function CameraCapture({ onCapture, onClose }: {
     ctx.drawImage(video, 0, 0);
     canvas.toBlob((blob) => {
       if (blob) {
-        // BUG #6 FIX: Use the blob's actual type instead of hardcoding image/jpeg.
-        // Android Chrome sometimes produces WebP even when JPEG is requested.
         const ext = blob.type === 'image/png' ? 'png' : blob.type === 'image/webp' ? 'webp' : 'jpg';
         const file = new File([blob], `prescription.${ext}`, { type: blob.type });
         stopCamera();
@@ -59,7 +124,6 @@ function CameraCapture({ onCapture, onClose }: {
     }, 'image/jpeg', 0.9);
   }, [stopCamera, onCapture]);
 
-  // Start camera on mount
   useState(() => {
     startCamera();
   });
@@ -67,13 +131,13 @@ function CameraCapture({ onCapture, onClose }: {
   if (error) {
     return (
       <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center px-6 text-center">
-        <div className="text-4xl mb-4">📷</div>
+        <IconCamera className="w-12 h-12 text-white/60 mb-4" />
         <p className="text-white text-sm mb-6">{error}</p>
         <button
           onClick={onClose}
-          className="bg-white text-slate-900 font-semibold py-2.5 px-6 rounded-xl text-sm"
+          className="bg-rx-surface text-rx-ink font-medium py-2.5 px-6 rounded-xl text-sm"
         >
-          Go Back
+          Go back
         </button>
       </div>
     );
@@ -81,21 +145,12 @@ function CameraCapture({ onCapture, onClose }: {
 
   return (
     <div className="fixed inset-0 z-50 bg-black flex flex-col">
-      {/* Camera feed */}
       <div className="flex-1 relative overflow-hidden">
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          muted
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <video ref={videoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover" />
         <canvas ref={canvasRef} className="hidden" />
 
-        {/* Viewfinder overlay */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-[85%] aspect-[3/4] border-2 border-white/40 rounded-2xl relative">
-            {/* Corner markers */}
             <div className="absolute -top-0.5 -left-0.5 w-8 h-8 border-t-3 border-l-3 border-white rounded-tl-xl" />
             <div className="absolute -top-0.5 -right-0.5 w-8 h-8 border-t-3 border-r-3 border-white rounded-tr-xl" />
             <div className="absolute -bottom-0.5 -left-0.5 w-8 h-8 border-b-3 border-l-3 border-white rounded-bl-xl" />
@@ -103,14 +158,12 @@ function CameraCapture({ onCapture, onClose }: {
           </div>
         </div>
 
-        {/* Tips bar */}
         <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/60 to-transparent px-4 pt-12 pb-8">
           <p className="text-white/90 text-sm text-center font-medium">
             Place prescription flat • Good lighting • Capture full page
           </p>
         </div>
 
-        {/* Loading state */}
         {!cameraReady && (
           <div className="absolute inset-0 bg-black flex items-center justify-center">
             <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -118,33 +171,21 @@ function CameraCapture({ onCapture, onClose }: {
         )}
       </div>
 
-      {/* Bottom controls */}
       <div className="bg-black px-4 py-6 flex items-center justify-between">
-        <button
-          onClick={() => { stopCamera(); onClose(); }}
-          className="text-white/70 text-sm font-medium py-2 px-4"
-        >
+        <button onClick={() => { stopCamera(); onClose(); }} className="text-white/70 text-sm font-medium py-2 px-4">
           Cancel
         </button>
-
-        {/* Shutter button */}
-        <button
-          onClick={takePhoto}
-          disabled={!cameraReady}
-          className="w-16 h-16 rounded-full border-4 border-white flex items-center justify-center disabled:opacity-30"
-        >
-          <div className="w-12 h-12 rounded-full bg-white active:bg-slate-200 transition-colors" />
+        <button onClick={takePhoto} disabled={!cameraReady} className="w-16 h-16 rounded-full border-4 border-white flex items-center justify-center disabled:opacity-30">
+          <div className="w-12 h-12 rounded-full bg-white active:bg-rx-surface transition-colors" />
         </button>
-
-        <div className="w-16" /> {/* Spacer for centering */}
+        <div className="w-16" />
       </div>
     </div>
   );
 }
 
-
 // ============================================================
-// COMPONENT: Image Preview with retake
+// IMAGE PREVIEW
 // ============================================================
 
 function ImagePreview({ file, onConfirm, onRetake }: {
@@ -156,43 +197,36 @@ function ImagePreview({ file, onConfirm, onRetake }: {
 
   return (
     <div className="space-y-4">
-      {/* Preview image */}
-      <div className="rounded-2xl overflow-hidden border-2 border-slate-200 bg-slate-100 shadow-sm">
-        <img
-          src={previewUrl}
-          alt="Prescription preview"
-          className="w-full object-contain max-h-[50vh]"
-        />
+      <div className="rounded-2xl overflow-hidden border border-rx-hairline bg-rx-surface">
+        <img src={previewUrl} alt="Prescription preview" className="w-full object-contain max-h-[50vh]" />
       </div>
 
-      {/* Confirm / Retake buttons */}
       <div className="flex gap-3">
         <button
           onClick={onRetake}
-          className="flex-1 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3.5 px-4 rounded-xl text-sm transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 bg-rx-surface hover:bg-rx-pine-50 text-rx-ink font-medium py-3.5 px-4 rounded-xl text-sm transition-colors"
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
           Retake
         </button>
         <button
           onClick={onConfirm}
-          className="flex-[2] flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 px-4 rounded-xl text-sm transition-colors"
+          className="flex-[2] flex items-center justify-center gap-2 bg-rx-pine-700 hover:bg-rx-pine-900 text-rx-surface font-medium py-3.5 px-4 rounded-xl text-sm transition-colors"
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          Analyze prescription
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
           </svg>
-          Analyze Prescription
         </button>
       </div>
     </div>
   );
 }
 
-
 // ============================================================
-// MAIN: Upload Screen
+// MAIN
 // ============================================================
 
 interface UploadScreenProps {
@@ -207,25 +241,15 @@ export default function UploadScreen({ onImageSelected, onBack }: UploadScreenPr
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-    }
+    if (file) setSelectedFile(file);
   };
 
-  const handleConfirm = () => {
-    if (selectedFile) {
-      onImageSelected(selectedFile);
-    }
-  };
-
+  const handleConfirm = () => { if (selectedFile) onImageSelected(selectedFile); };
   const handleRetake = () => {
     setSelectedFile(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  // Camera capture mode
   if (showCamera) {
     return (
       <CameraCapture
@@ -239,118 +263,94 @@ export default function UploadScreen({ onImageSelected, onBack }: UploadScreenPr
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-slate-200">
+    <div className="min-h-screen bg-rx-bg flex flex-col">
+      <header className="bg-rx-card/80 backdrop-blur-md border-b border-rx-hairline">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
-          <button onClick={onBack} className="text-slate-600 hover:text-slate-900 flex items-center gap-1 text-sm font-medium">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <button onClick={onBack} className="text-rx-ink-muted hover:text-rx-ink flex items-center gap-1 text-sm font-medium">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
             Back
           </button>
-          <h1 onClick={onBack} className="font-bold text-slate-900 text-lg tracking-tight cursor-pointer">
-            Rx<span className="text-emerald-600">Scan</span>
+          <h1 onClick={onBack} className="font-medium text-rx-ink text-lg tracking-tight cursor-pointer">
+            Rx<span className="text-rx-pine-700">Scan</span>
           </h1>
           <div className="w-12" />
         </div>
       </header>
 
-      {/* Content */}
       <main className="flex-1 max-w-lg mx-auto px-4 py-6 w-full">
         {selectedFile ? (
-          // Preview mode
           <div>
-            <h2 className="text-lg font-bold text-slate-900 mb-1">Looking good?</h2>
-            <p className="text-sm text-slate-500 mb-4">
+            <h2 className="text-lg font-medium text-rx-ink mb-1">Looking good?</h2>
+            <p className="text-sm text-rx-ink-muted mb-4">
               Make sure the full prescription is visible and text is readable.
             </p>
-            <ImagePreview
-              file={selectedFile}
-              onConfirm={handleConfirm}
-              onRetake={handleRetake}
-            />
+            <ImagePreview file={selectedFile} onConfirm={handleConfirm} onRetake={handleRetake} />
           </div>
         ) : (
-          // Upload mode
           <div>
-            <h2 className="text-lg font-bold text-slate-900 mb-1">Scan your prescription</h2>
-            <p className="text-sm text-slate-500 mb-6">
+            <h2 className="text-lg font-medium text-rx-ink mb-1">Scan your prescription</h2>
+            <p className="text-sm text-rx-ink-muted mb-6">
               Take a photo or upload an image of your handwritten prescription.
             </p>
 
-            {/* Camera button — primary on mobile */}
             <button
               onClick={() => setShowCamera(true)}
-              className="w-full flex items-center justify-center gap-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-6 rounded-2xl text-base transition-colors shadow-lg shadow-emerald-600/20"
+              className="w-full flex items-center justify-center gap-3 bg-rx-pine-700 hover:bg-rx-pine-900 text-rx-surface font-medium py-4 px-6 rounded-2xl text-base transition-colors"
             >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              Take a Photo
+              <IconCamera className="w-5 h-5" />
+              Take a photo
             </button>
 
-            {/* Divider */}
             <div className="flex items-center gap-3 my-5">
-              <div className="flex-1 h-px bg-slate-200" />
-              <span className="text-xs text-slate-400 font-medium">or</span>
-              <div className="flex-1 h-px bg-slate-200" />
+              <div className="flex-1 h-px bg-rx-hairline" />
+              <span className="text-xs text-rx-ink-subtle font-medium">or</span>
+              <div className="flex-1 h-px bg-rx-hairline" />
             </div>
 
-            {/* File upload — secondary */}
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleFileSelect}
-              accept="image/*"
-              className="hidden"
-            />
+            <input type="file" ref={fileInputRef} onChange={handleFileSelect} accept="image/*" className="hidden" />
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="w-full flex flex-col items-center justify-center gap-2 border-2 border-dashed border-slate-300 hover:border-emerald-400 bg-white hover:bg-emerald-50/50 rounded-2xl py-8 px-6 transition-colors cursor-pointer group"
+              className="w-full flex flex-col items-center justify-center gap-2 border border-dashed border-rx-hairline hover:border-rx-pine-700 bg-rx-card hover:bg-rx-pine-50/40 rounded-2xl py-8 px-6 transition-colors cursor-pointer group"
             >
-              <div className="w-12 h-12 rounded-full bg-slate-100 group-hover:bg-emerald-100 flex items-center justify-center transition-colors">
-                <svg className="w-6 h-6 text-slate-400 group-hover:text-emerald-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
+              <div className="w-11 h-11 rounded-full bg-rx-surface group-hover:bg-rx-pine-50 flex items-center justify-center transition-colors">
+                <IconImage className="w-5 h-5 text-rx-ink-subtle group-hover:text-rx-pine-700 transition-colors" />
               </div>
-              <span className="text-sm font-medium text-slate-600 group-hover:text-emerald-700 transition-colors">
+              <span className="text-sm font-medium text-rx-ink-muted group-hover:text-rx-pine-700 transition-colors">
                 Upload from gallery
               </span>
-              <span className="text-xs text-slate-400">
-                JPG, PNG, WebP — max 10MB
-              </span>
+              <span className="text-xs text-rx-ink-subtle">JPG, PNG, WebP — max 10MB</span>
             </button>
 
-            {/* Tips section */}
-            <div className="mt-8 rounded-xl bg-white border border-slate-200 p-4">
-              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
-                📸 Tips for best results
+            <div className="mt-8 rounded-xl bg-rx-card border border-rx-hairline p-4">
+              <h3 className="text-xs font-medium text-rx-ink-subtle uppercase tracking-wider mb-3">
+                Tips for best results
               </h3>
               <div className="space-y-2.5">
                 {[
-                  { icon: '☀️', text: 'Good lighting — avoid shadows on the prescription' },
-                  { icon: '📐', text: 'Flat surface — lay the prescription flat, no folds' },
-                  { icon: '🔍', text: 'Full page — capture the entire prescription in frame' },
-                  { icon: '✋', text: 'Steady hand — hold still to avoid blur' },
-                ].map((tip, i) => (
-                  <div key={i} className="flex items-start gap-2.5">
-                    <span className="text-sm flex-shrink-0">{tip.icon}</span>
-                    <p className="text-sm text-slate-600 leading-snug">{tip.text}</p>
-                  </div>
-                ))}
+                  { Icon: IconSun, text: 'Good lighting — avoid shadows on the prescription' },
+                  { Icon: IconRuler, text: 'Flat surface — lay the prescription flat, no folds' },
+                  { Icon: IconSearch, text: 'Full page — capture the entire prescription in frame' },
+                  { Icon: IconHand, text: 'Steady hand — hold still to avoid blur' },
+                ].map((tip, i) => {
+                  const TipIcon = tip.Icon;
+                  return (
+                    <div key={i} className="flex items-start gap-2.5">
+                      <TipIcon className="w-4 h-4 text-rx-pine-700 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-rx-ink leading-snug">{tip.text}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
         )}
       </main>
 
-      {/* Bottom disclaimer */}
       <div className="px-4 pb-6">
-        <p className="text-[11px] text-slate-400 leading-relaxed text-center max-w-lg mx-auto">
-          Your prescription image is processed securely and is NOT stored.
-          We delete all images after processing.
+        <p className="text-[11px] text-rx-ink-subtle leading-relaxed text-center max-w-lg mx-auto">
+          Your prescription image is processed securely and is not stored. We delete all images after processing.
         </p>
       </div>
     </div>

@@ -2,23 +2,41 @@ import { analyzePrescription } from '@/lib/drug-matcher';
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 
-// Initialize the Anthropic client
-// It automatically reads ANTHROPIC_API_KEY from your .env.local
 const anthropic = new Anthropic();
 
 const PRESCRIPTION_PROMPT = `You are a medical prescription reader specializing in Indian handwritten prescriptions.
 
-You are looking at a photograph of a handwritten doctor's prescription from India. Your task is to extract EVERY medicine prescribed.
+You are looking at a photograph of a handwritten doctor's prescription from India. Your task is to extract EVERY medicine prescribed AND any conditions/symptoms the doctor noted.
 
-For each medicine, identify:
+=== CRITICAL DISTINCTION — MEDICINES vs CONDITIONS ===
+
+Doctors often write the patient's diagnosis or symptoms on the prescription. These are NOT medicines. Common examples that are CONDITIONS or SYMPTOMS, not medicines:
+- HTN / Hypertension / High BP / BP
+- DM / Diabetes / Diabetes Mellitus / Type 2 DM
+- Fever / Viral fever / Pyrexia
+- Cough / Cold / URI / Upper respiratory infection
+- Pain abdomen / Abdominal pain / Headache / Migraine
+- Asthma / COPD / CAD / IHD
+- Anaemia / Anxiety / Depression
+
+If you see these terms, DO NOT put them in the medicines array. Put them in a separate "doctorNotes" array with:
+- kind: "condition" (for diagnoses like HTN, DM, Asthma)
+- kind: "symptom" (for symptoms like pain abdomen, cough, headache)
+- value: the exact text as written
+
+A medicine has a dosage (mg, ml) or a formulation (Tab, Cap, Syp). If something is written without a dosage or formulation, it's almost certainly a condition/symptom, not a medicine.
+
+=== FOR EACH MEDICINE, IDENTIFY ===
+
 1. Medicine name (exactly as written — could be a brand name or generic name)
 2. Dosage (e.g., 500mg, 10mg, 40mg)
 3. Frequency (e.g., 1-0-1, BD, TDS, OD, SOS)
 4. Duration (e.g., 5 days, 1 week, 1 month, "to continue", "as needed")
-5. Special instructions if visible (e.g., "after food", "before bed", "with milk", "before breakfast", "at 7 AM", "at 6 PM", "AC", "PC")
+5. Special instructions if visible (e.g., "after food", "before bed", "with milk", "AC", "PC")
 6. Formulation (tablet, capsule, syrup, injection, cream, drops, inhaler, pellets, sachets)
 
-CRITICAL CONTEXT — Indian prescription abbreviations:
+=== CRITICAL CONTEXT — Indian prescription abbreviations ===
+
 - Tab = Tablet, Cap = Capsule, Syp = Syrup, Inj = Injection
 - OD = once daily, BD = twice daily, TDS = three times daily
 - QID = four times daily, SOS = as needed, STAT = immediately
@@ -77,11 +95,36 @@ CONFIDENCE RULES:
 - "medium" = you're fairly sure but handwriting is ambiguous
 - "low" = you're guessing — the handwriting is very unclear
 
+=== NEW FIELDS YOU MUST RETURN ===
+
+1. "aiSummary" — ONE natural-language sentence describing what you found overall.
+   Examples:
+   - "Looks like a cardiac regimen. 3 medicines identified."
+   - "Appears to be a 5-day course for an upper respiratory infection."
+   - "I couldn't confidently read any medicine names from this prescription."
+   - "A routine diabetes management regimen with 4 medicines."
+   Write in first person ("I"), warm but concise. One sentence only.
+
+2. "aiConfidence" — an integer 0-100 representing your overall confidence that you read this prescription correctly.
+   - 90-100: handwriting was clear, confident about every medicine
+   - 70-89: handwriting was mostly clear, one or two ambiguous bits
+   - 50-69: handwriting was hard but you could make out most things
+   - 30-49: handwriting was very hard, mostly guessing
+   - 0-29: you could barely read anything
+
+3. "doctorNotes" — array of conditions and symptoms (NOT medicines). Shape:
+   [{ "kind": "condition" | "symptom", "value": "HTN" }]
+   If none visible, return empty array [].
+
+=== ERROR RESPONSES ===
+
 If the image is NOT a medical prescription (e.g., a receipt, a random document, a photo of food), respond with:
 { "error": "NOT_A_PRESCRIPTION", "message": "This doesn't appear to be a medical prescription." }
 
 If the image is too blurry or dark to read, respond with:
 { "error": "UNREADABLE", "message": "The image is too blurry or dark to read. Please retake the photo with better lighting." }
+
+=== OUTPUT FORMAT ===
 
 Return ONLY valid JSON. No markdown backticks. No explanation outside the JSON.
 
@@ -99,6 +142,11 @@ Return this exact format:
       "formulation": "tablet/capsule/syrup/injection/cream/drops/inhaler"
     }
   ],
+  "doctorNotes": [
+    { "kind": "condition", "value": "HTN" }
+  ],
+  "aiSummary": "One-sentence natural language summary in first person.",
+  "aiConfidence": 85,
   "doctorName": "doctor name if visible or null",
   "patientName": "patient name if visible or null",
   "clinicName": "clinic or hospital name if visible or null",
@@ -110,15 +158,9 @@ Return this exact format:
 
 export async function POST(request: NextRequest) {
   try {
-    // 1. Read the image from the request body
     const body = await request.json();
     const { image, mimeType } = body;
 
-    // ============================================================
-    // STEP 5: INPUT VALIDATION & GUARDS (runs first to save money)
-    // ============================================================
-
-    // GUARD 1: Missing data
     if (!image || !mimeType) {
       return NextResponse.json(
         { error: 'Please provide an image and its type.' },
@@ -126,7 +168,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // GUARD 2: Invalid MIME type
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
     if (!allowedTypes.includes(mimeType)) {
       return NextResponse.json(
@@ -137,7 +178,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // GUARD 3: Image too large (20MB base64 ≈ ~15MB raw file)
     const maxBase64Length = 20 * 1024 * 1024;
     if (image.length > maxBase64Length) {
       return NextResponse.json(
@@ -146,7 +186,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // GUARD 4: Reject data URL prefix (frontend should send raw base64 only)
     if (image.startsWith('data:')) {
       return NextResponse.json(
         {
@@ -156,10 +195,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    // ============================================================
-    // STEP 3: CALL CLAUDE VISION API
-    // ============================================================
 
     const response = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
@@ -185,10 +220,7 @@ export async function POST(request: NextRequest) {
       ],
     });
 
-    // Extract text from Claude's response
-    const textBlock = response.content.find(
-      (block) => block.type === 'text'
-    );
+    const textBlock = response.content.find((block) => block.type === 'text');
 
     if (!textBlock || textBlock.type !== 'text') {
       return NextResponse.json(
@@ -199,11 +231,6 @@ export async function POST(request: NextRequest) {
 
     const rawText = textBlock.text;
 
-    // ============================================================
-    // STEP 4: PARSE AND VALIDATE THE JSON RESPONSE
-    // ============================================================
-
-    // Clean up — Claude sometimes wraps JSON in markdown backticks
     let jsonString = rawText.trim();
     if (jsonString.startsWith('```')) {
       jsonString = jsonString
@@ -212,7 +239,6 @@ export async function POST(request: NextRequest) {
         .replace(/\n?\s*```\s*$/, '');
     }
 
-    // Try to parse the JSON
     let parsed;
     try {
       parsed = JSON.parse(jsonString);
@@ -232,7 +258,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Handle error responses from Claude (not-a-prescription, unreadable)
     if (parsed.error) {
       return NextResponse.json(
         {
@@ -244,18 +269,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate that we got a medicines array
     if (!parsed.medicines || !Array.isArray(parsed.medicines)) {
-      return NextResponse.json(
-        {
-          error:
-            'Could not identify any medicines in this image. Is this a medical prescription?',
-        },
-        { status: 422 }
-      );
+      parsed.medicines = [];
     }
 
-    // Filter out any medicines with no name
     parsed.medicines = parsed.medicines.filter((med: any) => {
       if (!med.name || med.name.trim() === '') {
         console.warn('Dropping medicine with no name:', med);
@@ -264,23 +281,12 @@ export async function POST(request: NextRequest) {
       return true;
     });
 
-    // Update the count
     parsed.totalMedicines = parsed.medicines.length;
 
-    // If no medicines survived the filter
-    if (parsed.medicines.length === 0) {
-      return NextResponse.json(
-        {
-          error:
-            'No medicine names could be read from this prescription. The handwriting may be too unclear.',
-        },
-        { status: 422 }
-      );
-    }
-
-    // ============================================================
-    // SUCCESS — Return the parsed prescription
-    // ============================================================
+    // Note: even if medicines is empty, we still return a valid analysis.
+    // The redesigned UI handles the "hard to read — only doctor notes" case
+    // gracefully. This is intentional — low-confidence scans should not be
+    // hard errors; they should show the adaptive retake hero + doctor notes.
 
     const analysis = analyzePrescription(parsed);
 
@@ -291,7 +297,6 @@ export async function POST(request: NextRequest) {
       interactionCount: analysis.interactions.length,
       savings: analysis.savings,
     });
-
   } catch (error: any) {
     console.error('Scan error:', error?.message || error);
     console.error('Stack:', error?.stack);
