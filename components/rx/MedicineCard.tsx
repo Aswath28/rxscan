@@ -213,22 +213,17 @@ export function MedicineCard({ medicine, onFindNearby }: MedicineCardProps) {
 
       {/* Pricing block */}
       {showPricing && medicine.pricing && (
-        <div className="mb-2.5 flex items-center justify-between rounded-[14px] bg-rx-surface px-3.5 py-3">
-          <div className="flex flex-col">
-            <div className="mb-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-rx-ink-muted">
-              Generic price
-            </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-[22px] font-extrabold tracking-[-0.02em] text-rx-ink">
-                {fmt(medicine.pricing.genericPrice)}
-              </span>
-              <span className="text-[13px] text-rx-ink-subtle line-through">
-                {fmt(medicine.pricing.brandPrice)}
-              </span>
-            </div>
+        <div className="mb-2.5 rounded-[14px] bg-rx-surface px-3.5 py-3">
+          <div className="mb-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-rx-ink-muted">
+            Generic price
           </div>
-          <div className="rounded-full bg-rx-pine-700 px-3 py-1.5 text-[12px] font-bold text-white shadow-rx-press">
-            Save {medicine.pricing.savingsPercent}%
+          <div className="flex items-baseline gap-2">
+            <span className="text-[22px] font-extrabold tracking-[-0.02em] text-rx-ink">
+              {fmt(medicine.pricing.genericPrice)}
+            </span>
+            <span className="text-[13px] text-rx-ink-subtle line-through">
+              {fmt(medicine.pricing.brandPrice)}
+            </span>
           </div>
         </div>
       )}

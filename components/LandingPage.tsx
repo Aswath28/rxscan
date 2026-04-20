@@ -164,7 +164,6 @@ function HeroPreview() {
 // ============================================================
 
 function SampleMiniCard({ medicine }: { medicine: typeof SAMPLE_MEDICINES[0] }) {
-  const savings = Math.round(((medicine.brandPrice - medicine.genericPrice) / medicine.brandPrice) * 100);
   return (
     <div className="flex items-center justify-between py-2.5 border-b border-rx-hairline last:border-0">
       <div className="min-w-0">
@@ -174,9 +173,6 @@ function SampleMiniCard({ medicine }: { medicine: typeof SAMPLE_MEDICINES[0] }) 
       <div className="flex items-center gap-2 flex-shrink-0 ml-3">
         <span className="text-xs text-rx-ink-subtle line-through">₹{medicine.brandPrice}</span>
         <span className="text-sm font-bold text-rx-ink">₹{medicine.genericPrice}</span>
-        <span className="text-[10px] font-bold text-rx-pine-700 bg-rx-pine-50 px-1.5 py-0.5 rounded">
-          -{savings}%
-        </span>
       </div>
     </div>
   );
