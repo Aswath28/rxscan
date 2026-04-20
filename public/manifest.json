@@ -1,0 +1,21 @@
+{
+  "name": "RxScan — Scan your prescription",
+  "short_name": "RxScan",
+  "description": "AI reads your doctor's handwriting, shows generic alternatives with savings, and flags drug interactions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF6F1",
+  "theme_color": "#1B4D3E",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
