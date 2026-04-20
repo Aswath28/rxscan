@@ -231,8 +231,8 @@ function HowItWorksStep({
 
 function StatBar() {
   const stats = [
-    { value: '400+', label: 'Top Indian medicines' },
-    { value: '₹500+', label: 'Avg savings' },
+    { value: '94%', label: 'OCR accuracy' },
+    { value: '140+', label: 'Interactions checked' },
     { value: '4K+', label: 'Brands recognized' },
   ];
   return (
@@ -575,7 +575,7 @@ export default function LandingPage({ onScanClick, onTrySample, onMyMedicines }:
             Always confirm with your doctor or pharmacist before making any changes to your medication.
           </p>
           <p className="text-[11px] text-rx-ink-subtle mt-2 opacity-70">
-            Built for every Indian patient
+            Data sourced from Jan Aushadhi and CDSCO public records
           </p>
         </div>
       </main>
