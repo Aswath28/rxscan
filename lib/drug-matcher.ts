@@ -129,7 +129,7 @@ function levenshtein(a: string, b: string): number {
 // BRAND MATCHING
 // ============================================================
 
-const brandMap = brandMappings as Record<string, { generic: string; dosage: string }>;
+const brandMap = brandMappings as unknown as Record<string, { generic: string; dosage: string }>;
 const drugs = drugsData as any[];
 const interactions = interactionsData as any[];
 
