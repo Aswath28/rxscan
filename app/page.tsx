@@ -203,6 +203,7 @@ function toAnalysis(result: any): PrescriptionAnalysis {
       matchMethod: m.matchMethod,
       showMatchedName: m.showMatchedName ?? true,
       showPricing: m.showPricing ?? true,
+      source: m.source,
     };
   });
 

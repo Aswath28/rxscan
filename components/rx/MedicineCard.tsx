@@ -3,6 +3,9 @@
 import { useState } from 'react'
 import { Medicine } from '@/types/prescription'
 import { ConfidencePill } from './primitives'
+import { AiFallbackCard } from './AiFallbackCard'
+
+
 
 interface MedicineCardProps {
   medicine: Medicine
@@ -127,6 +130,11 @@ function categoryToStyle(category?: string | null, formulation?: string | null):
 }
 
 export function MedicineCard({ medicine, onFindNearby }: MedicineCardProps) {
+  // AI fallback: completely different rendering with eager Haiku fetch
+  if (medicine.source === 'ai_fallback') {
+    return <AiFallbackCard medicine={medicine} />
+  }
+
   const [expanded, setExpanded] = useState(false)
   const fmt = (n: number) => `₹${n.toLocaleString('en-IN')}`
 

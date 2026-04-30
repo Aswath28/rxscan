@@ -16398,5 +16398,414 @@
   "Zyrtec 5mg": {
     "generic": "Cetirizine",
     "dosage": "5mg"
+  },
+  "_comment_combination_gastric": "Combination — Gastric (10 entries)",
+  "Pan-D": {
+    "generic": "Pantoprazole + Domperidone",
+    "dosage": "40mg+30mg"
+  },
+  "Pantop-D": {
+    "generic": "Pantoprazole + Domperidone",
+    "dosage": "40mg+30mg"
+  },
+  "Pantocid-D": {
+    "generic": "Pantoprazole + Domperidone",
+    "dosage": "40mg+30mg"
+  },
+  "Pantodac-D": {
+    "generic": "Pantoprazole + Domperidone",
+    "dosage": "40mg+30mg"
+  },
+  "Nexpro-D": {
+    "generic": "Pantoprazole + Domperidone",
+    "dosage": "40mg+30mg"
+  },
+  "Razo-D": {
+    "generic": "Rabeprazole + Domperidone",
+    "dosage": "20mg+30mg"
+  },
+  "Rablet-D": {
+    "generic": "Rabeprazole + Domperidone",
+    "dosage": "20mg+30mg"
+  },
+  "Raciper-D": {
+    "generic": "Rabeprazole + Domperidone",
+    "dosage": "20mg+30mg"
+  },
+  "Happi-D": {
+    "generic": "Rabeprazole + Domperidone",
+    "dosage": "20mg+30mg"
+  },
+  "Rantac-D": {
+    "generic": "Ranitidine + Domperidone",
+    "dosage": "150mg+10mg"
+  },
+  "_comment_combination_allergy_respiratory": "Combination — Allergy/Respiratory (15 entries)",
+  "Montek LC": {
+    "generic": "Montelukast + Levocetirizine",
+    "dosage": "10mg+5mg"
+  },
+  "Montair LC": {
+    "generic": "Montelukast + Levocetirizine",
+    "dosage": "10mg+5mg"
+  },
+  "Montemac LC": {
+    "generic": "Montelukast + Levocetirizine",
+    "dosage": "10mg+5mg"
+  },
+  "L-Montus": {
+    "generic": "Montelukast + Levocetirizine",
+    "dosage": "10mg+5mg"
+  },
+  "Lukotas LC": {
+    "generic": "Montelukast + Levocetirizine",
+    "dosage": "10mg+5mg"
+  },
+  "Romilast L": {
+    "generic": "Montelukast + Levocetirizine",
+    "dosage": "10mg+5mg"
+  },
+  "Telekast L": {
+    "generic": "Montelukast + Levocetirizine",
+    "dosage": "10mg+5mg"
+  },
+  "Montair FX": {
+    "generic": "Montelukast + Fexofenadine",
+    "dosage": "10mg+120mg"
+  },
+  "Montek FX": {
+    "generic": "Montelukast + Fexofenadine",
+    "dosage": "10mg+120mg"
+  },
+  "Ascoril LS": {
+    "generic": "Ambroxol + Guaifenesin + Terbutaline",
+    "dosage": "15mg+50mg+1.25mg"
+  },
+  "Ambrodil S": {
+    "generic": "Ambroxol + Guaifenesin + Terbutaline",
+    "dosage": "15mg+50mg+1.25mg"
+  },
+  "Cheston CS": {
+    "generic": "Chlorpheniramine + Phenylephrine + Dextromethorphan",
+    "dosage": "2mg+5mg+10mg"
+  },
+  "Corex DX": {
+    "generic": "Chlorpheniramine + Phenylephrine + Dextromethorphan",
+    "dosage": "2mg+5mg+10mg"
+  },
+  "Sinarest": {
+    "generic": "Cetirizine + Phenylephrine + Paracetamol",
+    "dosage": "5mg+10mg+325mg"
+  },
+  "Coldact": {
+    "generic": "Cetirizine + Phenylephrine + Paracetamol",
+    "dosage": "5mg+10mg+325mg"
+  },
+  "_comment_combination_antibiotic": "Combination — Antibiotic (12 entries)",
+  "Augmentin 625": {
+    "generic": "Amoxicillin + Clavulanate",
+    "dosage": "500mg+125mg"
+  },
+  "Augmentin": {
+    "generic": "Amoxicillin + Clavulanate",
+    "dosage": "500mg+125mg"
+  },
+  "Moxclav": {
+    "generic": "Amoxicillin + Clavulanate",
+    "dosage": "500mg+125mg"
+  },
+  "Clavam": {
+    "generic": "Amoxicillin + Clavulanate",
+    "dosage": "500mg+125mg"
+  },
+  "Mahacef CV": {
+    "generic": "Cefpodoxime + Clavulanate",
+    "dosage": "200mg+125mg"
+  },
+  "Cepodem CV": {
+    "generic": "Cefpodoxime + Clavulanate",
+    "dosage": "200mg+125mg"
+  },
+  "Cefpodox CV": {
+    "generic": "Cefpodoxime + Clavulanate",
+    "dosage": "200mg+125mg"
+  },
+  "Supacef CV": {
+    "generic": "Cefuroxime + Clavulanate",
+    "dosage": "500mg+125mg"
+  },
+  "Altacef CV": {
+    "generic": "Cefuroxime + Clavulanate",
+    "dosage": "500mg+125mg"
+  },
+  "Norflox-TZ": {
+    "generic": "Norfloxacin + Tinidazole",
+    "dosage": "400mg+600mg"
+  },
+  "Zenflox OZ": {
+    "generic": "Ofloxacin + Ornidazole",
+    "dosage": "200mg+500mg"
+  },
+  "Oflomac OZ": {
+    "generic": "Ofloxacin + Ornidazole",
+    "dosage": "200mg+500mg"
+  },
+  "_comment_combination_bp": "Combination — Blood Pressure (15 entries)",
+  "Telma AM": {
+    "generic": "Amlodipine + Telmisartan",
+    "dosage": "5mg+40mg"
+  },
+  "Telma-AM": {
+    "generic": "Amlodipine + Telmisartan",
+    "dosage": "5mg+40mg"
+  },
+  "Telmikind AM": {
+    "generic": "Amlodipine + Telmisartan",
+    "dosage": "5mg+40mg"
+  },
+  "Tazloc AM": {
+    "generic": "Amlodipine + Telmisartan",
+    "dosage": "5mg+40mg"
+  },
+  "Cresar AM": {
+    "generic": "Amlodipine + Telmisartan",
+    "dosage": "5mg+40mg"
+  },
+  "Telma H": {
+    "generic": "Telmisartan + Hydrochlorothiazide",
+    "dosage": "40mg+12.5mg"
+  },
+  "Telmikind H": {
+    "generic": "Telmisartan + Hydrochlorothiazide",
+    "dosage": "40mg+12.5mg"
+  },
+  "Tazloc H": {
+    "generic": "Telmisartan + Hydrochlorothiazide",
+    "dosage": "40mg+12.5mg"
+  },
+  "Telvas H": {
+    "generic": "Telmisartan + Hydrochlorothiazide",
+    "dosage": "40mg+12.5mg"
+  },
+  "Losar H": {
+    "generic": "Losartan + Hydrochlorothiazide",
+    "dosage": "50mg+12.5mg"
+  },
+  "Repace H": {
+    "generic": "Losartan + Hydrochlorothiazide",
+    "dosage": "50mg+12.5mg"
+  },
+  "Olmezest AM": {
+    "generic": "Olmesartan + Amlodipine",
+    "dosage": "20mg+5mg"
+  },
+  "Olmy AM": {
+    "generic": "Olmesartan + Amlodipine",
+    "dosage": "20mg+5mg"
+  },
+  "Amlokind AT": {
+    "generic": "Amlodipine + Atenolol",
+    "dosage": "5mg+50mg"
+  },
+  "Amlopres AT": {
+    "generic": "Amlodipine + Atenolol",
+    "dosage": "5mg+50mg"
+  },
+  "_comment_combination_diabetes": "Combination — Diabetes (15 entries)",
+  "Glycomet GP": {
+    "generic": "Metformin + Glimepiride",
+    "dosage": "500mg+1mg"
+  },
+  "Glycomet-GP": {
+    "generic": "Metformin + Glimepiride",
+    "dosage": "500mg+1mg"
+  },
+  "Gluconorm G": {
+    "generic": "Metformin + Glimepiride",
+    "dosage": "500mg+1mg"
+  },
+  "Amaryl M": {
+    "generic": "Metformin + Glimepiride",
+    "dosage": "500mg+1mg"
+  },
+  "Glimer M": {
+    "generic": "Metformin + Glimepiride",
+    "dosage": "500mg+1mg"
+  },
+  "Glimpid M": {
+    "generic": "Metformin + Glimepiride",
+    "dosage": "500mg+1mg"
+  },
+  "Janumet": {
+    "generic": "Sitagliptin + Metformin",
+    "dosage": "50mg+500mg"
+  },
+  "Istamet": {
+    "generic": "Sitagliptin + Metformin",
+    "dosage": "50mg+500mg"
+  },
+  "Istavel M": {
+    "generic": "Sitagliptin + Metformin",
+    "dosage": "50mg+500mg"
+  },
+  "Galvus Met": {
+    "generic": "Vildagliptin + Metformin",
+    "dosage": "50mg+500mg"
+  },
+  "Jalra M": {
+    "generic": "Vildagliptin + Metformin",
+    "dosage": "50mg+500mg"
+  },
+  "Zomilda M": {
+    "generic": "Vildagliptin + Metformin",
+    "dosage": "50mg+500mg"
+  },
+  "Teneli M": {
+    "generic": "Metformin + Teneligliptin",
+    "dosage": "500mg+20mg"
+  },
+  "Tenepure M": {
+    "generic": "Metformin + Teneligliptin",
+    "dosage": "500mg+20mg"
+  },
+  "Ziten M": {
+    "generic": "Metformin + Teneligliptin",
+    "dosage": "500mg+20mg"
+  },
+  "_comment_combination_cardiac": "Combination — Cardiac (8 entries)",
+  "Ecosprin AV": {
+    "generic": "Aspirin + Atorvastatin",
+    "dosage": "75mg+10mg"
+  },
+  "Ecosprin-AV": {
+    "generic": "Aspirin + Atorvastatin",
+    "dosage": "75mg+10mg"
+  },
+  "Atorva AS": {
+    "generic": "Aspirin + Atorvastatin",
+    "dosage": "75mg+10mg"
+  },
+  "Lipvas AS": {
+    "generic": "Aspirin + Atorvastatin",
+    "dosage": "75mg+10mg"
+  },
+  "Deplatt-A": {
+    "generic": "Clopidogrel + Aspirin",
+    "dosage": "75mg+75mg"
+  },
+  "Clopitab-A": {
+    "generic": "Clopidogrel + Aspirin",
+    "dosage": "75mg+75mg"
+  },
+  "Clavix-AS": {
+    "generic": "Clopidogrel + Aspirin",
+    "dosage": "75mg+75mg"
+  },
+  "Rozavel F": {
+    "generic": "Rosuvastatin + Fenofibrate",
+    "dosage": "10mg+145mg"
+  },
+  "_comment_single_pain_fever": "Single — Pain/Fever (12 entries)",
+  "Calpol 650": {
+    "generic": "Paracetamol",
+    "dosage": "650mg"
+  },
+  "Crocin Advance": {
+    "generic": "Paracetamol",
+    "dosage": "500mg"
+  },
+  "Crocin 650": {
+    "generic": "Paracetamol",
+    "dosage": "650mg"
+  },
+  "Dolo": {
+    "generic": "Paracetamol",
+    "dosage": "650mg"
+  },
+  "Dolo 650": {
+    "generic": "Paracetamol",
+    "dosage": "650mg"
+  },
+  "Pacimol": {
+    "generic": "Paracetamol",
+    "dosage": "500mg"
+  },
+  "P-500": {
+    "generic": "Paracetamol",
+    "dosage": "500mg"
+  },
+  "Zerodol SP": {
+    "generic": "Aceclofenac + Paracetamol + Serratiopeptidase",
+    "dosage": "100mg+325mg+15mg"
+  },
+  "Hifenac SP": {
+    "generic": "Aceclofenac + Paracetamol + Serratiopeptidase",
+    "dosage": "100mg+325mg+15mg"
+  },
+  "Acemiz SP": {
+    "generic": "Aceclofenac + Paracetamol + Serratiopeptidase",
+    "dosage": "100mg+325mg+15mg"
+  },
+  "Saridon": {
+    "generic": "Paracetamol + Caffeine",
+    "dosage": "500mg+65mg"
+  },
+  "Combiflam": {
+    "generic": "Paracetamol + Ibuprofen",
+    "dosage": "325mg+400mg"
+  },
+  "_comment_single_antibiotic": "Single — Antibiotic (10 entries)",
+  "Cefolac": {
+    "generic": "Cefpodoxime",
+    "dosage": "200mg"
+  },
+  "Cefolac CV": {
+    "generic": "Cefpodoxime + Clavulanate",
+    "dosage": "200mg+125mg"
+  },
+  "Monocef-O": {
+    "generic": "Cefpodoxime",
+    "dosage": "200mg"
+  },
+  "Cepodem": {
+    "generic": "Cefpodoxime",
+    "dosage": "200mg"
+  },
+  "Azee": {
+    "generic": "Azithromycin",
+    "dosage": "500mg"
+  },
+  "Azithral": {
+    "generic": "Azithromycin",
+    "dosage": "500mg"
+  },
+  "Zifi": {
+    "generic": "Cefixime",
+    "dosage": "200mg"
+  },
+  "Taxim-O": {
+    "generic": "Cefixime",
+    "dosage": "200mg"
+  },
+  "Cefspan": {
+    "generic": "Cefixime",
+    "dosage": "200mg"
+  },
+  "Levoflox": {
+    "generic": "Levofloxacin",
+    "dosage": "500mg"
+  },
+  "_comment_single_chronic": "Single — Chronic Disease (3 entries)",
+  "Glimelib": {
+    "generic": "Glimepiride",
+    "dosage": "1mg"
+  },
+  "Telmikind": {
+    "generic": "Telmisartan",
+    "dosage": "40mg"
+  },
+  "Tenali": {
+    "generic": "Teneligliptin",
+    "dosage": "20mg"
   }
 }

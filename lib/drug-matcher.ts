@@ -2,6 +2,15 @@ import drugsData from '@/data/drugs.json';
 import brandMappings from '@/data/brand-mappings.json';
 import interactionsData from '@/data/drug-interactions.json';
 
+function isLikelyGibberish(name: string, ocrConfidence: string): boolean {
+  if (!name || name.trim().length < 4) return true;
+  if (ocrConfidence === 'low') return true;
+  const letterRatio = (name.match(/[a-zA-Z]/g) || []).length / name.length;
+  if (letterRatio < 0.5) return true;
+  if (!/[aeiouAEIOU]/.test(name)) return true;
+  return false;
+}
+
 // ============================================================
 // TYPES
 // ============================================================
@@ -36,10 +45,9 @@ export interface OCRResult {
   aiConfidence?: number | null;
 }
 
-// NEW — how confidently did we identify this medicine?
 // 'exact'      : brand name matched exactly (Augmentin → Augmentin)
 // 'prefix'     : one is a prefix of the other (Pan → Pan 40)
-// 'fuzzy'      : Levenshtein close enough to pass threshold (risky)
+// 'fuzzy'      : Levenshtein close enough to pass threshold (never auto-trusted)
 // 'unmatched'  : no match at all — show OCR reading only
 export type MatchMethod = 'exact' | 'prefix' | 'fuzzy' | 'unmatched';
 
@@ -54,9 +62,10 @@ export interface MatchedMedicine extends OCRMedicine {
   brandPrice: number | null;
   genericPrice: number | null;
   janAushadhiAvailable: boolean;
-  matchMethod: MatchMethod;        // NEW
-  showMatchedName: boolean;        // NEW — UI guard
-  showPricing: boolean;            // NEW — UI guard
+  matchMethod: MatchMethod;
+  source: 'verified' | 'untrusted_match' | 'ai_fallback' | 'unknown';
+  showMatchedName: boolean;
+  showPricing: boolean;
 }
 
 export interface Interaction {
@@ -117,7 +126,7 @@ function levenshtein(a: string, b: string): number {
 }
 
 // ============================================================
-// BRAND MATCHING — now also reports the method used
+// BRAND MATCHING
 // ============================================================
 
 const brandMap = brandMappings as Record<string, { generic: string; dosage: string }>;
@@ -127,6 +136,7 @@ const interactions = interactionsData as any[];
 interface BrandMatchResult {
   mapping: { generic: string; dosage: string };
   method: 'exact' | 'prefix' | 'fuzzy';
+  matchedBrandName: string;
 }
 
 function matchBrand(ocrName: string): BrandMatchResult | null {
@@ -135,45 +145,69 @@ function matchBrand(ocrName: string): BrandMatchResult | null {
   // 1. Exact
   for (const [brand, mapping] of Object.entries(brandMap)) {
     if (normalize(brand) === normalized) {
-      return { mapping, method: 'exact' };
+      return { mapping, method: 'exact', matchedBrandName: brand };
     }
   }
 
   // 2. Starts-with (either direction)
+  // SAFETY FIX: require ≥4 chars of overlap. Prevents bogus prefix matches
+  // like "Pan" (3 chars) latching onto random P-a-n brands.
   for (const [brand, mapping] of Object.entries(brandMap)) {
-    if (normalize(brand).startsWith(normalized) || normalized.startsWith(normalize(brand))) {
-      return { mapping, method: 'prefix' };
+    const brandNorm = normalize(brand);
+    const overlap = Math.min(brandNorm.length, normalized.length);
+    if (overlap < 4) continue;
+    if (brandNorm.startsWith(normalized) || normalized.startsWith(brandNorm)) {
+      return { mapping, method: 'prefix', matchedBrandName: brand };
     }
   }
 
   // 3. Fuzzy
+  // SAFETY FIX: short brand names (≤7 chars) get NO fuzzy matching at all.
+  // They've already had exact + prefix shots above. Fuzzy on short names is
+  // how Cefolac → Cefixime, Calpol → Calpan-class errors creep in:
+  // a single character flip on a 7-char name is a different drug.
   const ocrNamePart = normalized.replace(/\d+.*/g, '').trim();
-  if (ocrNamePart.length < 3) return null;
+  if (ocrNamePart.length < 4) return null;
+  if (ocrNamePart.length <= 7) return null;
 
-  const maxDistance = ocrNamePart.length <= 5 ? 1 : ocrNamePart.length <= 9 ? 2 : 3;
+  // Names 8+ chars: tighter thresholds than before
+  const maxDistance = ocrNamePart.length <= 9 ? 1 : 2;
+  const minRatio = 0.85; // was 0.6 — much stricter
 
-  let bestMatch: { mapping: { generic: string; dosage: string }; distance: number; ratio: number } | null = null;
+  let bestMatch: {
+    mapping: { generic: string; dosage: string };
+    distance: number;
+    ratio: number;
+    brand: string;
+  } | null = null;
 
   for (const [brand, mapping] of Object.entries(brandMap)) {
     const brandNamePart = normalize(brand).replace(/\d+.*/g, '').trim();
+    if (brandNamePart.length < 4) continue;
     if (Math.abs(ocrNamePart.length - brandNamePart.length) > maxDistance) continue;
 
     const distance = levenshtein(ocrNamePart, brandNamePart);
     const maxLen = Math.max(ocrNamePart.length, brandNamePart.length);
-    const ratio = 1 - (distance / maxLen);
+    const ratio = 1 - distance / maxLen;
 
-    if (distance <= maxDistance && ratio >= 0.6) {
-      if (!bestMatch || ratio > bestMatch.ratio || (ratio === bestMatch.ratio && distance < bestMatch.distance)) {
-        bestMatch = { mapping, distance, ratio };
+    if (distance <= maxDistance && ratio >= minRatio) {
+      if (
+        !bestMatch ||
+        ratio > bestMatch.ratio ||
+        (ratio === bestMatch.ratio && distance < bestMatch.distance)
+      ) {
+        bestMatch = { mapping, distance, ratio, brand };
       }
     }
   }
 
-  return bestMatch ? { mapping: bestMatch.mapping, method: 'fuzzy' } : null;
+  return bestMatch
+    ? { mapping: bestMatch.mapping, method: 'fuzzy', matchedBrandName: bestMatch.brand }
+    : null;
 }
 
 // ============================================================
-// DRUG DATABASE LOOKUP — unchanged
+// DRUG DATABASE LOOKUP
 // ============================================================
 
 function findDrugByGeneric(genericName: string): any | null {
@@ -217,10 +251,14 @@ function checkInteractions(genericNames: string[]): Interaction[] {
     const interactionDrugs = interaction.drugs.map((d: string) => normalize(d));
 
     const drug1Present = normalizedNames.some(
-      (name) => interactionDrugs[0] && (name.includes(interactionDrugs[0]) || interactionDrugs[0].includes(name))
+      (name) =>
+        interactionDrugs[0] &&
+        (name.includes(interactionDrugs[0]) || interactionDrugs[0].includes(name))
     );
     const drug2Present = normalizedNames.some(
-      (name) => interactionDrugs[1] && (name.includes(interactionDrugs[1]) || interactionDrugs[1].includes(name))
+      (name) =>
+        interactionDrugs[1] &&
+        (name.includes(interactionDrugs[1]) || interactionDrugs[1].includes(name))
     );
 
     if (drug1Present && drug2Present) {
@@ -250,7 +288,6 @@ export function analyzePrescription(ocrResult: OCRResult): AnalysisResult {
     const genericName = brandMatch?.mapping.generic || med.name;
     const drugEntry = findDrugByGeneric(genericName);
 
-    // Determine match method — the single source of truth for trust
     let matchMethod: MatchMethod;
     if (brandMatch?.method === 'exact' && drugEntry) {
       matchMethod = 'exact';
@@ -259,30 +296,53 @@ export function analyzePrescription(ocrResult: OCRResult): AnalysisResult {
     } else if (brandMatch?.method === 'fuzzy' && drugEntry) {
       matchMethod = 'fuzzy';
     } else if (!brandMatch && drugEntry) {
-      // Direct generic lookup succeeded — treat as exact
       matchMethod = 'exact';
     } else {
       matchMethod = 'unmatched';
     }
 
-    // Trust gates for the UI
+    // Derive source for frontend dispatch.
+    // - verified: trusted match, full data shown
+    // - untrusted_match: fuzzy candidate, OCR-only display + verify banner
+    // - ai_fallback: no DB match but name looks real, route to Haiku
+    // - unknown: gibberish/illegible, no AI call
+    let source: 'verified' | 'untrusted_match' | 'ai_fallback' | 'unknown';
+    if (matchMethod === 'exact' || matchMethod === 'prefix') {
+      source = 'verified';
+    } else if (matchMethod === 'fuzzy') {
+      source = 'untrusted_match';
+    } else if (isLikelyGibberish(med.name, med.confidence)) {
+      source = 'unknown';
+    } else {
+      source = 'ai_fallback';
+    }
+
+    // SAFETY FIX: fuzzy matches no longer get the green-light treatment.
+
+    // SAFETY FIX: fuzzy matches no longer get the green-light treatment.
+    // Even if the matcher cleared its own threshold, fuzzy is by definition
+    // uncertain — surface it as untrusted, let the user verify.
     const showMatchedName = matchMethod === 'exact' || matchMethod === 'prefix';
     const showPricing = matchMethod === 'exact' || matchMethod === 'prefix';
 
-    // Confidence override — our match strength outranks Vision's self-doubt.
-    // If Vision said "medium" but we got an exact or prefix brand match,
-    // the match is confident enough to show as "high". This fixes the
-    // "Tap to verify" pill firing on obvious matches like Paracetamol.
     let finalConfidence = med.confidence;
     if (med.confidence === 'medium' && (matchMethod === 'exact' || matchMethod === 'prefix')) {
       finalConfidence = 'high';
     }
-    // If Vision said "high" but we couldn't match, downgrade to medium —
-    // Vision read it confidently but it's not in our database, so the user
-    // should still verify.
     if (med.confidence === 'high' && matchMethod === 'unmatched') {
       finalConfidence = 'medium';
     }
+
+    // ============================================================
+    // DOSAGE OVERRIDE FIX
+    // ============================================================
+    // OCR-extracted dosage from the prescription is the ground truth.
+    // The brand-mapping default dosage is just a fallback for when OCR
+    // didn't read one. Doctor wrote "Calpol 650mg" → user takes 650mg,
+    // not whatever default we happen to have in brand-mappings.json.
+    const effectiveDosage = (med.dosage && med.dosage.trim())
+      ? med.dosage.trim()
+      : (brandMatch?.mapping.dosage || '');
 
     // Brand price lookup
     let brandPrice: number | null = null;
@@ -295,20 +355,31 @@ export function analyzePrescription(ocrResult: OCRResult): AnalysisResult {
       brandPrice = exactBrand ? exactBrand.mrp : drugEntry.commonBrands[0].mrp;
     }
 
-    // If match is untrusted, null out pricing + description regardless of what DB said
     const finalBrandPrice = showPricing ? brandPrice : null;
     const finalGenericPrice = showPricing ? drugEntry?.janAushadhiPrice ?? null : null;
 
+    // Build matched name using OCR dosage (the override fix in action)
+    let matchedDrug: string | null = null;
+    if (showMatchedName && brandMatch) {
+      const moleculeName = brandMatch.mapping.generic;
+      matchedDrug = effectiveDosage
+        ? `${moleculeName} ${effectiveDosage}`
+        : moleculeName;
+    } else if (showMatchedName && drugEntry) {
+      matchedDrug = effectiveDosage
+        ? `${drugEntry.genericName} ${effectiveDosage}`
+        : drugEntry.genericName;
+    }
+
     const matched: MatchedMedicine = {
       ...med,
+      dosage: effectiveDosage || med.dosage, // preserve OCR dosage in raw field too
       confidence: finalConfidence,
       ocrReading: med.name,
-      matchedDrug: showMatchedName && brandMatch
-        ? `${brandMatch.mapping.generic} ${brandMatch.mapping.dosage}`
-        : showMatchedName && drugEntry
-        ? `${drugEntry.genericName} ${med.dosage || ''}`
+      matchedDrug,
+      genericName: showMatchedName
+        ? brandMatch?.mapping.generic || drugEntry?.genericName || null
         : null,
-      genericName: showMatchedName ? (brandMatch?.mapping.generic || drugEntry?.genericName || null) : null,
       category: showMatchedName ? drugEntry?.category || null : null,
       description: showMatchedName ? drugEntry?.description || null : null,
       howToTake: showMatchedName ? drugEntry?.howToTake || null : null,
@@ -317,13 +388,13 @@ export function analyzePrescription(ocrResult: OCRResult): AnalysisResult {
       genericPrice: finalGenericPrice,
       janAushadhiAvailable: showPricing && drugEntry?.janAushadhiPrice != null,
       matchMethod,
+      source,
       showMatchedName,
       showPricing,
     };
 
     matchedMedicines.push(matched);
 
-    // Only count genericName for interactions when trusted
     if (matched.genericName) {
       genericNames.push(matched.genericName);
     }
@@ -331,7 +402,6 @@ export function analyzePrescription(ocrResult: OCRResult): AnalysisResult {
 
   const foundInteractions = checkInteractions(genericNames);
 
-  // Savings — only sum trusted matches
   let brandTotal = 0;
   let genericTotal = 0;
   for (const med of matchedMedicines) {

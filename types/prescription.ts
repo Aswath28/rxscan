@@ -34,6 +34,8 @@ export interface Medicine {
   matchMethod?: MatchMethod;
   showMatchedName?: boolean;
   showPricing?: boolean;
+  // AI fallback — discriminator for which card variant to render
+  source?: 'verified' | 'untrusted_match' | 'ai_fallback' | 'unknown';
 }
 
 export interface DoctorNote {
