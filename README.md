@@ -13,13 +13,13 @@
 </p>
 
 <p align="center">
-  <a href="https://www.linkedin.com/posts/aswath-kr_last-week-i-posted-about-trying-to-solve-activity-7455239540648173568-j2uI"><img alt="Built in public" src="https://img.shields.io/badge/Built_in_public-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
-  <img alt="Status" src="https://img.shields.io/badge/Status-MVP_Live-22c55e?style=for-the-badge" />
-  <img alt="Built for India" src="https://img.shields.io/badge/Built_for-India_🇮🇳-FF9933?style=for-the-badge" />
+  <a href="https://www.linkedin.com/posts/aswath-kr_last-week-i-posted-about-trying-to-solve-activity-7455239540648173568-j2uI"><img src="https://img.shields.io/badge/Built_in_public-LinkedIn-0A66C2?style=for-the-badge&labelColor=0F172A&logo=linkedin&logoColor=white" /></a>
+  <img src="https://img.shields.io/badge/Status-MVP_Live-22c55e?style=for-the-badge&labelColor=0F172A" />
+  <img src="https://img.shields.io/badge/Built_for-India_🇮🇳-FF9933?style=for-the-badge&labelColor=0F172A" />
 </p>
 
 <p align="center">
-  <a href="YOUR_VERCEL_URL"><img alt="Try Rx Scan" src="https://img.shields.io/badge/▶_Try_Rx_Scan_Live-22c55e?style=for-the-badge" /></a>
+  <a href="YOUR_VERCEL_URL"><img src="https://img.shields.io/badge/▶_Try_Rx_Scan_Live-22c55e?style=for-the-badge&labelColor=0F172A" /></a>
 </p>
 
 <p align="center">
