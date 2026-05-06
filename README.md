@@ -19,6 +19,14 @@
 </p>
 
 <p align="center">
+  <a href="YOUR_VERCEL_URL"><img alt="Try Rx Scan" src="https://img.shields.io/badge/▶_Try_Rx_Scan_Live-22c55e?style=for-the-badge" /></a>
+</p>
+
+<p align="center">
+  <sub>No signup. No install. Scan a prescription in your browser →</sub>
+</p>
+
+<p align="center">
   <img width="436" height="892" alt="Screenshot 2026-05-05 at 12 32 43 PM" src="https://github.com/user-attachments/assets/de8744b5-003a-43e4-a32b-043ad22030e6" />
 </p>
 
