@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <a href="YOUR_VERCEL_URL"><img src="https://img.shields.io/badge/▶_Try_Rx_Scan_Live-22c55e?style=for-the-badge&labelColor=0F172A" /></a>
+  <a href="[YOUR_VERCEL_URL](https://rxscan-five.vercel.app/)"><img src="https://img.shields.io/badge/▶_Try_Rx_Scan_Live-22c55e?style=for-the-badge&labelColor=0F172A" /></a>
 </p>
 
 <p align="center">
