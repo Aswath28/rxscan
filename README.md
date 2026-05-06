@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <img src="screenshots/home.png" alt="Rx Scan home screen" width="320" />
+  <img width="436" height="892" alt="Screenshot 2026-05-05 at 12 32 43 PM" src="https://github.com/user-attachments/assets/de8744b5-003a-43e4-a32b-043ad22030e6" />
 </p>
 
 ---
@@ -59,19 +59,19 @@ Rx Scan fixes all three. In one scan.
 **Snap a photo of your prescription:**
 
 <p align="center">
-  <img src="screenshots/scan.png" alt="Scan upload screen" width="320" />
+<img width="405" height="523" alt="Screenshot 2026-05-05 at 12 33 29 PM" src="https://github.com/user-attachments/assets/a6dd02ac-31f6-4f30-bc6b-2fb543f9126a" />
 </p>
 
 **Get the full breakdown — savings, AI summary, every medicine identified:**
 
 <p align="center">
-  <img src="screenshots/prescription-detail.png" alt="Prescription detail with savings" width="320" />
+  <img width="348" height="891" alt="Screenshot 2026-05-05 at 12 33 00 PM" src="https://github.com/user-attachments/assets/2e193d18-0964-4198-a52b-236b0990aeb6" />
 </p>
 
 **Tap any medicine for plain-language details and safety alerts:**
 
 <p align="center">
-  <img src="screenshots/medicine-detail.png" alt="Medicine detail with safety check" width="320" />
+  <img width="355" height="803" alt="Screenshot 2026-05-05 at 12 33 12 PM" src="https://github.com/user-attachments/assets/6d7c0492-1a81-4701-9a1a-5c15d6ede3e1" />
 </p>
 
 ---
